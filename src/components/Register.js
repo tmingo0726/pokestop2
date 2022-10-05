@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
 // import { BASE_URL} from
 
 const path = process.env.REACT_APP_BASE_URL;
@@ -13,7 +14,9 @@ const Register = (props) => {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [registered, setRegistered] = useState(false);
-  // const [ passwordError , setPasswordError ] = useState(null);
+  const [error, setError] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  // const [passwordError, setPasswordError] = useState(null);
   // const [ usernameError, setUsernameError ] = useState(null)
 
   const registerNewCustomer = async (
@@ -22,8 +25,7 @@ const Register = (props) => {
     firstname,
     lastname,
     email,
-    address,
-    isadmin
+    address
   ) => {
     // console.log("PATH", path);
     try {
@@ -39,11 +41,12 @@ const Register = (props) => {
           lastname,
           email,
           address,
-          isadmin,
         }),
       });
       const result = await response.json();
       console.log("result", result);
+      setError(result.error);
+      console.log("resulterror", result.error);
       setRegistered(result.token);
     } catch (err) {
       console.error(err);
@@ -52,39 +55,39 @@ const Register = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    registerNewCustomer(
-      newUsername,
-      newPassword,
-      firstname,
-      lastname,
-      email,
-      address,
-      isadmin
-    );
-    // {
-    //   newPassword == confirmPassword
-    //     ? registerNewCustomer(
-    //         newUsername,
-    //         newPassword,
-    //         firstname,
-    //         lastname,
-    //         email,
-    //         address,
-    //         isadmin
-    //       ) && setErrorMessage(null)
-    //     : setErrorMessage("Error");
-    // }
-    // {
-    //   errors == true ? setErrors("UserError") : setErrors(null);
-    // }
+    // registerNewCustomer(
+    //   newUsername,
+    //   newPassword,
+    //   firstname,
+    //   lastname,
+    //   email,
+    //   address
+    // );
+    {
+      newPassword !== confirmPassword &&
+        setErrorMessage("Passwords do not match");
+    }
+    {
+      error
+        ? setErrorMessage(error)
+        : setErrorMessage(null) &&
+          registerNewCustomer(
+            newUsername,
+            newPassword,
+            firstname,
+            lastname,
+            email,
+            address
+          );
+    }
   };
 
-  //   const PasswordError = () => {
-  //     if (errorMessage) {
-  //       return <h2>Passwords do not match!</h2>;
-  //     }
-  //     return;
-  //   };
+  const Error = () => {
+    if (errorMessage) {
+      return <h2>{errorMessage}</h2>;
+    }
+    return;
+  };
 
   //   const UsernameError = () => {
   //     if (errors) {
@@ -118,7 +121,7 @@ const Register = (props) => {
                 placeholder="Please enter password"
                 required
                 type="password"
-                minLength={5}
+                minLength={8}
                 onChange={(event) => {
                   setNewPassword(event.target.value);
                 }}
@@ -130,7 +133,7 @@ const Register = (props) => {
                 placeholder="Please confirm password"
                 required
                 type="password"
-                minLength={5}
+                minLength={8}
                 onChange={(event) => {
                   setConfirmPassword(event.target.value);
                 }}
@@ -177,6 +180,7 @@ const Register = (props) => {
               ></input>
             </div>
             <div id="error">
+              <Error />
               {/* <PasswordError />
               <UsernameError /> */}
             </div>
