@@ -8,21 +8,12 @@ const createCustomer = async ({
   lastname,
   email,
   address,
-  isadmin,
+  isadmin = false,
 }) => {
   try {
     const SALT_COUNT = 10;
     const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
-    console.log(
-      "username,password,firstName,lastName,email,address,isadmin",
-      username,
-      password,
-      firstname,
-      lastname,
-      email,
-      address,
-      isadmin
-    );
+
     const {
       rows: [customer],
     } = await client.query(
@@ -36,6 +27,33 @@ const createCustomer = async ({
     );
 
     return customer;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+const updateCustomer = async ({ id, ...fields }) => {
+  const columns = Object.keys(fields)
+    .map((key, idx) => `"${key}"=$${idx + 1}`)
+    .join(", ");
+
+  if (columns.length === 0) {
+    return;
+  }
+
+  try {
+    const {
+      rows: [customer],
+    } = await client.query(
+      `
+            UPDATE customers
+            SET ${columns}
+            WHERE id = ${id}
+            RETURNING *;
+        `,
+      Object.values(fields)
+    );
   } catch (error) {
     console.error(error);
     throw error;
@@ -67,7 +85,7 @@ const getCustomerById = async (customerId) => {
       rows: [customer],
     } = await client.query(`
             SELECT id, username
-            FROM users
+            FROM customers
             WHERE id = ${customerId};
         `);
   } catch (error) {
@@ -83,7 +101,7 @@ const getCustomerByUsername = async (username) => {
     } = await client.query(
       `
             SELECT *
-            FROM users
+            FROM customers
             WHERE username = $1;
         `,
       [username]
@@ -115,6 +133,7 @@ const isAdmin = async ({ username, password }) => {
 
 module.exports = {
   createCustomer,
+  updateCustomer,
   getCustomer,
   getCustomerById,
   getCustomerByUsername,
