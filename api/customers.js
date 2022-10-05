@@ -3,7 +3,8 @@ const customersRouter = express.Router();
 const {
     createCustomer,
     getCustomer,
-    getCustomerByUsername
+    getCustomerByUsername,
+    getCustomerById
 } = require('../db');
 const { requireUser } = require('./utils');
 
@@ -103,11 +104,20 @@ customersRouter.post('/register', async(req, res, next) => {
     }
 });
 
-customersRouter.patch('/:username/edit', async(req, res, next) => {
+customersRouter.patch('/:username/edit', requireUser, async(req, res, next) => {
+    const { id, username: _username } = req.user;
     const { username } = req.params;
 
     try {
-        
+        if(username !== _username) {
+            res.status(403).send({
+                name: 'Unauthorized User',
+                message: `${_username} cannot update ${username}'s information.`
+            });
+        } else {
+            
+        }
+
     } catch (error) {
         
     }

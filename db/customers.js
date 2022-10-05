@@ -33,6 +33,29 @@ const createCustomer = async ({
   }
 };
 
+const updateCustomer = async ({id, ...fields}) => {
+    
+    const columns = Object.keys(fields).map(
+        (key, idx) => `"${key}"=$${idx + 1}`
+        ).join(', ');
+
+    if(columns.length === 0) {
+        return;
+    }
+
+    try {
+        const { rows: [customer] } = await client.query(`
+            UPDATE customers
+            SET ${columns}
+            WHERE id = ${id}
+            RETURNING *;
+        `, Object.values(fields));
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
 const getCustomer = async ({ username, password }) => {
   try {
     const customer = await getCustomerByUsername(username);
@@ -106,6 +129,7 @@ const isAdmin = async ({ username, password }) => {
 
 module.exports = {
   createCustomer,
+  updateCustomer,
   getCustomer,
   getCustomerById,
   getCustomerByUsername,
