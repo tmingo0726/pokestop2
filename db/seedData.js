@@ -1,4 +1,4 @@
-const {} = require("./");
+const { createCustomer } = require("./");
 const client = require("./client");
 
 const dropTables = async () => {
@@ -62,7 +62,7 @@ const createInitialUsers = async () => {
         isadmin: false,
       },
     ];
-    const users = await Promise.all(usersToCreate.map(createUser));
+    const users = await Promise.all(usersToCreate.map(createCustomer));
 
     console.log("FINISHED CREATING USERS");
   } catch (err) {
@@ -70,6 +70,14 @@ const createInitialUsers = async () => {
     throw err;
   }
 };
+
+// const testDB = async() => {
+//     try {
+//         console.log('STARTING TO TEST DATABASE')
+
+//         console.log('')
+//     }
+// }
 
 const rebuildDB = async () => {
   try {
