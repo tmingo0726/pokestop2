@@ -16,12 +16,11 @@ const Register = (props) => {
   const [registered, setRegistered] = useState(false);
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  // const [passwordError, setPasswordError] = useState(null);
-  // const [ usernameError, setUsernameError ] = useState(null)
 
   const registerNewCustomer = async (
     username,
     password,
+    confirmPassword,
     firstname,
     lastname,
     email,
@@ -37,6 +36,7 @@ const Register = (props) => {
         body: JSON.stringify({
           username,
           password,
+          confirmPassword,
           firstname,
           lastname,
           email,
@@ -46,7 +46,9 @@ const Register = (props) => {
       const result = await response.json();
       console.log("result", result);
       setError(result.error);
+      setErrorMessage(result.message);
       console.log("resulterror", result.error);
+      console.log("resultmessage", result.message);
       setRegistered(result.token);
     } catch (err) {
       console.error(err);
@@ -55,31 +57,15 @@ const Register = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // registerNewCustomer(
-    //   newUsername,
-    //   newPassword,
-    //   firstname,
-    //   lastname,
-    //   email,
-    //   address
-    // );
-    {
-      newPassword !== confirmPassword &&
-        setErrorMessage("Passwords do not match");
-    }
-    {
-      error
-        ? setErrorMessage(error)
-        : setErrorMessage(null) &&
-          registerNewCustomer(
-            newUsername,
-            newPassword,
-            firstname,
-            lastname,
-            email,
-            address
-          );
-    }
+    registerNewCustomer(
+      newUsername,
+      newPassword,
+      confirmPassword,
+      firstname,
+      lastname,
+      email,
+      address
+    );
   };
 
   const Error = () => {
@@ -88,13 +74,6 @@ const Register = (props) => {
     }
     return;
   };
-
-  //   const UsernameError = () => {
-  //     if (errors) {
-  //       return <h2>A user by that username already exists!</h2>
-  //     }
-  //     return;
-  //   }
 
   return (
     <div>
@@ -180,7 +159,7 @@ const Register = (props) => {
               ></input>
             </div>
             <div id="error">
-              <Error />
+              <h2>{error ? `${errorMessage}` : null}</h2>
               {/* <PasswordError />
               <UsernameError /> */}
             </div>
