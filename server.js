@@ -1,23 +1,26 @@
 require("dotenv").config();
+const client = require("./db/client");
 const cors = require("cors");
 const path = require("path");
-const favicon = require("serve-favicon");
-const client = require("./db/client");
-const morgan = require("morgan");
-
 const http = require("http");
 const chalk = import("chalk");
+const favicon = require("serve-favicon");
 
 const express = require("express");
 const app = express();
+
+const morgan = require("morgan");
 app.use(morgan("dev"));
+
 app.use(express.json());
+
 app.use(
   cors({
     origin: "*",
   })
 );
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
+
 app.use((req, res, next) => {
   console.log("<___Body Logger Start___>");
   console.log(req.body);
@@ -25,8 +28,10 @@ app.use((req, res, next) => {
 
   next();
 });
+
 const apiRouter = require("./api");
 app.use("/api", apiRouter);
+
 app.use((error, req, res, next) => {
   res.send({
     name: error.name,

@@ -18,7 +18,7 @@ const createTables = async () => {
     await client.query(`
             CREATE TABLE customers (
                 id SERIAL PRIMARY KEY,
-                username VARCHAR(50)  NOT NULL,
+                username VARCHAR(50) NOT NULL,
                 password VARCHAR(255) NOT NULL,
                 firstname VARCHAR(50) NOT NULL,
                 lastname VARCHAR(50) NOT NULL,
@@ -45,8 +45,7 @@ const createInitialUsers = async () => {
         firstname: "Al",
         lastname: "Bert",
         email: "Al.Bert@gmail.com",
-        address: "123 Sesame St",
-        isadmin: false,
+        address: "123 Sesame St"
       },
       {
         username: "sandra",
@@ -54,8 +53,7 @@ const createInitialUsers = async () => {
         firstname: "San",
         lastname: "Dra",
         email: "San.Dra@gmail.com",
-        address: "1234 Sesame St",
-        isadmin: false,
+        address: "1234 Sesame St"
       },
       {
         username: "glamgal",
@@ -63,8 +61,7 @@ const createInitialUsers = async () => {
         firstname: "Glam",
         lastname: "Gal",
         email: "Glam.Gal@gmail.com",
-        address: "12345 Sesame St",
-        isadmin: false,
+        address: "12345 Sesame St"
       },
     ];
     console.log("CUSTOMERS TO CREATE", customersToCreate);
