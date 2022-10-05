@@ -103,9 +103,9 @@ const getCustomerByUsername = async (username) => {
             SELECT *
             FROM customers
             WHERE username = $1;
-        `,
-      [username]
-    );
+        `, [username]);
+
+        return customer;
   } catch (error) {
     console.error(error);
     throw error;
