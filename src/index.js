@@ -9,6 +9,7 @@ const { REACT_APP_BASE_URL: BASE_URL } = process.env; // ask tom how this works
 
 const App = () => {
   const [token, setToken] = useState("");
+  const [isadmin, setIsadmin] = useState(false);
 
   return (
     <div>
@@ -21,7 +22,11 @@ const App = () => {
       <span>My Cart </span>
       <Routes>
         {/* <Route exact path ="/" element={<Products />} */}
-        <Route exact path="/register" element={<Register />}></Route>
+        <Route
+          exact
+          path="/register"
+          element={<Register isadmin={isadmin} />}
+        ></Route>
       </Routes>
       {/* Change span to Link once we have appropriate routes set up*/}
       <Footer />
