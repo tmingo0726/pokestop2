@@ -52,12 +52,12 @@ customersRouter.post("/register", async (req, res, next) => {
 
     if (_customer) {
       next({
-        name: "Username Exists",
+        error: "Username Exists",
         message: `${username} is already taken.`,
       });
     } else if (password.length < 8) {
       next({
-        name: "Password Too Short",
+        error: "Password Too Short",
         message: "Minimum password length is 8 characters",
       });
     } else {
@@ -85,8 +85,8 @@ customersRouter.post("/register", async (req, res, next) => {
         token,
       });
     }
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch ({ error, message }) {
+    next({ error, message });
   }
 });
 
