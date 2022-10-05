@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-require("dotenv").config();
-const path = process.env.REACT_APP_BASE_URL;
+// require("dotenv").config();
+// const path = process.env.REACT_APP_BASE_URL;
 
 const Login = () => {
   const loginUser = async () => {

@@ -1,8 +1,8 @@
 import { useState } from "react";
 // import { BASE_URL} from
-require("dotenv").config();
-const JWT = require("jsonwebtoken");
 
+const path = process.env.REACT_APP_BASE_URL;
+const BASE_URL = "http://localhost:4000/api";
 const Register = (props) => {
   const { isadmin } = props;
   const [newUsername, setNewUsername] = useState("");
@@ -25,8 +25,9 @@ const Register = (props) => {
     address,
     isadmin
   ) => {
+    // console.log("PATH", path);
     try {
-      const response = await fetch(`${BASE_URL}/users/register`, {
+      const response = await fetch(`${BASE_URL}/customers/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,6 +43,7 @@ const Register = (props) => {
         }),
       });
       const result = await response.json();
+      console.log("result", result);
       setRegistered(result.token);
     } catch (err) {
       console.error(err);
@@ -50,22 +52,31 @@ const Register = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    {
-      newPassword == confirmPassword
-        ? registerNewCustomer(
-            newUsername,
-            newPassword,
-            firstname,
-            lastname,
-            email,
-            address,
-            isadmin
-          ) && setErrorMessage(null)
-        : setErrorMessage("Error");
-    }
-    {
-      errors == true ? setErrors("UserError") : setErrors(null);
-    }
+    registerNewCustomer(
+      newUsername,
+      newPassword,
+      firstname,
+      lastname,
+      email,
+      address,
+      isadmin
+    );
+    // {
+    //   newPassword == confirmPassword
+    //     ? registerNewCustomer(
+    //         newUsername,
+    //         newPassword,
+    //         firstname,
+    //         lastname,
+    //         email,
+    //         address,
+    //         isadmin
+    //       ) && setErrorMessage(null)
+    //     : setErrorMessage("Error");
+    // }
+    // {
+    //   errors == true ? setErrors("UserError") : setErrors(null);
+    // }
   };
 
   //   const PasswordError = () => {
@@ -107,7 +118,7 @@ const Register = (props) => {
                 placeholder="Please enter password"
                 required
                 type="password"
-                minLength={8}
+                minLength={5}
                 onChange={(event) => {
                   setNewPassword(event.target.value);
                 }}
@@ -119,7 +130,7 @@ const Register = (props) => {
                 placeholder="Please confirm password"
                 required
                 type="password"
-                minLength={8}
+                minLength={5}
                 onChange={(event) => {
                   setConfirmPassword(event.target.value);
                 }}

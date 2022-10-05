@@ -8,7 +8,7 @@ const createCustomer = async ({
   lastname,
   email,
   address,
-  isadmin = false
+  isadmin = false,
 }) => {
   try {
     const SALT_COUNT = 10;
@@ -33,28 +33,32 @@ const createCustomer = async ({
   }
 };
 
-const updateCustomer = async ({id, ...fields}) => {
-    
-    const columns = Object.keys(fields).map(
-        (key, idx) => `"${key}"=$${idx + 1}`
-        ).join(', ');
+const updateCustomer = async ({ id, ...fields }) => {
+  const columns = Object.keys(fields)
+    .map((key, idx) => `"${key}"=$${idx + 1}`)
+    .join(", ");
 
-    if(columns.length === 0) {
-        return;
-    }
+  if (columns.length === 0) {
+    return;
+  }
 
-    try {
-        const { rows: [customer] } = await client.query(`
+  try {
+    const {
+      rows: [customer],
+    } = await client.query(
+      `
             UPDATE customers
             SET ${columns}
             WHERE id = ${id}
             RETURNING *;
-        `, Object.values(fields));
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
-}
+        `,
+      Object.values(fields)
+    );
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 
 const getCustomer = async ({ username, password }) => {
   try {
@@ -81,7 +85,7 @@ const getCustomerById = async (customerId) => {
       rows: [customer],
     } = await client.query(`
             SELECT id, username
-            FROM users
+            FROM customers
             WHERE id = ${customerId};
         `);
   } catch (error) {
@@ -97,7 +101,7 @@ const getCustomerByUsername = async (username) => {
     } = await client.query(
       `
             SELECT *
-            FROM users
+            FROM customers
             WHERE username = $1;
         `,
       [username]

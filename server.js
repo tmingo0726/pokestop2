@@ -4,6 +4,7 @@ const cors = require("cors");
 const path = require("path");
 const http = require("http");
 const chalk = import("chalk");
+
 const favicon = require("serve-favicon");
 
 const express = require("express");
@@ -44,9 +45,10 @@ const PORT = process.env["PORT"] ?? 4000;
 const server = http.createServer(app);
 
 server.listen(PORT, () => {
-  console.log(
-    chalk.blueBright("Server is listening on PORT:"),
-    chalk.yellow(PORT),
-    chalk.blueBright("Pokemon are cool!")
-  );
+  console.log("Server is listening on PORT:", PORT);
+  // console.log(
+  //   chalk.blueBright("Server is listening on PORT:"),
+  //   chalk.yellow(PORT),
+  //   chalk.blueBright("Pokemon are cool!")
+  // );
 });
