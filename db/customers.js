@@ -13,16 +13,7 @@ const createCustomer = async ({
   try {
     const SALT_COUNT = 10;
     const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
-    console.log(
-      "username,password,firstName,lastName,email,address,isadmin",
-      username,
-      password,
-      firstname,
-      lastname,
-      email,
-      address,
-      isadmin
-    );
+
     const {
       rows: [customer],
     } = await client.query(
