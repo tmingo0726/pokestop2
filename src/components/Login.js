@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+require("dotenv").config();
+const path = process.env.REACT_APP_BASE_URL;
+
 const Login = () => {
   const loginUser = async () => {
     const [username, setUsername] = useState("");
@@ -9,7 +12,7 @@ const Login = () => {
 
     const loginUser = async (username, password) => {
       try {
-        const response = await fetch(`${BASE_URL}/customers/login`, {
+        const response = await fetch(`${path}/customers/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -1,5 +1,7 @@
 import { useState } from "react";
 // import { BASE_URL} from
+require("dotenv").config();
+const JWT = require("jsonwebtoken");
 
 const Register = (props) => {
   const { isadmin } = props;
