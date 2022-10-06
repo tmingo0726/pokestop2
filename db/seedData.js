@@ -26,6 +26,7 @@ const createTables = async () => {
                 email VARCHAR(50) UNIQUE NOT NULL,
                 isadmin BOOLEAN DEFAULT false
             );
+            CREATE UNIQUE INDEX uname_email on customers (username, email);
         `);
     console.log("FINISHED BUILDING TABLES!");
   } catch (err) {
