@@ -18,14 +18,13 @@ const createTables = async () => {
     await client.query(`
             CREATE TABLE customers (
                 id SERIAL PRIMARY KEY,
-                username VARCHAR(50) NOT NULL,
+                username VARCHAR(50) UNIQUE NOT NULL,
                 password VARCHAR(255) NOT NULL,
                 firstname VARCHAR(50) NOT NULL,
                 lastname VARCHAR(50) NOT NULL,
                 address VARCHAR(255) NOT NULL,
-                email VARCHAR(50) NOT NULL,
-                isadmin BOOLEAN DEFAULT false,
-                UNIQUE (username, email)
+                email VARCHAR(50) UNIQUE NOT NULL,
+                isadmin BOOLEAN DEFAULT false
             );
         `);
     console.log("FINISHED BUILDING TABLES!");
@@ -45,7 +44,7 @@ const createInitialUsers = async () => {
         firstname: "Al",
         lastname: "Bert",
         email: "Al.Bert@gmail.com",
-        address: "123 Sesame St"
+        address: "123 Sesame St",
       },
       {
         username: "sandra",
@@ -53,7 +52,7 @@ const createInitialUsers = async () => {
         firstname: "San",
         lastname: "Dra",
         email: "San.Dra@gmail.com",
-        address: "1234 Sesame St"
+        address: "1234 Sesame St",
       },
       {
         username: "glamgal",
@@ -61,7 +60,7 @@ const createInitialUsers = async () => {
         firstname: "Glam",
         lastname: "Gal",
         email: "Glam.Gal@gmail.com",
-        address: "12345 Sesame St"
+        address: "12345 Sesame St",
       },
     ];
     console.log("CUSTOMERS TO CREATE", customersToCreate);
