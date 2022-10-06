@@ -5,6 +5,7 @@ const {
   getCustomer,
   getCustomerByUsername,
   getCustomerById,
+  updateCustomer,
 } = require("../db");
 const { requireUser } = require("./utils");
 
@@ -25,10 +26,10 @@ customersRouter.post("/login", async (req, res, next) => {
 
   try {
     if (customer) {
-      const token = jwt.sign(user, JWT_SECRET, { expiresIn: "1w" });
+      const token = jwt.sign(customer, JWT_SECRET, { expiresIn: "1w" });
 
       res.send({
-        user,
+        customer,
         message: "Login successful.",
         token,
       });
@@ -75,7 +76,8 @@ customersRouter.post("/register", async (req, res, next) => {
         message: "Passwords do not match",
       });
     } else {
-      const customer = await createCustomer({
+
+      await createCustomer({
         username,
         password,
         firstname,
@@ -110,18 +112,72 @@ customersRouter.patch(
   async (req, res, next) => {
     const { id, username: _username } = req.user;
     const { username } = req.params;
+    const {
+      password,
+      confirmPassword,
+      firstname,
+      lastname,
+      email,
+      address
+      } = req.body;
 
-    try {
-      if (username !== _username) {
-        res.status(403).send({
-          name: "Unauthorized User",
-          message: `${_username} cannot update ${username}'s information.`,
-        });
-      } else {
+    if (password !== confirmPassword) {
+      next({
+        error: "Passwords do not match",
+        message: "Passwords do not match",
+      });
+    } else if (password.length < 8) {
+      next({
+        error: "Password Too Short",
+        message: "Minimum password length is 8 characters",
+      });
+    } else {
+
+      try {
+
+        if (username !== _username) {
+          res.status(403).send({
+            name: "Unauthorized User",
+            message: `${_username} cannot update ${username}'s information.`,
+          });
+        } else {
+          const updatedFields = {
+            id
+          }
+
+          if (password) {
+            updatedFields.password = password
+          }
+
+          if (firstname) {
+            updatedFields.firstname = firstname
+          }
+
+          if (lastname) {
+            updatedFields.lastname = lastname
+          }
+
+          if (email) {
+            updatedFields.email = email
+          }
+
+          if (address) {
+            updatedFields.address = address
+          }
+
+          console.log("UPDATED FIELDS", updatedFields)
+
+          await updateCustomer(updatedFields)
+
+          const customer = await getCustomer({ username, password })
+          
+          res.send(customer)
+        }
+      } catch ({ error, message }) {
+        next({ error, message })
       }
-    } catch (error) {}
-  }
-);
+    }
+  })
 
 // GET /api/users/me PLACEHOLDER
 

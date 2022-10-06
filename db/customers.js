@@ -65,6 +65,11 @@ const updateCustomer = async ({ id, ...fields }) => {
 const getCustomer = async ({ username, password }) => {
   try {
     const customer = await getCustomerByUsername(username);
+
+    if (!customer) { 
+      return;
+    }
+    
     const hashedPassword = customer.password;
     const passwordsMatch = await bcrypt.compare(password, hashedPassword);
 
