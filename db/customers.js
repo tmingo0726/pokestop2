@@ -20,7 +20,7 @@ const createCustomer = async ({
       `
             INSERT INTO customers (username, password, firstname, lastname, email, address, isadmin)
             VALUES ($1, $2, $3, $4, $5, $6, $7)
-            ON CONFLICT username, email DO NOTHING
+            ON CONFLICT (username, email) DO NOTHING
             RETURNING id, username;
         `,
       [username, hashedPassword, firstname, lastname, email, address, isadmin]
