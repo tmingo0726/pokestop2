@@ -33,10 +33,18 @@ app.use((req, res, next) => {
 const apiRouter = require("./api");
 app.use("/api", apiRouter);
 
+
 app.use((error, req, res, next) => {
   res.send({
     error: error.error,
     message: error.message,
+  });
+});
+
+app.get('*', async (req, res) => {
+  res.status(404).send({
+      error: 'Page not found',
+      message: 'The page you are looking for was not found'
   });
 });
 
