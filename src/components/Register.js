@@ -4,8 +4,7 @@ import { Navigate } from "react-router-dom";
 
 const path = process.env.REACT_APP_BASE_URL;
 const BASE_URL = "http://localhost:4000/api";
-const Register = (props) => {
-  const { isadmin } = props;
+const Register = () => {
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -79,7 +78,7 @@ const Register = (props) => {
     <div>
       <form id="registration" onSubmit={handleSubmit}>
         {registered ? (
-          <Navigate to="/customers/login" />
+          <Navigate to="/login" />
         ) : (
           <>
             <h2>New Customer Registration Form</h2>

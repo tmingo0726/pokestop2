@@ -72,7 +72,6 @@ const getCustomer = async ({ username, password }) => {
     
     const hashedPassword = customer.password;
     const passwordsMatch = await bcrypt.compare(password, hashedPassword);
-
     if (passwordsMatch) {
       const validCustomer = {
         id: customer.id,
@@ -96,7 +95,7 @@ const getCustomerById = async (customerId) => {
             WHERE id = ${customerId};
         `);
 
-        return customer;
+    return customer;
   } catch (error) {
     console.error(error);
     throw error;
@@ -112,9 +111,11 @@ const getCustomerByUsername = async (username) => {
             SELECT *
             FROM customers
             WHERE username = $1;
-        `, [username]);
+        `,
+      [username]
+    );
 
-        return customer;
+    return customer;
   } catch (error) {
     console.error(error);
     throw error;
@@ -130,7 +131,7 @@ const isAdmin = async ({ username, password }) => {
     if (passwordsMatch && user.isadmin) {
       const admin = {
         id: user.id,
-        username: user.username
+        username: user.username,
       };
       return admin;
     }
