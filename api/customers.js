@@ -112,7 +112,7 @@ customersRouter.patch(
   async (req, res, next) => {
     const { id, username: _username } = req.user;
     const { username } = req.params;
-    const {
+    const customerInputs = {
       password,
       confirmPassword,
       firstname,
@@ -131,8 +131,12 @@ customersRouter.patch(
         error: "Password Too Short",
         message: "Minimum password length is 8 characters",
       });
+    } else if(!customerInputs) {
+      next({
+        error: "No Fields Submitted",
+        message: "You must update at least one field before submission",
+      });
     } else {
-
       try {
 
         if (username !== _username) {
