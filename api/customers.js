@@ -105,6 +105,7 @@ customersRouter.post("/register", async (req, res, next) => {
   }
 });
 
+// PATCH
 customersRouter.patch(
   "/:username/edit",
   requireUser,
@@ -120,17 +121,19 @@ customersRouter.patch(
       address
       } = req.body;
 
-    if (password !== confirmPassword) {
+      console.log("INPUTS", customerInputs)
+
+    if (password && password !== confirmPassword) {
       next({
         error: "Passwords do not match",
         message: "Passwords do not match",
       });
-    } else if (password.length < 8) {
+    } else if (password && password.length < 8) {
       next({
         error: "Password Too Short",
         message: "Minimum password length is 8 characters",
       });
-    } else if(!customerInputs) {
+    } else if(!Object.keys(customerInputs).length) {
       next({
         error: "No Fields Submitted",
         message: "You must update at least one field before submission",
@@ -170,8 +173,8 @@ customersRouter.patch(
 
           console.log("UPDATED FIELDS", updatedFields);
 
-          await updateCustomer(updatedFields);
-
+          const updateTest = await updateCustomer(updatedFields);
+          console.log("UPDATE INFO", updateTest)
           const customer = await getCustomer({ username, password });
           
           res.send({
