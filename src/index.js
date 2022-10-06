@@ -9,25 +9,37 @@ const root = createRoot(container);
 const { REACT_APP_BASE_URL: BASE_URL } = process.env; // ask tom how this works
 
 const App = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
   const [token, setToken] = useState("");
   const [isadmin, setIsadmin] = useState(false);
 
   return (
     <div>
-     <Header /> 
-      <h1>Pokestop</h1>
-      <h3>Your one stop shop to "be the very best"</h3>
-      {/* Change span to Link once we have appropriate routes set up*/}
-      <Link to="/login">Login </Link>
-      <Link to="/register">Register </Link>
-      <span>Products </span>
-      <span>My Cart </span>
+      <Header
+        loggedIn={loggedIn}
+        setLoggedIn={setLoggedIn}
+        setUsername={setUsername}
+        setPassword={setPassword}
+      />
       <Routes>
         {/* <Route exact path ="/" element={<Products />} */}
         <Route path="/register" element={<Register />}></Route>
-        <Route path="/login" element={<Login />}></Route>
+        <Route
+          path="/login"
+          element={
+            <Login
+              loggedIn={loggedIn}
+              setLoggedIn={setLoggedIn}
+              username={username}
+              setUsername={setUsername}
+              password={password}
+              setPassword={setPassword}
+            />
+          }
+        ></Route>
       </Routes>
-      {/* Change span to Link once we have appropriate routes set up*/}
       <Footer />
     </div>
   );

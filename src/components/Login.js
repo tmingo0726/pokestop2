@@ -5,12 +5,19 @@ import { Navigate } from "react-router-dom";
 // const path = process.env.REACT_APP_BASE_URL;
 const BASE_URL = "http://localhost:4000/api";
 
-const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const Login = ({
+  loggedIn,
+  setLoggedIn,
+  username,
+  setUsername,
+  password,
+  setPassword,
+}) => {
+  //   const [username, setUsername] = useState("");
+  //   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
+  //   const [loggedIn, setLoggedIn] = useState(false);
 
   const loginUser = async (username, password) => {
     try {
