@@ -54,6 +54,8 @@ const updateCustomer = async ({ id, ...fields }) => {
         `,
       Object.values(fields)
     );
+
+    return customer;
   } catch (error) {
     console.error(error);
     throw error;
@@ -88,6 +90,8 @@ const getCustomerById = async (customerId) => {
             FROM customers
             WHERE id = ${customerId};
         `);
+
+        return customer;
   } catch (error) {
     console.error(error);
     throw error;
@@ -118,10 +122,10 @@ const isAdmin = async ({ username, password }) => {
     const hashedPassword = user.password;
     const passwordsMatch = await bcrypt.compare(password, hashedPassword);
 
-    if (passwordsMatch) {
+    if (passwordsMatch && user.isadmin) {
       const admin = {
         id: user.id,
-        username: user.username,
+        username: user.username
       };
       return admin;
     }
