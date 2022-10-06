@@ -45,7 +45,16 @@ customersRouter.post("/login", async (req, res, next) => {
 
 // REGISTER
 customersRouter.post("/register", async (req, res, next) => {
-  const { username, password, firstname, lastname, email, address } = req.body;
+  console.log("REQBODY", req.body);
+  const {
+    username,
+    password,
+    confirmPassword,
+    firstname,
+    lastname,
+    email,
+    address,
+  } = req.body;
 
   try {
     const _customer = await getCustomerByUsername(username);
@@ -59,6 +68,11 @@ customersRouter.post("/register", async (req, res, next) => {
       next({
         error: "Password Too Short",
         message: "Minimum password length is 8 characters",
+      });
+    } else if (password !== confirmPassword) {
+      next({
+        error: "Passwords do not match",
+        message: "Passwords do not match",
       });
     } else {
       const customer = await createCustomer({
