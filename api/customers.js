@@ -169,19 +169,22 @@ customersRouter.patch(
             updatedFields.address = address
           }
 
-          console.log("UPDATED FIELDS", updatedFields)
+          console.log("UPDATED FIELDS", updatedFields);
 
-          await updateCustomer(updatedFields)
+          await updateCustomer(updatedFields);
 
-          const customer = await getCustomer({ username, password })
+          const customer = await getCustomer({ username, password });
           
-          res.send(customer)
+          res.send({
+            customer,
+            message: `Successfully updated fields: ${updatedFields}`
+          });
         }
       } catch ({ error, message }) {
         next({ error, message })
       }
     }
-  })
+  });
 
 // GET /api/users/me PLACEHOLDER
 
