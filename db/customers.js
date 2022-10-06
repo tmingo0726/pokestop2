@@ -66,9 +66,10 @@ const getCustomer = async ({ username, password }) => {
   try {
     const customer = await getCustomerByUsername(username);
 
-    if (!customer) {
+    if (!customer) { 
       return;
     }
+    
     const hashedPassword = customer.password;
     const passwordsMatch = await bcrypt.compare(password, hashedPassword);
     if (passwordsMatch) {
