@@ -19,7 +19,7 @@ customersRouter.post("/login", async (req, res, next) => {
 
   if (!username || !password) {
     next({
-      name: "MissingCredentials",
+      error: "MissingCredentials",
       message: "Please provide both a username and password",
     });
   }
@@ -35,12 +35,12 @@ customersRouter.post("/login", async (req, res, next) => {
       });
     } else {
       next({
-        name: "Invalid Credentials",
+        error: "Invalid Credentials",
         message: "Incorrect username or password.",
       });
     }
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch ({ error, message }) {
+    next({ error, message });
   }
 });
 
@@ -76,7 +76,6 @@ customersRouter.post("/register", async (req, res, next) => {
         message: "Passwords do not match",
       });
     } else {
-
       await createCustomer({
         username,
         password,

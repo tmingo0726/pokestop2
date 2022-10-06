@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { Footer, Register } from "./components";
+import { Footer, Login, Register } from "./components";
 const container = document.getElementById("app");
 const root = createRoot(container);
 
@@ -22,11 +22,8 @@ const App = () => {
       <span>My Cart </span>
       <Routes>
         {/* <Route exact path ="/" element={<Products />} */}
-        <Route
-          exact
-          path="/register"
-          element={<Register isadmin={isadmin} />}
-        ></Route>
+        <Route path="/register" element={<Register />}></Route>
+        <Route path="/login" element={<Login />}></Route>
       </Routes>
       {/* Change span to Link once we have appropriate routes set up*/}
       <Footer />
