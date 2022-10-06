@@ -5,6 +5,7 @@ const dropTables = async () => {
   console.log("DROPPING TABLES");
   try {
     await client.query(`
+            DROP TABLE IF EXISTS cards;
             DROP TABLE IF EXISTS customers;
         `);
   } catch (err) {
@@ -27,6 +28,17 @@ const createTables = async () => {
                 isadmin BOOLEAN DEFAULT false
             );
             CREATE UNIQUE INDEX uname_email on customers (username, email);
+
+            CREATE TABLE cards (
+              id SERIAL PRIMARY KEY,
+              name VARCHAR(50) UNIQUE NOT NULL,
+              price INTEGER NOT NULL,
+              condition VARCHAR(50) NOT NULL,
+              rarity VARCHAR(50) NOT NULL,
+              ability1 VARCHAR(500) NOT NULL,
+              ability2 VARCHAR(500),
+              isactive BOOLEAN DEFAULT true
+            );
         `);
     console.log("FINISHED BUILDING TABLES!");
   } catch (err) {
