@@ -6,6 +6,7 @@ const {
   getCustomerByUsername,
   getCustomerById,
   updateCustomer,
+  getCustomerByEmail,
 } = require("../db");
 const { requireUser } = require("./utils");
 
@@ -59,11 +60,16 @@ customersRouter.post("/register", async (req, res, next) => {
 
   try {
     const _customer = await getCustomerByUsername(username);
-
+    const _email = await getCustomerByEmail(email);
     if (_customer) {
       next({
         error: "Username Exists",
         message: `${username} is already taken.`,
+      });
+    } else if (_email) {
+      next({
+        error: "E-mail Exists",
+        message: `${email} is already taken.`,
       });
     } else if (password.length < 8) {
       next({
@@ -140,11 +146,17 @@ customersRouter.patch(
       });
     } else {
       try {
+        const _email = await getCustomerByEmail(email);
 
         if (username !== _username) {
           res.status(403).send({
             name: "Unauthorized User",
             message: `${_username} cannot update ${username}'s information.`,
+          });
+        } else if (_email) {
+          next({
+            error: "E-mail Exists",
+            message: `${email} is already taken.`,
           });
         } else {
           const updatedFields = {

@@ -20,7 +20,7 @@ const createCustomer = async ({
       `
             INSERT INTO customers (username, password, firstname, lastname, email, address, isadmin)
             VALUES ($1, $2, $3, $4, $5, $6, $7)
-            ON CONFLICT (username, email) DO NOTHING
+            ON CONFLICT username, email DO NOTHING
             RETURNING id, username;
         `,
       [username, hashedPassword, firstname, lastname, email, address, isadmin]
@@ -122,6 +122,26 @@ const getCustomerByUsername = async (username) => {
   }
 };
 
+const getCustomerByEmail = async (email) => {
+  try {
+    const {
+      rows: [customer],
+    } = await client.query(
+      `
+            SELECT *
+            FROM customers
+            WHERE email = $1;
+        `,
+      [email]
+    );
+
+    return customer;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 const isAdmin = async ({ username, password }) => {
   try {
     const user = await getCustomerByUsername(username);
@@ -147,5 +167,6 @@ module.exports = {
   getCustomer,
   getCustomerById,
   getCustomerByUsername,
+  getCustomerByEmail,
   isAdmin,
 };
