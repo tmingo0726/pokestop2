@@ -39,6 +39,8 @@ apiRouter.use((req, res, next) => {
 });
 
 const customersRouter = require("./customers");
+const productsRouter = require("./products");
 apiRouter.use("/customers", customersRouter);
+apiRouter.use("/products", productsRouter);
 
 module.exports = apiRouter;

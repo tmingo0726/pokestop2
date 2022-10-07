@@ -1,0 +1,30 @@
+.body {
+    display: flex;
+    flex-direction: row;
+    background-color: black;
+}
+
+.grid-container {
+    display: inline-grid;
+    grid-template-columns: auto auto auto auto;
+    background-color: white;
+    padding: 10px;
+}
+
+.grid-item {
+  background-color: black;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  
+}
+
+.caption {
+    font-family: Arial;
+    font-weight: bolder;
+    align-items: center;
+}
+
+#products-heading {
+    text-align: center;
+    margin: 0 auto;
+}

@@ -1,4 +1,4 @@
-const { createCustomer } = require("./");
+const { createCustomer, createCard } = require("./");
 const client = require("./client");
 
 const dropTables = async () => {
@@ -39,6 +39,8 @@ const createTables = async () => {
               rarity VARCHAR(50) NOT NULL,
               ability1 VARCHAR(500) NOT NULL,
               ability2 VARCHAR(500),
+              imagelink VARCHAR(255) NOT NULL,
+              inventorycount INTEGER NOT NULL,
               isactive BOOLEAN DEFAULT true
             );
         `);
@@ -83,42 +85,58 @@ const createInitialUsers = async () => {
 
     console.log("CUSTOMERS", customers);
 
-    console.log("FINISHED CREATING USERS");
+    console.log("FINISHED CREATING CUSTOMERS");
   } catch (err) {
-    console.log("ERROR CREATING USERS");
+    console.log("ERROR CREATING CUSTOMERS");
     throw err;
   }
 };
 
 
 const createInitialCards = async() => {
-  console.log('STARTING TO CREATE CARDS')
+  console.log('STARTING TO CREATE CARDS');
     try {
       const cardsToCreate = [
-        { name: 'Charizard',
+        { 
+          name: 'Charizard',
           price: 30000,
           condition:'Good',
+          rarity: "Holo",
           ability1: "Energy Burn: As often as you like during your turn (before your attack), you may turn all Energy attached to Charizard into Fire Energy for the rest of the turn. This power can't be used if Charizard is Asleep, Confused, or Paralyzed.",
-          ability2: "Fire Spin: Discard 2 Energy cards attached to Charizard in order to use this attack."
+          ability2: "Fire Spin: Discard 2 Energy cards attached to Charizard in order to use this attack.",
+          imagelink: "https://images.pokemontcg.io/base1/4.png",
+          inventorycount: 35,
+          isactive: true,
         },
-
         {
           name: 'Blastoise',
           price: 50000,
           condition: 'Mint',
+          rarity: "Holo",
           ability1: "Rain Dance: As often as you like during your turn (before your attack), you may attach 1 Water Energy card to 1 of your Water Pokémon. (This doesn't use up your 1 Energy card attachment for the turn.) This power can't be used if Blastoise is Asleep, Confused, or Paralyzed.",
-          ability2: "Hydro Pump: Does 40 damage plus 10 more damage for each Water Energy attached to Blastoise but not used to pay for this attack's Energy cost. Extra Water Energy after the 2nd doesn't count."
+          ability2: "Hydro Pump: Does 40 damage plus 10 more damage for each Water Energy attached to Blastoise but not used to pay for this attack's Energy cost. Extra Water Energy after the 2nd doesn't count.",
+          imagelink: "https://images.pokemontcg.io/base4/2.png",
+          inventorycount: 50,
+          isactive: true,
         },
-
         {
           name:'Venusaur',
           price: 5000,
           condition: 'Poor',
+          rarity: 'Holo',
           ability1: "Energy Trans: As often as you like during your turn (before your attack), you may take 1 Grass Energy card attached to 1 of your Pokémon and attach it to a different one. This power can't be used if Venusaur is Asleep, Confused, or Paralyzed.",
-          ability2: "Solarbeam"
-        }
+          ability2: "Solarbeam",
+          imagelink: "https://images.pokemontcg.io/base6/18.png",
+          inventorycount: 10,
+          isactive: true,
+        },
+    ];
 
-    ]
+      console.log("CARDS TO CREATE", cardsToCreate);
+      const cards = await Promise.all(cardsToCreate.map(createCard));
+      console.log("CARDS", cards);
+      console.log("FINISHED CREATING CARDS");
+
     } catch (err) {
       console.log('ERROR CREATING CARDS');
       throw err;
@@ -138,6 +156,7 @@ const rebuildDB = async () => {
     await dropTables();
     await createTables();
     await createInitialUsers();
+    await createInitialCards();
   } catch (err) {
     console.log("ERROR DURING REBUILDDB");
     throw err;
