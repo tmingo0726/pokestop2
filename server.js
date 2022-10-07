@@ -23,9 +23,9 @@ app.use(
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
 app.use((req, res, next) => {
-  console.log(chalk.whiteBright.underline("<___Body Logger Start___>"));
+  console.log(chalk.whiteBright("<___Body Logger Start___>"));
   console.log(chalk.greenBright.bgWhiteBright(req.body));
-  console.log(chalk.whiteBright.overline("<___Body Logger End___>"));
+  console.log(chalk.whiteBright("<___Body Logger End___>"));
 
   next();
 });
