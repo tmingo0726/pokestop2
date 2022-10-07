@@ -1,7 +1,6 @@
 const express = require("express");
 const adminRouter = express.Router();
 const {
-  adminCheckById,
   adminCreateProduct,
   adminGetProductIdByName,
   adminUpdateProductById,
@@ -68,20 +67,19 @@ adminRouter.patch("/editproduct", requireAdmin, async (req, res, next) => {
       message: `${productName} doesn't exist in our inventory yet.`,
     });
   }
-  adminInputs.id = id
+  adminInputs.id = id;
 
   try {
     const updatedProduct = await adminUpdateProductById(adminInputs);
 
     if (updatedProduct) {
-    res.send({
-    updatedProduct,
-    message: `Successfully updated fields: ${adminInputs}`,
-    });
+      res.send({
+        updatedProduct,
+        message: `Successfully updated fields: ${adminInputs}`,
+      });
     }
-    
-  } catch ({error, message}) {
-    next({error, message})
+  } catch ({ error, message }) {
+    next({ error, message });
   }
 });
 
@@ -89,20 +87,20 @@ adminRouter.patch("/setactiveproduct", requireAdmin, async (req, res, next) => {
   const { name: productName, isactive } = req.body;
   const { id } = await adminGetProductIdByName(productName);
   try {
-      if (!id) {
-        next({
-          error: "Product doesn't exist",
-          message: `${productName} doesn't exist in our inventory yet.`,
-        });
-      } else {
-        await adminSetActiveProductById(id, isactive);
-        
-        res.send({
-            success: `Successfully changed active status for ${productName}`,
-        });
+    if (!id) {
+      next({
+        error: "Product doesn't exist",
+        message: `${productName} doesn't exist in our inventory yet.`,
+      });
+    } else {
+      await adminSetActiveProductById(id, isactive);
+
+      res.send({
+        success: `Successfully changed active status for ${productName}`,
+      });
     }
-  } catch ({error, message}) {
-    next({error, message})
+  } catch ({ error, message }) {
+    next({ error, message });
   }
 });
 
@@ -110,19 +108,19 @@ adminRouter.get("/customerinfo", requireAdmin, async (req, res, next) => {
   const { username } = req.body;
   try {
     const viewCustomer = await adminGetCustomerByUsername(username);
-    console.log("CUST", viewCustomer)
+    console.log("CUST", viewCustomer);
     if (!viewCustomer) {
-        next({
-            error: "Customer doesn't exist",
-            message: `${username} is not a registerd customer.`,
-        });
+      next({
+        error: "Customer doesn't exist",
+        message: `${username} is not a registerd customer.`,
+      });
     } else {
-        res.send({
-            success: `${viewCustomer}`,
-        });
+      res.send({
+        success: `${viewCustomer}`,
+      });
     }
-  } catch ({error, message}) {
-    next({error, message})
+  } catch ({ error, message }) {
+    next({ error, message });
   }
 });
 module.exports = adminRouter;
