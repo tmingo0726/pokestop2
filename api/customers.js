@@ -125,8 +125,7 @@ customersRouter.patch(
       email,
       address,
     } = req.body);
-
-    console.log("INPUTS", customerInputs);
+    customerInputs.id = id;
 
     if (password && password !== confirmPassword) {
       next({
@@ -158,39 +157,16 @@ customersRouter.patch(
             message: `${email} is already taken.`,
           });
         } else {
-          const updatedFields = {
-            id,
-          };
-
-          if (password) {
-            updatedFields.password = password;
+          if (customerInputs.confirmPassword) {
+            delete customerInputs.confirmPassword;
           }
 
-          if (firstname) {
-            updatedFields.firstname = firstname;
-          }
-
-          if (lastname) {
-            updatedFields.lastname = lastname;
-          }
-
-          if (email) {
-            updatedFields.email = email;
-          }
-
-          if (address) {
-            updatedFields.address = address;
-          }
-
-          console.log("UPDATED FIELDS", updatedFields);
-
-          const updateTest = await updateCustomer(updatedFields);
-          console.log("UPDATE INFO", updateTest);
+          await updateCustomer(customerInputs);
           const customer = await getCustomer({ username, password });
 
           res.send({
             customer,
-            message: `Successfully updated fields: ${updatedFields}`,
+            success: `Successfully updated fields: ${customerInputs}`,
           });
         }
       } catch ({ error, message }) {

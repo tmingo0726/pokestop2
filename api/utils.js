@@ -12,7 +12,7 @@ const requireUser = (req, res, next) => {
   next();
 };
 
-const requireAdmin = (req, res, next) => {
+const requireAdmin = async (req, res, next) => {
   if (!req.user) {
     res.status(401).send({
       error: "401",
@@ -22,7 +22,7 @@ const requireAdmin = (req, res, next) => {
   }
 
   try {
-    const admin = adminCheckById(req.user.id);
+    const admin = await adminCheckById(req.user.id);
     if (!admin) {
       res.send({
         error: "Not Admin",
