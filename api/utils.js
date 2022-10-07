@@ -14,7 +14,9 @@ const requireUser = (req, res, next) => {
 
 const requireAdmin = async (req, res, next) => {
   if (!req.user) {
-    res.status(401).send({
+    res.status(401)
+
+    next({
       error: "401",
       name: "UnauthorizedError",
       message: "Please login to perform this action.",
@@ -24,7 +26,9 @@ const requireAdmin = async (req, res, next) => {
   try {
     const admin = await adminCheckById(req.user.id);
     if (!admin) {
-      res.send({
+    res.status(401)
+
+      next({
         error: "Not Admin",
         name: "Not Admin",
         message: "You aren't the admin",

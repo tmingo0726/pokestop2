@@ -60,57 +60,29 @@ adminRouter.patch("/editproduct", requireAdmin, async (req, res, next) => {
     isactive,
   } = req.body);
 
-  const { id } = adminGetProductIdByName(productName);
+  const { id } = await adminGetProductIdByName(productName);
+
   if (!id) {
-    res.send({
+    next({
       error: "Product doesn't exist",
       message: `${productName} doesn't exist in our inventory yet.`,
     });
   }
-  const updatedFields = { id };
-  if (productName) {
-    updatedFields.productName = productName;
-  }
+  adminInputs.id = id
 
-  if (price) {
-    updatedFields.price = price;
-  }
+  try {
+    const updatedProduct = await adminUpdateProductById(adminInputs);
 
-  if (condition) {
-    updatedFields.condition = condition;
-  }
-
-  if (rarity) {
-    updatedFields.rarity = rarity;
-  }
-
-  if (ability1) {
-    updatedFields.ability1 = ability1;
-  }
-
-  if (ability2) {
-    updatedFields.ability2 = ability2;
-  }
-
-  if (imagelink) {
-    updatedFields.imagelink = imagelink;
-  }
-
-  if (inventorycount) {
-    updatedFields.inventorycount = inventorycount;
-  }
-
-  if (isactive) {
-    updatedFields.isactive = isactive;
-  }
-  console.log("UPDATED FIELDS", updatedFields);
-  const updatedProduct = await adminUpdateProductById({ id, updatedFields });
-  console.log("UPDATED PRODUCT", updatedProduct);
-
-  res.send({
+    if (updatedProduct) {
+    res.send({
     updatedProduct,
-    message: `Successfully updated fields: ${updatedFields}`,
-  });
+    message: `Successfully updated fields: ${adminInputs}`,
+    });
+    }
+    
+  } catch ({error, message}) {
+    next({error, message})
+  }
 });
 
 adminRouter.patch("/setactiveproduct", requireAdmin, async (req, res, next) => {
