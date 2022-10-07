@@ -80,14 +80,16 @@ const adminGetProductIdByName = async (name) => {
 };
 
 const adminUpdateProductById = async ({ id, ...fields }) => {
+  console.log("ID AND FIELDS", id, fields);
   const columns = Object.keys(fields)
     .map((key, idx) => `"${key}"=$${idx + 1}`)
     .join(", ");
+  console.log("COLUMNS", columns);
 
   if (columns.length === 0) {
     return;
   }
-
+  console.log("Object.values(fields)", Object.values(fields));
   try {
     const {
       rows: [product],
@@ -100,6 +102,7 @@ const adminUpdateProductById = async ({ id, ...fields }) => {
           `,
       Object.values(fields)
     );
+    console.log("PRODUCT", product);
 
     return product;
   } catch (error) {
@@ -108,7 +111,7 @@ const adminUpdateProductById = async ({ id, ...fields }) => {
   }
 };
 
-const adminSetActiveProductById = async ({ id, bool }) => {
+const adminSetActiveProductById = async (id, bool) => {
   try {
     const {
       rows: [product],
@@ -150,4 +153,5 @@ module.exports = {
   adminGetProductIdByName,
   adminUpdateProductById,
   adminSetActiveProductById,
+  adminGetCustomerByUsername,
 };

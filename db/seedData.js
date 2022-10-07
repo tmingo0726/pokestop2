@@ -1,4 +1,12 @@
-const { createCustomer, adminCreateProduct } = require("./");
+const {
+  createCustomer,
+  adminCheckById,
+  adminCreateProduct,
+  adminGetProductIdByName,
+  adminUpdateProductById,
+  adminSetActiveProductById,
+  adminGetCustomerByUsername,
+} = require("./");
 const client = require("./client");
 
 const dropTables = async () => {
@@ -62,6 +70,7 @@ const createInitialUsers = async () => {
         lastname: "Bert",
         email: "Al.Bert@gmail.com",
         address: "123 Sesame St",
+        isadmin: true,
       },
       {
         username: "sandra",
@@ -147,6 +156,83 @@ const createInitialProducts = async () => {
     throw err;
   }
 };
+
+// const testAdminCheckById = async (id) => {
+//   try {
+//     const testing = await adminCheckById(id);
+//     console.log("TESTING", testing);
+//     return testing;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
+// const testAdminCreateProduct = async (
+//   name,
+//   price,
+//   condition,
+//   rarity,
+//   ability1,
+//   ability2,
+//   imagelink,
+//   inventorycount,
+//   isactive
+// ) => {
+//   try {
+//     const testing = await adminCreateProduct(
+//       name,
+//       price,
+//       condition,
+//       rarity,
+//       ability1,
+//       ability2,
+//       imagelink,
+//       inventorycount,
+//       isactive
+//     );
+//     console.log("TESTING", testing);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
+// const testAdminGetProductIdByName = async (name) => {
+//   try {
+//     const testing = await adminGetProductIdByName(name);
+//     console.log("TESTING", testing);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
+// const fields = { id: 4, name: "Mew", isactive: false };
+
+// const testAdminUpdateProductById = async (fields) => {
+//   try {
+//     const testing = await adminUpdateProductById(fields);
+//     console.log("TESTING", testing);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
+// const testAdminSetActiveProductById = async (id, bool) => {
+//   try {
+//     const testing = await adminSetActiveProductById(id, bool);
+//     console.log("TESTING", testing);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
+// const testAdminGetCustomerByUsername = async (username) => {
+//   try {
+//     const testing = await adminGetCustomerByUsername(username);
+//     console.log("TESTING", testing);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 const rebuildDB = async () => {
   try {
