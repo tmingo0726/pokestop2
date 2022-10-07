@@ -1,5 +1,6 @@
 const express = require("express");
 const apiRouter = express.Router();
+const chalk = require('chalk');
 
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
@@ -30,9 +31,9 @@ apiRouter.use(async (req, res, next) => {
 
 apiRouter.use((req, res, next) => {
   if (req.user) {
-    console.log("User is set: ", req.user);
+    console.log(chalk.green("User is set: ", req.user));
   } else {
-    console.log("No user set.");
+    console.log(chalk.red("No user set."));
   }
   next();
 });
