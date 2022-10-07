@@ -90,7 +90,7 @@ const getCustomerById = async (customerId) => {
     const {
       rows: [customer],
     } = await client.query(`
-            SELECT id, username
+            SELECT id, username, isadmin
             FROM customers
             WHERE id = ${customerId};
         `);
@@ -142,31 +142,11 @@ const getCustomerByEmail = async (email) => {
   }
 };
 
-const isAdmin = async ({ username, password }) => {
-  try {
-    const user = await getCustomerByUsername(username);
-    const hashedPassword = user.password;
-    const passwordsMatch = await bcrypt.compare(password, hashedPassword);
-
-    if (passwordsMatch && user.isadmin) {
-      const admin = {
-        id: user.id,
-        username: user.username,
-      };
-      return admin;
-    }
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
-
 module.exports = {
   createCustomer,
   updateCustomer,
   getCustomer,
   getCustomerById,
   getCustomerByUsername,
-  getCustomerByEmail,
-  isAdmin,
+  getCustomerByEmail
 };
