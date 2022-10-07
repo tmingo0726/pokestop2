@@ -3,7 +3,7 @@ const client = require("./db/client");
 const cors = require("cors");
 const path = require("path");
 const http = require("http");
-const chalk = import("chalk");
+const chalk = require('chalk');
 
 const favicon = require("serve-favicon");
 
@@ -23,9 +23,9 @@ app.use(
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
 app.use((req, res, next) => {
-  console.log("<___Body Logger Start___>");
-  console.log(req.body);
-  console.log("<___Body Logger End___>");
+  console.log(chalk.whiteBright.underline("<___Body Logger Start___>"));
+  console.log(chalk.greenBright.bgWhiteBright(req.body));
+  console.log(chalk.whiteBright.overline("<___Body Logger End___>"));
 
   next();
 });
@@ -55,9 +55,9 @@ const server = http.createServer(app);
 
 server.listen(PORT, () => {
   console.log("Server is listening on PORT:", PORT);
-  // console.log(
-  //   chalk.blueBright("Server is listening on PORT:"),
-  //   chalk.yellow(PORT),
-  //   chalk.blueBright("Pokemon are cool!")
-  // );
+  console.log(
+    chalk.blueBright("Server is listening on"),
+    chalk.bold.yellowBright('PORT :', PORT),
+    chalk.blueBright("Pokemon are cool!")
+  );
 });
