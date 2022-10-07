@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
+import './Register.css'
 // import { BASE_URL} from
 
 const path = process.env.REACT_APP_BASE_URL;
@@ -81,9 +82,10 @@ const Register = () => {
           <Navigate to="/login" />
         ) : (
           <>
-            <h2>New Customer Registration Form</h2>
+            <h2 id="register-header">New Customer Registration Form</h2>
             <div>
               <input
+                type="text"
                 value={newUsername}
                 placeholder="Please enter a username"
                 required
@@ -119,6 +121,7 @@ const Register = () => {
             </div>
             <div>
               <input
+                type="text"
                 value={firstname}
                 placeholder="Please enter your first name"
                 required
@@ -129,6 +132,7 @@ const Register = () => {
             </div>
             <div>
               <input
+                type="text"
                 value={lastname}
                 placeholder="Please enter your last name"
                 required
@@ -139,6 +143,7 @@ const Register = () => {
             </div>
             <div>
               <input
+                type="text"
                 value={address}
                 placeholder="Please enter shipping address"
                 required
@@ -149,6 +154,7 @@ const Register = () => {
             </div>
             <div>
               <input
+                type="text"
                 value={email}
                 placeholder="Please enter your email"
                 required
