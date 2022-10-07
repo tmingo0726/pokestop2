@@ -15,7 +15,7 @@ const createCard = async ({
             `
                 INSERT INTO cards (name, price, condition, rarity, ability1, ability2)
                 VALUES ($1, $2, $3, $4, $5, $6)
-                ON CONFLICT 
+                ON CONFLICT
             `,
             [ name, price, condition, rarity, ability1, ability2 ]
         );

@@ -47,7 +47,6 @@ customersRouter.post("/login", async (req, res, next) => {
 
 // REGISTER
 customersRouter.post("/register", async (req, res, next) => {
-  console.log("REQBODY", req.body);
   const {
     username,
     password,
