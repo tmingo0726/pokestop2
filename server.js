@@ -41,6 +41,7 @@ app.use((error, req, res, next) => {
   });
 });
 
+
 app.get('*', async (req, res) => {
   res.status(404).send({
       error: 'Page not found',
