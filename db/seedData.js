@@ -1,4 +1,12 @@
-const { createCustomer, createProduct } = require("./");
+const {
+  createCustomer,
+  adminCheckById,
+  adminCreateProduct,
+  adminGetProductIdByName,
+  adminUpdateProductById,
+  adminSetActiveProductById,
+  adminGetCustomerByUsername,
+} = require("./");
 const client = require("./client");
 
 const dropTables = async () => {
@@ -62,6 +70,7 @@ const createInitialUsers = async () => {
         lastname: "Bert",
         email: "Al.Bert@gmail.com",
         address: "123 Sesame St",
+        isadmin: true,
       },
       {
         username: "sandra",
@@ -92,56 +101,138 @@ const createInitialUsers = async () => {
   }
 };
 
-
-const createInitialProducts = async() => {
-  console.log('STARTING TO CREATE PRODUCTS');
-    try {
-      const productsToCreate = [
-        { 
-          name: 'Charizard',
-          price: 30000,
-          condition:'Good',
-          rarity: "Holo",
-          ability1: "Energy Burn: As often as you like during your turn (before your attack), you may turn all Energy attached to Charizard into Fire Energy for the rest of the turn. This power can't be used if Charizard is Asleep, Confused, or Paralyzed.",
-          ability2: "Fire Spin: Discard 2 Energy cards attached to Charizard in order to use this attack.",
-          imagelink: "https://images.pokemontcg.io/base1/4.png",
-          inventorycount: 35,
-          isactive: true,
-        },
-        {
-          name: 'Blastoise',
-          price: 50000,
-          condition: 'Mint',
-          rarity: "Holo",
-          ability1: "Rain Dance: As often as you like during your turn (before your attack), you may attach 1 Water Energy card to 1 of your Water Pokémon. (This doesn't use up your 1 Energy card attachment for the turn.) This power can't be used if Blastoise is Asleep, Confused, or Paralyzed.",
-          ability2: "Hydro Pump: Does 40 damage plus 10 more damage for each Water Energy attached to Blastoise but not used to pay for this attack's Energy cost. Extra Water Energy after the 2nd doesn't count.",
-          imagelink: "https://images.pokemontcg.io/base4/2.png",
-          inventorycount: 50,
-          isactive: true,
-        },
-        {
-          name:'Venusaur',
-          price: 5000,
-          condition: 'Poor',
-          rarity: 'Holo',
-          ability1: "Energy Trans: As often as you like during your turn (before your attack), you may take 1 Grass Energy card attached to 1 of your Pokémon and attach it to a different one. This power can't be used if Venusaur is Asleep, Confused, or Paralyzed.",
-          ability2: "Solarbeam",
-          imagelink: "https://images.pokemontcg.io/base6/18.png",
-          inventorycount: 10,
-          isactive: true,
-        },
+const createInitialProducts = async () => {
+  console.log("STARTING TO CREATE PRODUCTS");
+  try {
+    const productsToCreate = [
+      {
+        name: "Charizard",
+        price: 30000,
+        condition: "Good",
+        rarity: "Holo",
+        ability1:
+          "Energy Burn: As often as you like during your turn (before your attack), you may turn all Energy attached to Charizard into Fire Energy for the rest of the turn. This power can't be used if Charizard is Asleep, Confused, or Paralyzed.",
+        ability2:
+          "Fire Spin: Discard 2 Energy cards attached to Charizard in order to use this attack.",
+        imagelink: "https://images.pokemontcg.io/base1/4.png",
+        inventorycount: 35,
+        isactive: true,
+      },
+      {
+        name: "Blastoise",
+        price: 50000,
+        condition: "Mint",
+        rarity: "Holo",
+        ability1:
+          "Rain Dance: As often as you like during your turn (before your attack), you may attach 1 Water Energy card to 1 of your Water Pokémon. (This doesn't use up your 1 Energy card attachment for the turn.) This power can't be used if Blastoise is Asleep, Confused, or Paralyzed.",
+        ability2:
+          "Hydro Pump: Does 40 damage plus 10 more damage for each Water Energy attached to Blastoise but not used to pay for this attack's Energy cost. Extra Water Energy after the 2nd doesn't count.",
+        imagelink: "https://images.pokemontcg.io/base4/2.png",
+        inventorycount: 50,
+        isactive: true,
+      },
+      {
+        name: "Venusaur",
+        price: 5000,
+        condition: "Poor",
+        rarity: "Holo",
+        ability1:
+          "Energy Trans: As often as you like during your turn (before your attack), you may take 1 Grass Energy card attached to 1 of your Pokémon and attach it to a different one. This power can't be used if Venusaur is Asleep, Confused, or Paralyzed.",
+        ability2: "Solarbeam",
+        imagelink: "https://images.pokemontcg.io/base6/18.png",
+        inventorycount: 10,
+        isactive: true,
+      },
     ];
 
-      console.log("PRODUCTS TO CREATE", productsToCreate);
-      const products = await Promise.all(productsToCreate.map(createProduct));
-      console.log("PRODUCTS", products);
-      console.log("FINISHED CREATING PRODUCTS");
+    console.log("PRODUCTS TO CREATE", productsToCreate);
+    const products = await Promise.all(
+      productsToCreate.map(adminCreateProduct)
+    );
+    console.log("PRODUCTS", products);
+    console.log("FINISHED CREATING PRODUCTS");
+  } catch (err) {
+    console.log("ERROR CREATING PRODUCTS");
+    throw err;
+  }
+};
 
-    } catch (err) {
-      console.log('ERROR CREATING PRODUCTS');
-      throw err;
-    }
-}
+// const testAdminCheckById = async (id) => {
+//   try {
+//     const testing = await adminCheckById(id);
+//     console.log("TESTING", testing);
+//     return testing;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
+// const testAdminCreateProduct = async (
+//   name,
+//   price,
+//   condition,
+//   rarity,
+//   ability1,
+//   ability2,
+//   imagelink,
+//   inventorycount,
+//   isactive
+// ) => {
+//   try {
+//     const testing = await adminCreateProduct(
+//       name,
+//       price,
+//       condition,
+//       rarity,
+//       ability1,
+//       ability2,
+//       imagelink,
+//       inventorycount,
+//       isactive
+//     );
+//     console.log("TESTING", testing);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
+// const testAdminGetProductIdByName = async (name) => {
+//   try {
+//     const testing = await adminGetProductIdByName(name);
+//     console.log("TESTING", testing);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
+// const fields = { id: 4, name: "Mew", isactive: false };
+
+// const testAdminUpdateProductById = async (fields) => {
+//   try {
+//     const testing = await adminUpdateProductById(fields);
+//     console.log("TESTING", testing);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
+// const testAdminSetActiveProductById = async (id, bool) => {
+//   try {
+//     const testing = await adminSetActiveProductById(id, bool);
+//     console.log("TESTING", testing);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
+// const testAdminGetCustomerByUsername = async (username) => {
+//   try {
+//     const testing = await adminGetCustomerByUsername(username);
+//     console.log("TESTING", testing);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 const rebuildDB = async () => {
   try {

@@ -90,7 +90,7 @@ const getCustomerById = async (customerId) => {
     const {
       rows: [customer],
     } = await client.query(`
-            SELECT id, username, isadmin
+            SELECT id, username
             FROM customers
             WHERE id = ${customerId};
         `);
@@ -110,9 +110,8 @@ const getCustomerByUsername = async (username) => {
       `
             SELECT *
             FROM customers
-            WHERE username = $1;
-        `,
-      [username]
+            WHERE username = '${username}';
+        `
     );
 
     return customer;
@@ -148,5 +147,5 @@ module.exports = {
   getCustomer,
   getCustomerById,
   getCustomerByUsername,
-  getCustomerByEmail
+  getCustomerByEmail,
 };
