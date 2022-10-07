@@ -87,30 +87,42 @@ adminRouter.patch("/editproduct", requireAdmin, async (req, res, next) => {
 
 adminRouter.patch("/setactiveproduct", requireAdmin, async (req, res, next) => {
   const { name: productName, isactive } = req.body;
-  const { id } = adminGetProductIdByName(productName);
-  if (!id) {
-    res.send({
-      error: "Product doesn't exist",
-      message: `${productName} doesn't exist in our inventory yet.`,
-    });
+  const { id } = await adminGetProductIdByName(productName);
+  try {
+      if (!id) {
+        next({
+          error: "Product doesn't exist",
+          message: `${productName} doesn't exist in our inventory yet.`,
+        });
+      } else {
+        await adminSetActiveProductById(id, isactive);
+        
+        res.send({
+            success: `Successfully changed active status for ${productName}`,
+        });
+    }
+  } catch ({error, message}) {
+    next({error, message})
   }
-  await adminSetActiveProductById(id);
-  res.send({
-    success: `Successfully changed active status for ${productName}`,
-  });
 });
 
 adminRouter.get("/customerinfo", requireAdmin, async (req, res, next) => {
   const { username } = req.body;
-  const viewCustomer = await adminGetCustomerByUsername(username);
-  if (!viewCustomer) {
-    res.send({
-      error: "Customer doesn't exist",
-      message: `${username} is not a registerd customer.`,
-    });
+  try {
+    const viewCustomer = await adminGetCustomerByUsername(username);
+    console.log("CUST", viewCustomer)
+    if (!viewCustomer) {
+        next({
+            error: "Customer doesn't exist",
+            message: `${username} is not a registerd customer.`,
+        });
+    } else {
+        res.send({
+            success: `${viewCustomer}`,
+        });
+    }
+  } catch ({error, message}) {
+    next({error, message})
   }
-  res.send({
-    success: `${viewCustomer}`,
-  });
 });
 module.exports = adminRouter;
