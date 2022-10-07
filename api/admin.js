@@ -12,6 +12,7 @@ const { requireAdmin } = require("./utils");
 
 adminRouter.post("/products", requireAdmin, async (req, res, next) => {
   const fieldName = ({
+    name: productName,
     price,
     condition,
     rarity,
@@ -21,16 +22,16 @@ adminRouter.post("/products", requireAdmin, async (req, res, next) => {
     inventorycount,
     isactive,
   } = req.body);
-  const { name } = req.body;
+
   try {
-    const _product = await adminGetProductIdByName(name);
+    const _product = await adminGetProductIdByName(productName);
     if (_product) {
       next({
         error: "Product Exists",
-        message: `${name} already exists. Try making it active.`,
+        message: `${productName} already exists. Try making it active.`,
       });
     }
-    const product = await adminCreateProduct({ name, fieldName });
+    const product = await adminCreateProduct(fieldName);
     if (!product) {
       next({
         error: "Error Creating Product",
@@ -45,5 +46,11 @@ adminRouter.post("/products", requireAdmin, async (req, res, next) => {
     next({ error, message });
   }
 });
+
+adminRouter.patch(
+  "/:productname/edit",
+  requireAdmin,
+  async (req, res, next) => {}
+);
 
 module.exports = adminRouter;

@@ -167,34 +167,34 @@ const createInitialProducts = async () => {
 //   }
 // };
 
-const testAdminCreateProduct = async (
-  name,
-  price,
-  condition,
-  rarity,
-  ability1,
-  ability2,
-  imagelink,
-  inventorycount,
-  isactive
-) => {
-  try {
-    const testing = await adminCreateProduct(
-      name,
-      price,
-      condition,
-      rarity,
-      ability1,
-      ability2,
-      imagelink,
-      inventorycount,
-      isactive
-    );
-    console.log("TESTING", testing);
-  } catch (error) {
-    throw error;
-  }
-};
+// const testAdminCreateProduct = async (
+//   name,
+//   price,
+//   condition,
+//   rarity,
+//   ability1,
+//   ability2,
+//   imagelink,
+//   inventorycount,
+//   isactive
+// ) => {
+//   try {
+//     const testing = await adminCreateProduct(
+//       name,
+//       price,
+//       condition,
+//       rarity,
+//       ability1,
+//       ability2,
+//       imagelink,
+//       inventorycount,
+//       isactive
+//     );
+//     console.log("TESTING", testing);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 // const testAdminGetProductIdByName = async (name) => {
 //   try {
@@ -240,17 +240,17 @@ const rebuildDB = async () => {
     await createTables();
     await createInitialUsers();
     await createInitialProducts();
-    await testAdminCreateProduct({
-      name: "Mewtwo",
-      price: "1,000,000",
-      condition: "mint",
-      rarity: "holo",
-      ability1: "psychic",
-      ability2: "psychic2",
-      imagelink: "https://images.pokemontcg.io/base1/10_hires.png",
-      inventorycount: 1,
-      isactive: true,
-    });
+    // await testAdminCreateProduct({
+    //   name: "Mewtwo",
+    //   price: "1,000,000",
+    //   condition: "mint",
+    //   rarity: "holo",
+    //   ability1: "psychic",
+    //   ability2: "psychic2",
+    //   imagelink: "https://images.pokemontcg.io/base1/10_hires.png",
+    //   inventorycount: 1,
+    //   isactive: true,
+    // });
   } catch (err) {
     console.log("ERROR DURING REBUILDDB");
     throw err;

@@ -23,9 +23,14 @@ const requireAdmin = (req, res, next) => {
 
   try {
     const admin = adminCheckById(req.user.id);
-    if (admin) {
-      next();
+    if (!admin) {
+      res.send({
+        error: "Not Admin",
+        name: "Not Admin",
+        message: "You aren't the admin",
+      });
     }
+    next();
   } catch ({ error, message }) {
     next({ error, message });
   }
