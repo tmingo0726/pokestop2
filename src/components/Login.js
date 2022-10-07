@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
+import './Login.css';
 
 // require("dotenv").config();
 // const path = process.env.REACT_APP_BASE_URL;
@@ -61,6 +62,7 @@ const Login = ({
             <h2>Login</h2>
             <div>
               <input
+                type="text"
                 value={username}
                 placeholder="Please enter username"
                 required
@@ -86,7 +88,7 @@ const Login = ({
               <h2>{error ? `${errorMessage}` : null}</h2>
             </div>
             <div>
-              <button type="submit">Login</button>
+              <button id="submit" type="submit">Login</button>
             </div>
           </>
         )}
