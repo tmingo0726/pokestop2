@@ -35,10 +35,10 @@ const Products = (props) => {
         }
     }
     
-    const seeDetails = (id) => {
+    const seeDetails = (product) => {
 
-        //setChosenCard(id);
-        console.log("Clicked on Card id", id);
+        setChosenCard(product);
+        console.log("Clicked on Card id", product);
         navigate("/products/details");
 
     }
@@ -52,7 +52,7 @@ const Products = (props) => {
                 return (
                     
                     <div className="grid-container" key={i}>
-                        <div className="caption"><img className="grid-item" src={product.imagelink} onClick={() => seeDetails(product.id)} alt="Pokemon"/>
+                        <div className="caption"><img className="grid-item" src={product.imagelink} onClick={() => seeDetails(product)} alt="Pokemon"/>
 
                         <p>Price: ${product.price}</p>
                         <p>Cards in Stock: {product.inventorycount}</p></div>

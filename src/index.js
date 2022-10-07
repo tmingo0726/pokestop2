@@ -29,7 +29,7 @@ const App = () => {
         <Route path="/register" element={<Register />}></Route>
         <Route path="/products" element={<Products allProducts={allProducts} setAllProducts={setAllProducts} chosenCard={chosenCard} setChosenCard={setChosenCard} />}></Route>
         <Route path="/products/details" element={<Details chosenCard={chosenCard} />}></Route>
-        <Route exact path ="/" element={<Products allProducts={allProducts} setAllProducts={setAllProducts}/>}></Route>
+        <Route exact path ="/" element={<Products allProducts={allProducts} setAllProducts={setAllProducts} chosenCard={chosenCard} setChosenCard={setChosenCard} />}></Route>
         <Route
           path="/login"
           element={

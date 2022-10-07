@@ -3,12 +3,17 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 const Details = (props) => {
 
-    const chosenCard = props.chosenCard;
+    const product = props.chosenCard;
 
-    console.log("Inside Product Details card picked is", chosenCard);
+    console.log("Inside Product Details card picked is", product);
 
     return(
-        <h1>TBD to display clicked on card</h1>
+        <div className="grid-container">
+            <div className="caption"><img className="grid-item" src={product.imagelink} onClick={() => seeDetails(product)} alt="Pokemon"/>
+
+                <p>Price: ${product.price}</p>
+                <p>Cards in Stock: {product.inventorycount}</p></div>
+            </div>
     )
 
 }
