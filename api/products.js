@@ -5,7 +5,7 @@ const {
   getAllProducts,
 } = require("../db");
 
-//Get all the cards/products
+//Get all the products
 productsRouter.get('/', async (req, res, next) => {
      
     console.log("Inside GET for all products");

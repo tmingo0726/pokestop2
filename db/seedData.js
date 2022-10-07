@@ -1,11 +1,11 @@
-const { createCustomer, createCard } = require("./");
+const { createCustomer, createProduct } = require("./");
 const client = require("./client");
 
 const dropTables = async () => {
   console.log("DROPPING TABLES");
   try {
     await client.query(`
-      DROP TABLE IF EXISTS cards;      
+      DROP TABLE IF EXISTS products;      
       DROP TABLE IF EXISTS customers;
         `);
   } catch (err) {
@@ -31,7 +31,7 @@ const createTables = async () => {
             
             CREATE UNIQUE INDEX uname_email on customers (username, email);
 
-            CREATE TABLE cards (
+            CREATE TABLE products (
               id SERIAL PRIMARY KEY,
               name VARCHAR(50) UNIQUE NOT NULL,
               price INTEGER NOT NULL,
@@ -93,10 +93,10 @@ const createInitialUsers = async () => {
 };
 
 
-const createInitialCards = async() => {
-  console.log('STARTING TO CREATE CARDS');
+const createInitialProducts = async() => {
+  console.log('STARTING TO CREATE PRODUCTS');
     try {
-      const cardsToCreate = [
+      const productsToCreate = [
         { 
           name: 'Charizard',
           price: 30000,
@@ -132,31 +132,23 @@ const createInitialCards = async() => {
         },
     ];
 
-      console.log("CARDS TO CREATE", cardsToCreate);
-      const cards = await Promise.all(cardsToCreate.map(createCard));
-      console.log("CARDS", cards);
-      console.log("FINISHED CREATING CARDS");
+      console.log("PRODUCTS TO CREATE", productsToCreate);
+      const products = await Promise.all(productsToCreate.map(createProduct));
+      console.log("PRODUCTS", products);
+      console.log("FINISHED CREATING PRODUCTS");
 
     } catch (err) {
-      console.log('ERROR CREATING CARDS');
+      console.log('ERROR CREATING PRODUCTS');
       throw err;
     }
 }
-
-// const testDB = async() => {
-//     try {
-//         console.log('STARTING TO TEST DATABASE')
-
-//         console.log('')
-//     }
-// }
 
 const rebuildDB = async () => {
   try {
     await dropTables();
     await createTables();
     await createInitialUsers();
-    await createInitialCards();
+    await createInitialProducts();
   } catch (err) {
     console.log("ERROR DURING REBUILDDB");
     throw err;
