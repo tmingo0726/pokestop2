@@ -101,7 +101,7 @@ customersRouter.post("/register", async (req, res, next) => {
 
       res.send({
         customer: customerData,
-        message: "Thanks for signing up!",
+        success: "Thanks for signing up!",
         token,
       });
     }
@@ -117,16 +117,15 @@ customersRouter.patch(
   async (req, res, next) => {
     const { id, username: _username } = req.user;
     const { username } = req.params;
-    const customerInputs = {
+    const customerInputs = ({
       password,
       confirmPassword,
       firstname,
       lastname,
       email,
-      address
-      } = req.body;
-
-      console.log("INPUTS", customerInputs)
+      address,
+    } = req.body);
+    customerInputs.id = id;
 
     if (password && password !== confirmPassword) {
       next({
@@ -138,7 +137,7 @@ customersRouter.patch(
         error: "Password Too Short",
         message: "Minimum password length is 8 characters",
       });
-    } else if(!Object.keys(customerInputs).length) {
+    } else if (!Object.keys(customerInputs).length) {
       next({
         error: "No Fields Submitted",
         message: "You must update at least one field before submission",
@@ -158,46 +157,24 @@ customersRouter.patch(
             message: `${email} is already taken.`,
           });
         } else {
-          const updatedFields = {
-            id
+          if (customerInputs.confirmPassword) {
+            delete customerInputs.confirmPassword;
           }
 
-          if (password) {
-            updatedFields.password = password
-          }
-
-          if (firstname) {
-            updatedFields.firstname = firstname
-          }
-
-          if (lastname) {
-            updatedFields.lastname = lastname
-          }
-
-          if (email) {
-            updatedFields.email = email
-          }
-
-          if (address) {
-            updatedFields.address = address
-          }
-
-          console.log("UPDATED FIELDS", updatedFields);
-
-          const updateTest = await updateCustomer(updatedFields);
-          console.log("UPDATE INFO", updateTest)
+          await updateCustomer(customerInputs);
           const customer = await getCustomer({ username, password });
-          
+
           res.send({
             customer,
-            message: `Successfully updated fields: ${updatedFields}`
+            success: `Successfully updated fields: ${customerInputs}`,
           });
         }
       } catch ({ error, message }) {
-        next({ error, message })
+        next({ error, message });
       }
     }
-  });
+  }
+);
 
 // GET /api/users/me PLACEHOLDER
 
