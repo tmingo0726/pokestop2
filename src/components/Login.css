@@ -1,10 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-*{
-    margin: 0;
-    padding: 0;
-}
-
 #login{
     font-family: 'VT323', monospace;
     display: flex;
@@ -20,7 +15,7 @@
     font-size: 64px;
 }
 
-* {box-sizing: border-box}
+/* * {box-sizing: border-box} <-- Make specific so it doesn't apply to every component */
 
 #login {
     /* Size & position */

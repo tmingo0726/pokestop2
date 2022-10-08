@@ -107,42 +107,75 @@ const createInitialProducts = async () => {
     const productsToCreate = [
       {
         name: "Charizard",
-        price: 30000,
+        price: "30,000",
         condition: "Good",
         rarity: "Holo",
         ability1:
           "Energy Burn: As often as you like during your turn (before your attack), you may turn all Energy attached to Charizard into Fire Energy for the rest of the turn. This power can't be used if Charizard is Asleep, Confused, or Paralyzed.",
         ability2:
           "Fire Spin: Discard 2 Energy cards attached to Charizard in order to use this attack.",
-        imagelink: "https://images.pokemontcg.io/base1/4.png",
+        imagelink: "https://images.pokemontcg.io/base1/4_hires.png",
         inventorycount: 35,
         isactive: true,
       },
       {
         name: "Blastoise",
-        price: 50000,
+        price: "50,000",
         condition: "Mint",
         rarity: "Holo",
         ability1:
           "Rain Dance: As often as you like during your turn (before your attack), you may attach 1 Water Energy card to 1 of your Water Pokémon. (This doesn't use up your 1 Energy card attachment for the turn.) This power can't be used if Blastoise is Asleep, Confused, or Paralyzed.",
         ability2:
           "Hydro Pump: Does 40 damage plus 10 more damage for each Water Energy attached to Blastoise but not used to pay for this attack's Energy cost. Extra Water Energy after the 2nd doesn't count.",
-        imagelink: "https://images.pokemontcg.io/base4/2.png",
+        imagelink: "https://images.pokemontcg.io/base1/2_hires.png",
         inventorycount: 50,
         isactive: true,
       },
       {
         name: "Venusaur",
-        price: 5000,
+        price: "5,000",
         condition: "Poor",
         rarity: "Holo",
         ability1:
           "Energy Trans: As often as you like during your turn (before your attack), you may take 1 Grass Energy card attached to 1 of your Pokémon and attach it to a different one. This power can't be used if Venusaur is Asleep, Confused, or Paralyzed.",
         ability2: "Solarbeam",
-        imagelink: "https://images.pokemontcg.io/base6/18.png",
+        imagelink: "https://images.pokemontcg.io/base1/15_hires.png",
         inventorycount: 10,
         isactive: true,
       },
+      {
+        name: "Mewtwo",
+        price: "10,000",
+        condition: "Good",
+        rarity: "Holo",
+        ability1: "Psychic: Does 10 damage plus 10 more damage for each Energy card attached to the Defending Pokémon.",
+        ability2: "Barrier: Discard 1 Psychic Energy card attached to Mewtwo in order to prevent all effects of attacks, including damage, done to Mewtwo during your opponent's next turn.",
+        imagelink: "https://images.pokemontcg.io/base1/10_hires.png",
+        inventorycount: 3,
+        isactive: true
+      },
+      {
+        name: "Zapdos",
+        price: "300",
+        condition: "Poor",
+        rarity: "Holo",
+        ability1: "Thunder: Flip a coin. If tails, Zapdos does 30 damage to itself.",
+        ability2: "Thunderbolt: Discard all Energy cards attached to Zapdos in order to use this attack.",
+        imagelink: "https://images.pokemontcg.io/base1/16_hires.png",
+        inventorycount: 1,
+        isactive: true
+      },
+      {
+        name: "Raichu",
+        price: "69.99",
+        condition: "Good",
+        rarity: "Holo",
+        ability1: "Agility: Flip a coin. If heads, during your opponent's next turn, prevent all effects of attacks, including damage, done to Raichu.",
+        ability2: "Thunder: Flip a coin. If tails, Raichu does 30 damage to itself.",
+        imagelink: "https://images.pokemontcg.io/base1/14_hires.png",
+        inventorycount: 2,
+        isactive: true
+      }
     ];
 
     console.log("PRODUCTS TO CREATE", productsToCreate);

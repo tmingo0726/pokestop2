@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import './Products.css'
 
 const Products = (props) => {
 
@@ -45,22 +46,25 @@ const Products = (props) => {
 
 
     return (
-        <div>
+        <>
             <h1 id="products-heading">Cards For Sale</h1>
+            <div id="products-wrapper">
             {
-            allProducts.map((product, i) => {
-                return (
-                    
-                    <div className="grid-container" key={i}>
-                        <div className="caption"><img className="grid-item" src={product.imagelink} onClick={() => seeDetails(product)} alt="Pokemon"/>
-
-                        <p>Price: ${product.price}</p>
-                        <p>Cards in Stock: {product.inventorycount}</p></div>
-                    </div>
-                )
-            })
+                allProducts.map((product, i) => {
+                    return (
+                        
+                        <div className="product-container" key={i}>
+                            <img className="card" src={product.imagelink} onClick={() => seeDetails(product)} alt="Pokemon"/>
+                            <div className="caption">
+                                <p>Price: ${product.price}</p>
+                                <p>Cards in Stock: {product.inventorycount}</p>
+                            </div>
+                        </div>
+                    )
+                })
             }
-        </div>
+            </div>
+        </>
     );
 
 }
