@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
-import './Login.css';
+import "./Login.css";
 
 // require("dotenv").config();
 // const path = process.env.REACT_APP_BASE_URL;
@@ -13,6 +13,7 @@ const Login = ({
   setUsername,
   password,
   setPassword,
+  setIsadmin,
 }) => {
   //   const [username, setUsername] = useState("");
   //   const [password, setPassword] = useState("");
@@ -40,6 +41,7 @@ const Login = ({
         result.token ? localStorage.setItem("token", result.token) : null;
       }
       setLoggedIn(result.token);
+      setIsadmin(result.customer.admin);
       return result.token;
     } catch (err) {
       console.error(err);
@@ -90,7 +92,9 @@ const Login = ({
               <h2>{error ? `${errorMessage}` : null}</h2>
             </div>
             <div>
-              <button id="submit" type="submit">Login</button>
+              <button id="submit" type="submit">
+                Login
+              </button>
             </div>
           </>
         )}
