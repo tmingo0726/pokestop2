@@ -1,47 +1,64 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
 #registration{
-    font-family: 'VT323', monospace;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    color: #FFDE00;
-    margin-top: 100px;
+  font-family: 'VT323', monospace;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  color: #FFDE00;
+  margin-top: 100px;
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  margin-right: 200px;
+  margin-left: 200px;
 }
 
 #register-header{
     margin: 20px;
-    font-size: 64px;
+    font-size: 40px;
+    color: #FFDE00;
 }
 
 /* * {box-sizing: border-box} <-- Make specific so it doesn't apply to every component */ 
 
-
 #registration {
-  padding: 16px;
+  /* Size & position */
+  width: 600px;
+  margin: 60px auto 30px;
+  padding: 10px;
+  position: relative; /* For the submit button positioning */
+
+  /* Styles */
+
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 3px 7px rgba(0, 0, 0, 0.3),
+    inset 0 1px rgba(255, 255, 255, 1), inset 0 -3px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  background: linear-gradient(#eeefef, #ffffff 10%);
 }
 
-input[type=text], input[type=password] {
+input[type="text"] , input[type="password"], input[type="submit"] {
   width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
-  border: none;
-  background: #f1f1f1;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
 }
 
-input[type=text]:focus, input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
+#register-inputs {
+
+  width: 75%;
 }
+
 
 hr {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
+  border: 1px solid #717177;
+  width: 100%;
 }
 
-#submit {
+#register-submit {
     background-color: #3B4CCA;
     color: white;
     padding: 16px 20px;
@@ -52,6 +69,6 @@ hr {
     opacity: 0.9;
   }
   
-  #submit:hover {
+  #register-submit:hover {
     opacity:1;
   }
