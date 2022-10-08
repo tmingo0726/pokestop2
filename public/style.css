@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
 }
-/* 
+
 #products-heading {
     text-align: center;
     margin: 0 auto;
@@ -12,7 +12,7 @@ body {
     margin-left: 50px; /* Same as the width of the sidenav */
     font-size: 20px; /* Increased text to enable scrolling */
     padding: 0px 10px;
-}
+} 
 
 .v1 {
     border-left: 3px solid #3B4CCA;

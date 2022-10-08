@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
-import './Register.css'
+import '../stylesheets/Register.css'
 // import { BASE_URL} from
 
 const path = process.env.REACT_APP_BASE_URL;
