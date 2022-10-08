@@ -60,9 +60,10 @@ const Login = ({
         ) : (
           <>
             <h2>Login</h2>
-            <div>
+            <div id="login-inputs">
               <input
                 type="text"
+                id="login-username"
                 value={username}
                 placeholder="Please enter username"
                 required
@@ -72,9 +73,10 @@ const Login = ({
                 }}
               ></input>
             </div>
-            <div>
+            <div id="login-inputs">
               <input
                 value={password}
+                id="login-password"
                 placeholder="Please enter password"
                 required
                 type="password"

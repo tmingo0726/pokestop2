@@ -83,7 +83,8 @@ const Register = () => {
         ) : (
           <>
             <h2 id="register-header">New Customer Registration Form</h2>
-            <div>
+            <hr></hr>
+            <div id="register-inputs">
               <input
                 type="text"
                 value={newUsername}
@@ -95,7 +96,7 @@ const Register = () => {
                 }}
               ></input>
             </div>
-            <div>
+            <div id="register-inputs">
               <input
                 value={newPassword}
                 placeholder="Please enter password"
@@ -107,7 +108,7 @@ const Register = () => {
                 }}
               ></input>
             </div>
-            <div>
+            <div id="register-inputs">
               <input
                 value={confirmPassword}
                 placeholder="Please confirm password"
@@ -119,7 +120,7 @@ const Register = () => {
                 }}
               ></input>
             </div>
-            <div>
+            <div id="register-inputs" >
               <input
                 type="text"
                 value={firstname}
@@ -130,7 +131,7 @@ const Register = () => {
                 }}
               ></input>
             </div>
-            <div>
+            <div id="register-inputs">
               <input
                 type="text"
                 value={lastname}
@@ -141,7 +142,7 @@ const Register = () => {
                 }}
               ></input>
             </div>
-            <div>
+            <div id="register-inputs">
               <input
                 type="text"
                 value={address}
@@ -152,7 +153,7 @@ const Register = () => {
                 }}
               ></input>
             </div>
-            <div>
+            <div id="register-inputs">
               <input
                 type="text"
                 value={email}
@@ -169,7 +170,7 @@ const Register = () => {
               <UsernameError /> */}
             </div>
             <div>
-              <button type="submit">Submit!</button>
+              <button id="register-submit" type="submit">Submit!</button>
             </div>
           </>
         )}
