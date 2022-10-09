@@ -49,6 +49,8 @@
 #quantity-count {
     font-size: xx-large;
     color: black;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 #plus, #minus {
