@@ -70,6 +70,9 @@ const AdminCreate = () => {
     <div>
       <form id="new-product-form" onSubmit={handleSubmit}>
         <fieldset>
+          <legend>
+            <h2>Create A New Product</h2>
+          </legend>
           <div id="new-product-inputs">
             <br />
             <legend>New Product Name:</legend>
