@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
-import "./Login.css";
+import '../stylesheets/Login.css'
 
 // require("dotenv").config();
 // const path = process.env.REACT_APP_BASE_URL;

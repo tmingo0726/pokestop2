@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import './Products.css'
+import '../stylesheets/Products.css'
 
 const Products = (props) => {
 
