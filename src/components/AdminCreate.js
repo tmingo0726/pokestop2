@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./AdminCreate.css";
+import "../stylesheets/AdminCreate.css";
 
 const BASE_URL = "http://localhost:4000/api";
 
@@ -12,7 +12,7 @@ const AdminCreate = () => {
   const [newAbility2, setNewAbility2] = useState("");
   const [newImagelink, setNewImagelink] = useState("");
   const [newInventorycount, setNewInventorycount] = useState("");
-  const [newIsactive, setNewIsactive] = useState();
+  const [newIsactive, setNewIsactive] = useState(true);
 
   const token = localStorage.getItem("token");
   const createProduct = async (
@@ -24,9 +24,10 @@ const AdminCreate = () => {
     ability2,
     imagelink,
     inventorycount,
-    isactive
+    newIsactive
   ) => {
     try {
+      console.log("ISACTIVE", newIsactive);
       const response = await fetch(`${BASE_URL}/admin/products`, {
         method: "POST",
         headers: {
@@ -42,7 +43,7 @@ const AdminCreate = () => {
           ability2,
           imagelink,
           inventorycount,
-          isactive,
+          isactive: newIsactive,
         }),
       });
       const result = await response.json();
