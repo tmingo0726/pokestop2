@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import '../stylesheets/Register.css'
 // import { BASE_URL} from
 
@@ -77,18 +77,18 @@ const Register = () => {
 
   return (
     <div>
-      <form id="registration" onSubmit={handleSubmit}>
+      <form id="register-form" onSubmit={handleSubmit}>
         {registered ? (
           <Navigate to="/login" />
         ) : (
           <>
-            <h2 id="register-header">New Customer Registration Form</h2>
-            <hr></hr>
+            <h2 id="register-header">Register</h2>
+            <hr id="divider"></hr>
             <div id="register-inputs">
               <input
+                className="form-inputs"
                 type="text"
-                value={newUsername}
-                placeholder="Please enter a username"
+                placeholder="Username"
                 required
                 minLength={5}
                 onChange={(event) => {
@@ -98,8 +98,8 @@ const Register = () => {
             </div>
             <div id="register-inputs">
               <input
-                value={newPassword}
-                placeholder="Please enter password"
+                className="form-inputs"
+                placeholder="Password"
                 required
                 type="password"
                 minLength={8}
@@ -110,8 +110,8 @@ const Register = () => {
             </div>
             <div id="register-inputs">
               <input
-                value={confirmPassword}
-                placeholder="Please confirm password"
+                className="form-inputs"
+                placeholder="Confirm Password"
                 required
                 type="password"
                 minLength={8}
@@ -122,9 +122,9 @@ const Register = () => {
             </div>
             <div id="register-inputs" >
               <input
+                className="form-inputs"
                 type="text"
-                value={firstname}
-                placeholder="Please enter your first name"
+                placeholder="Your First Name"
                 required
                 onChange={(event) => {
                   setFirstname(event.target.value);
@@ -133,9 +133,9 @@ const Register = () => {
             </div>
             <div id="register-inputs">
               <input
+                className="form-inputs"
                 type="text"
-                value={lastname}
-                placeholder="Please enter your last name"
+                placeholder="Your Last Name"
                 required
                 onChange={(event) => {
                   setLastname(event.target.value);
@@ -143,21 +143,22 @@ const Register = () => {
               ></input>
             </div>
             <div id="register-inputs">
-              <input
+              <textarea
+                id="address-input"
+                className="form-inputs"
                 type="text"
-                value={address}
-                placeholder="Please enter shipping address"
+                placeholder="Address&#10;City&#10;State&#10;Zip Code"
                 required
                 onChange={(event) => {
                   setAddress(event.target.value);
                 }}
-              ></input>
+              ></textarea>
             </div>
             <div id="register-inputs">
               <input
+                className="form-inputs"
                 type="text"
-                value={email}
-                placeholder="Please enter your email"
+                placeholder="Email"
                 required
                 onChange={(event) => {
                   setEmail(event.target.value);
@@ -171,6 +172,7 @@ const Register = () => {
             </div>
             <div>
               <button id="register-submit" type="submit">Submit!</button>
+              <div className="form-redirect-text">Already a member? <Link className="form-redirect-link" to='/login'>Login!</Link></div>
             </div>
           </>
         )}

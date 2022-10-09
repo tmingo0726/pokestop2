@@ -1,18 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-#registration{
-  font-family: 'VT323', monospace;
+#register-form {
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  color: #FFDE00;
-  margin-top: 100px;
-  border-top-right-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
-  margin-right: 200px;
-  margin-left: 200px;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+
+    width: 400px;
+    margin: 60px auto 30px;
+    padding: 10px;
+    position: relative; 
+  
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 3px 7px rgba(0, 0, 0, 0.3),
+      inset 0 1px rgba(255, 255, 255, 1), inset 0 -3px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    background: linear-gradient(#eeefef, #ffffff 10%);
 }
 
 #register-header{
@@ -21,53 +24,39 @@
     color: #FFDE00;
 }
 
-#registration {
-  /* Size & position */
-  width: 600px;
-  margin: 60px auto 30px;
-  padding: 10px;
-  position: relative; 
-
-  /* Styles */
-
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 3px 7px rgba(0, 0, 0, 0.3),
-    inset 0 1px rgba(255, 255, 255, 1), inset 0 -3px 2px rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
-  background: linear-gradient(#eeefef, #ffffff 10%);
-}
-
-input[type="text"] , input[type="password"], input[type="submit"] {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  margin-top: 6px;
-  margin-bottom: 16px;
-}
-
 #register-inputs {
-
   width: 75%;
 }
 
-
-hr {
-  border: 1px solid #717177;
+#register-submit {
+  background-color: #3B4CCA;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
   width: 100%;
+  opacity: 0.9;
 }
 
-#register-submit {
-    background-color: #3B4CCA;
-    color: white;
-    padding: 16px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-  }
-  
-  #register-submit:hover {
-    opacity:1;
-  }
+#register-submit:hover {
+  opacity:1;
+}
+
+#divider {
+  border: 1px solid #717177;
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+#address-input {
+  height: 110px;
+}
+
+.form-redirect-text {
+  color: #6060a3;
+}
+
+.form-redirect-link {
+  color: #FFDE00;
+}

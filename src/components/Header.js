@@ -19,10 +19,10 @@ const Header = ({ loggedIn, setLoggedIn, setUsername, setPassword }) => {
       {loggedIn ? (
         <>
           <nav id="links">
-            <Link to="profile">Profile</Link> | {""}
-            <Link to="products">Products</Link> | {""}
-            <Link to="mycart">My Cart</Link> | {""}
-            <Link to="Login" onClick={logout}>
+            <Link to="/profile">Profile</Link> | {""}
+            <Link to="/products">Products</Link> | {""}
+            <Link to="/mycart">My Cart</Link> | {""}
+            <Link to="/" onClick={logout}>
               Logout
             </Link>
           </nav>
@@ -30,10 +30,9 @@ const Header = ({ loggedIn, setLoggedIn, setUsername, setPassword }) => {
       ) : (
         <>
           <nav id="links">
-            <Link to="Login">Login</Link> | {""}
-            <Link to="register">Register</Link> | {""}
-            <Link to="products">Products</Link> | {""}
-            <Link to="mycart">My Cart</Link>
+            <Link to="/login">Login/Register</Link> | {""}
+            <Link to="/products">Products</Link> | {""}
+            <Link to="/mycart">My Cart</Link>
           </nav>
         </>
       )}

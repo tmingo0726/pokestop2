@@ -13,6 +13,22 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+.form-inputs {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    color:rgba(0, 0, 0);
+}
+
+.form-inputs:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
 #products-heading {
     text-align: center;
     margin: 0 auto;
