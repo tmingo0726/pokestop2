@@ -76,6 +76,7 @@ const getCustomer = async ({ username, password }) => {
       const validCustomer = {
         id: customer.id,
         username: customer.username,
+        admin: customer.isadmin,
       };
       return validCustomer;
     }
