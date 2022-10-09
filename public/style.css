@@ -1,6 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
 body {
+
+    background-image: url('night-bg.png');
+    background-attachment: fixed;
     margin: 0;
     padding: 0;
+}
+
+* {
+    color: lightgrey;
+    font-family: 'Poppins', sans-serif;
 }
 
 #products-heading {
@@ -9,8 +19,8 @@ body {
 }
 
 .main {
-    margin-left: 50px; /* Same as the width of the sidenav */
-    font-size: 20px; /* Increased text to enable scrolling */
+    margin-left: 50px;
+    font-size: 20px;
     padding: 0px 10px;
 } 
 
@@ -38,11 +48,6 @@ body {
     opacity: 0.9;
 }
 
-* {
-    color: #3B4CCA;
-    font-family: 'VT323', monospace;
-    
-}
 
 #quantity-count {
     font-size: xx-large;

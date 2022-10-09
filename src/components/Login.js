@@ -59,7 +59,7 @@ const Login = ({
           <Navigate to="/" />
         ) : (
           <>
-            <h2>Login</h2>
+            <h2 id="login-header">Login</h2>
             <div id="login-inputs">
               <input
                 type="text"

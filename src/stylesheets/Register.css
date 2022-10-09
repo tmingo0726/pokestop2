@@ -6,6 +6,7 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   color: #FFDE00;
   margin-top: 100px;
   border-top-right-radius: 0.25rem;
@@ -20,14 +21,12 @@
     color: #FFDE00;
 }
 
-/* * {box-sizing: border-box} <-- Make specific so it doesn't apply to every component */ 
-
 #registration {
   /* Size & position */
   width: 600px;
   margin: 60px auto 30px;
   padding: 10px;
-  position: relative; /* For the submit button positioning */
+  position: relative; 
 
   /* Styles */
 
