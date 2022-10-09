@@ -10,10 +10,11 @@ const AdminCreate = () => {
   const [newRarity, setNewRarity] = useState("");
   const [newAbility1, setNewAbility1] = useState("");
   const [newAbility2, setNewAbility2] = useState("");
-  const [newImagelink, setNewImageLink] = useState("");
+  const [newImagelink, setNewImagelink] = useState("");
   const [newInventorycount, setNewInventorycount] = useState("");
   const [newIsactive, setNewIsactive] = useState();
 
+  const token = localStorage.getItem("token");
   const createProduct = async (
     productName,
     price,
@@ -21,7 +22,7 @@ const AdminCreate = () => {
     rarity,
     ability1,
     ability2,
-    imageLink,
+    imagelink,
     inventorycount,
     isactive
   ) => {
@@ -30,15 +31,16 @@ const AdminCreate = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          productName,
+          name: productName,
           price,
           condition,
           rarity,
           ability1,
           ability2,
-          imageLink,
+          imagelink,
           inventorycount,
           isactive,
         }),
@@ -97,8 +99,8 @@ const AdminCreate = () => {
                 id="conditionChoice1"
                 name="condition"
                 value={newCondition}
-                onChange={(event) => {
-                  setNewCondition(event.target.value);
+                onChange={() => {
+                  setNewCondition("Mint");
                 }}
               ></input>
               <label htmlFor="conditionChoice1"> Mint </label>
@@ -107,8 +109,8 @@ const AdminCreate = () => {
                 id="conditionChoice2"
                 name="condition"
                 value={newCondition}
-                onChange={(event) => {
-                  setNewCondition(event.target.value);
+                onChange={() => {
+                  setNewCondition("Good");
                 }}
               ></input>
               <label htmlFor="conditionChoice2"> Good </label>
@@ -117,8 +119,8 @@ const AdminCreate = () => {
                 id="conditionChoice3"
                 name="condition"
                 value={newCondition}
-                onChange={(event) => {
-                  setNewCondition(event.target.value);
+                onChange={() => {
+                  setNewCondition("Damaged");
                 }}
               ></input>
               <label htmlFor="conditionChoice3"> Damaged </label>
@@ -131,8 +133,8 @@ const AdminCreate = () => {
                 id="rarityChoice1"
                 name="rarity"
                 value={newRarity}
-                onChange={(event) => {
-                  setNewRarity(event.target.value);
+                onChange={() => {
+                  setNewRarity("Holographic");
                 }}
               ></input>
               <label htmlFor="rarityChoice1"> Holographic </label>
@@ -141,8 +143,8 @@ const AdminCreate = () => {
                 id="rarityChoice2"
                 name="rarity"
                 value={newRarity}
-                onChange={(event) => {
-                  setNewRarity(event.target.value);
+                onChange={() => {
+                  setNewRarity("Rare");
                 }}
               ></input>
               <label htmlFor="rarityChoice2"> Rare </label>
@@ -151,8 +153,8 @@ const AdminCreate = () => {
                 id="rarityChoice3"
                 name="rarity"
                 value={newRarity}
-                onChange={(event) => {
-                  setNewRarity(event.target.value);
+                onChange={() => {
+                  setNewRarity("Common");
                 }}
               ></input>
               <label htmlFor="rarityChoice3"> Common </label>
@@ -183,7 +185,7 @@ const AdminCreate = () => {
               value={newImagelink}
               placeholder="Image URL"
               onChange={(event) => {
-                setNewImageLink(event.target.value);
+                setNewImagelink(event.target.value);
               }}
             ></input>
             <legend>New Product Inventory</legend>
@@ -203,8 +205,8 @@ const AdminCreate = () => {
                 name="isactive"
                 value={newIsactive}
                 checked
-                onChange={(event) => {
-                  setNewIsactive(event.target.value);
+                onChange={() => {
+                  setNewIsactive(true);
                 }}
               ></input>
               <label htmlFor="isactiveChoice1"> True </label>
@@ -213,8 +215,8 @@ const AdminCreate = () => {
                 id="isactiveChoice2"
                 name="isactive"
                 value={newIsactive}
-                onChange={(event) => {
-                  setNewIsactive(event.target.value);
+                onChange={() => {
+                  setNewIsactive(false);
                 }}
               ></input>
               <label htmlFor="isactiveChoice2"> False </label>

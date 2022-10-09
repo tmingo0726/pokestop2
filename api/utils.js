@@ -14,7 +14,7 @@ const requireUser = (req, res, next) => {
 
 const requireAdmin = async (req, res, next) => {
   if (!req.user) {
-    res.status(401)
+    res.status(401);
 
     next({
       error: "401",
@@ -25,8 +25,11 @@ const requireAdmin = async (req, res, next) => {
 
   try {
     const admin = await adminCheckById(req.user.id);
+    console.log("REQUSERID", req.user.id);
+    console.log("REQUSERI=", req.user);
+    console.log("ADMIN", admin);
     if (!admin) {
-    res.status(401)
+      res.status(401);
 
       next({
         error: "Not Admin",

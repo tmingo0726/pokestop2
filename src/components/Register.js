@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
-import './Register.css'
+import "./Register.css";
 // import { BASE_URL} from
 
 const path = process.env.REACT_APP_BASE_URL;
@@ -120,7 +120,7 @@ const Register = () => {
                 }}
               ></input>
             </div>
-            <div id="register-inputs" >
+            <div id="register-inputs">
               <input
                 type="text"
                 value={firstname}
@@ -170,7 +170,9 @@ const Register = () => {
               <UsernameError /> */}
             </div>
             <div>
-              <button id="register-submit" type="submit">Submit!</button>
+              <button id="register-submit" type="submit">
+                Submit!
+              </button>
             </div>
           </>
         )}

@@ -36,7 +36,7 @@ const App = () => {
       />
       <Routes>
         <Route path="/register" element={<Register />}></Route>
-        <Route path="/admin" element={<Admin />}></Route>
+        <Route path="/admin" element={<Admin token={token} />}></Route>
         <Route
           path="/products"
           element={
