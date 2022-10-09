@@ -14,7 +14,7 @@ const Header = ({ loggedIn, setLoggedIn, setUsername, setPassword }) => {
   return (
     <div id="header">
         <Link id="brand-name" to="/">
-          Pokestop
+          Pokéstop
         </Link>
       {loggedIn ? (
         <>

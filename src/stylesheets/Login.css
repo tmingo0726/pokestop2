@@ -20,7 +20,7 @@
 
 #login-header{
   font-size: 40px;
-  color: #FFDE00;
+  color: #6060a3;
   margin: 20px;
 }
 
@@ -50,9 +50,9 @@
 }
 
 .form-redirect-text {
-  color: #6060a3;
+  color: #717177;
 }
 
 .form-redirect-link {
-  color: #FFDE00;
+  color: #6060a3;
 }
