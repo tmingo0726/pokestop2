@@ -1,7 +1,15 @@
 import { createRoot } from "react-dom/client";
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { Footer, Register, Login, Header, Products, Details } from "./components";
+import {
+  Footer,
+  Register,
+  Login,
+  Header,
+  Products,
+  Details,
+  Admin,
+} from "./components";
 
 const container = document.getElementById("app");
 const root = createRoot(container);
@@ -24,12 +32,38 @@ const App = () => {
         setLoggedIn={setLoggedIn}
         setUsername={setUsername}
         setPassword={setPassword}
+        isadmin={isadmin}
       />
       <Routes>
         <Route path="/register" element={<Register />}></Route>
-        <Route path="/products" element={<Products allProducts={allProducts} setAllProducts={setAllProducts} chosenCard={chosenCard} setChosenCard={setChosenCard} />}></Route>
-        <Route path="/products/details" element={<Details chosenCard={chosenCard} />}></Route>
-        <Route exact path ="/" element={<Products allProducts={allProducts} setAllProducts={setAllProducts} chosenCard={chosenCard} setChosenCard={setChosenCard} />}></Route>
+        <Route path="/admin" element={<Admin token={token} />}></Route>
+        <Route
+          path="/products"
+          element={
+            <Products
+              allProducts={allProducts}
+              setAllProducts={setAllProducts}
+              chosenCard={chosenCard}
+              setChosenCard={setChosenCard}
+            />
+          }
+        ></Route>
+        <Route
+          path="/products/details"
+          element={<Details chosenCard={chosenCard} />}
+        ></Route>
+        <Route
+          exact
+          path="/"
+          element={
+            <Products
+              allProducts={allProducts}
+              setAllProducts={setAllProducts}
+              chosenCard={chosenCard}
+              setChosenCard={setChosenCard}
+            />
+          }
+        ></Route>
         <Route
           path="/login"
           element={
@@ -40,6 +74,7 @@ const App = () => {
               setUsername={setUsername}
               password={password}
               setPassword={setPassword}
+              setIsadmin={setIsadmin}
             />
           }
         ></Route>

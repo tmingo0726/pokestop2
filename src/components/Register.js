@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Navigate, Link } from "react-router-dom";
 import '../stylesheets/Register.css'
+
 // import { BASE_URL} from
 
 const path = process.env.REACT_APP_BASE_URL;
@@ -120,7 +121,7 @@ const Register = () => {
                 }}
               ></input>
             </div>
-            <div id="register-inputs" >
+            <div id="register-inputs">
               <input
                 className="form-inputs"
                 type="text"

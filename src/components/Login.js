@@ -13,6 +13,7 @@ const Login = ({
   setUsername,
   password,
   setPassword,
+  setIsadmin,
 }) => {
   //   const [username, setUsername] = useState("");
   //   const [password, setPassword] = useState("");
@@ -40,6 +41,7 @@ const Login = ({
         result.token ? localStorage.setItem("token", result.token) : null;
       }
       setLoggedIn(result.token);
+      setIsadmin(result.customer.admin);
       return result.token;
     } catch (err) {
       console.error(err);

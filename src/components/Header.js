@@ -1,7 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import '../stylesheets/Header.css'
 
-const Header = ({ loggedIn, setLoggedIn, setUsername, setPassword }) => {
+const Header = ({
+  loggedIn,
+  setLoggedIn,
+  setUsername,
+  setPassword,
+  isadmin,
+}) => {
   let navigate = useNavigate();
   const logout = () => {
     setLoggedIn(false);
@@ -20,9 +26,10 @@ const Header = ({ loggedIn, setLoggedIn, setUsername, setPassword }) => {
         <>
           <nav id="links">
             <Link to="/profile">Profile</Link> | {""}
+            {isadmin ? <Link to="admin">Admin | {""}</Link> : null}
             <Link to="/products">Products</Link> | {""}
             <Link to="/mycart">My Cart</Link> | {""}
-            <Link to="/" onClick={logout}>
+            <Link to="/login" onClick={logout}>
               Logout
             </Link>
           </nav>

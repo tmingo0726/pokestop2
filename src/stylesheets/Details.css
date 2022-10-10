@@ -1,0 +1,74 @@
+.main {
+    margin-left: 550px; /* Same as the width of the sidenav */
+    font-size: 20px; /* Increased text to enable scrolling */
+    padding: 0px 10px;
+    margin-top: 0;
+} 
+
+.v1 {
+    border-left: 3px solid #3B4CCA;
+    height: 800px;
+    margin-left: 500px;
+    margin-top: 0;
+    position: absolute;
+}
+
+.caption {
+    width: 300px;
+}
+
+#test {
+    width: 200px;
+    margin-left: 0;
+}
+
+#instock {
+    background-color: green;
+    width: 120px;
+    color: black;
+}
+
+#addcard {
+    margin-top: 10px;
+    background-color: #3B4CCA;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 25%;
+    opacity: 0.9;
+}
+
+* {
+    color: #3B4CCA;
+    font-family: 'VT323', monospace;
+    
+}
+
+#quantity-count {
+    font-size: xx-large;
+    color: black;
+}
+
+#plus, #minus {
+    background-color: #3B4CCA;
+    font-size: large;
+    color: white;
+    padding: 12px 2px;
+    margin: 2px 0;
+    border: none;
+    cursor: pointer;
+    width: 10%;
+    opacity: 0.9;
+}
+
+#details-header {
+    color: #FFDE00;
+}
+
+.grid-item {
+    width: 400px;
+    height: 500px;
+    position: absolute;
+}
