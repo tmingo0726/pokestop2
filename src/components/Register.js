@@ -78,14 +78,14 @@ const Register = () => {
 
   return (
     <div>
-      <form id="register-form" onSubmit={handleSubmit}>
+      <form id="register" className="form" onSubmit={handleSubmit}>
         {registered ? (
           <Navigate to="/login" />
         ) : (
           <>
-            <h2 id="register-header">Register</h2>
-            <hr id="divider"></hr>
-            <div id="register-inputs">
+            <h2 className="form-header">Register</h2>
+            <hr className="form-divider"></hr>
+            <div className="input-wrapper">
               <input
                 className="form-inputs"
                 type="text"
@@ -96,8 +96,6 @@ const Register = () => {
                   setNewUsername(event.target.value);
                 }}
               ></input>
-            </div>
-            <div id="register-inputs">
               <input
                 className="form-inputs"
                 placeholder="Password"
@@ -108,8 +106,6 @@ const Register = () => {
                   setNewPassword(event.target.value);
                 }}
               ></input>
-            </div>
-            <div id="register-inputs">
               <input
                 className="form-inputs"
                 placeholder="Confirm Password"
@@ -120,8 +116,6 @@ const Register = () => {
                   setConfirmPassword(event.target.value);
                 }}
               ></input>
-            </div>
-            <div id="register-inputs">
               <input
                 className="form-inputs"
                 type="text"
@@ -131,8 +125,6 @@ const Register = () => {
                   setFirstname(event.target.value);
                 }}
               ></input>
-            </div>
-            <div id="register-inputs">
               <input
                 className="form-inputs"
                 type="text"
@@ -142,8 +134,6 @@ const Register = () => {
                   setLastname(event.target.value);
                 }}
               ></input>
-            </div>
-            <div id="register-inputs">
               <textarea
                 id="address-input"
                 className="form-inputs"
@@ -154,8 +144,6 @@ const Register = () => {
                   setAddress(event.target.value);
                 }}
               ></textarea>
-            </div>
-            <div id="register-inputs">
               <input
                 className="form-inputs"
                 type="text"
@@ -166,13 +154,13 @@ const Register = () => {
                 }}
               ></input>
             </div>
-            <div id="error">
-              <h2>{error ? `${errorMessage}` : null}</h2>
+            <div className="error">
+              <h4>{error ? `${errorMessage}` : null}</h4>
               {/* <PasswordError />
               <UsernameError /> */}
             </div>
             <div>
-              <button id="register-submit" type="submit">Submit!</button>
+              <button className="form-btn" type="submit">Submit!</button>
               <div className="form-redirect-text">Already a member? <Link className="form-redirect-link" to='/login'>Login!</Link></div>
             </div>
           </>

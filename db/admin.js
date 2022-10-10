@@ -61,6 +61,7 @@ const adminCreateProduct = async ({
 
 const adminGetProductIdByName = async (name) => {
   try {
+    console.log("NAME", name);
     if (!name) {
       return;
     }
@@ -72,6 +73,9 @@ const adminGetProductIdByName = async (name) => {
       FROM products
       WHERE name = '${name}'
     `);
+    // console.log("ROWS", rows);
+    // console.log("RESULT", result);
+    console.log("PRODUCT", product);
     return product;
   } catch (error) {
     console.error(error);

@@ -31,14 +31,13 @@ const createTables = async () => {
     await client.query(`
             CREATE TABLE customers (
                 id SERIAL PRIMARY KEY,
-                username VARCHAR(50) NOT NULL,
+                username VARCHAR(50) UNIQUE NOT NULL,
                 password VARCHAR(255) NOT NULL,
                 firstname VARCHAR(50) NOT NULL,
                 lastname VARCHAR(50) NOT NULL,
                 address VARCHAR(255) NOT NULL,
-                email VARCHAR(50) NOT NULL,
-                isadmin BOOLEAN DEFAULT false,
-                UNIQUE (username, email)
+                email VARCHAR(50) UNIQUE NOT NULL,
+                isadmin BOOLEAN DEFAULT false
             ); 
             
             CREATE UNIQUE INDEX uname_email on customers (username, email);
@@ -165,34 +164,40 @@ const createInitialProducts = async () => {
         price: "10,000",
         condition: "Good",
         rarity: "Holo",
-        ability1: "Psychic: Does 10 damage plus 10 more damage for each Energy card attached to the Defending Pokémon.",
-        ability2: "Barrier: Discard 1 Psychic Energy card attached to Mewtwo in order to prevent all effects of attacks, including damage, done to Mewtwo during your opponent's next turn.",
+        ability1:
+          "Psychic: Does 10 damage plus 10 more damage for each Energy card attached to the Defending Pokémon.",
+        ability2:
+          "Barrier: Discard 1 Psychic Energy card attached to Mewtwo in order to prevent all effects of attacks, including damage, done to Mewtwo during your opponent's next turn.",
         imagelink: "https://images.pokemontcg.io/base1/10_hires.png",
         inventorycount: 3,
-        isactive: true
+        isactive: true,
       },
       {
         name: "Zapdos",
         price: "300",
         condition: "Poor",
         rarity: "Holo",
-        ability1: "Thunder: Flip a coin. If tails, Zapdos does 30 damage to itself.",
-        ability2: "Thunderbolt: Discard all Energy cards attached to Zapdos in order to use this attack.",
+        ability1:
+          "Thunder: Flip a coin. If tails, Zapdos does 30 damage to itself.",
+        ability2:
+          "Thunderbolt: Discard all Energy cards attached to Zapdos in order to use this attack.",
         imagelink: "https://images.pokemontcg.io/base1/16_hires.png",
         inventorycount: 1,
-        isactive: true
+        isactive: true,
       },
       {
         name: "Raichu",
         price: "69.99",
         condition: "Good",
         rarity: "Holo",
-        ability1: "Agility: Flip a coin. If heads, during your opponent's next turn, prevent all effects of attacks, including damage, done to Raichu.",
-        ability2: "Thunder: Flip a coin. If tails, Raichu does 30 damage to itself.",
+        ability1:
+          "Agility: Flip a coin. If heads, during your opponent's next turn, prevent all effects of attacks, including damage, done to Raichu.",
+        ability2:
+          "Thunder: Flip a coin. If tails, Raichu does 30 damage to itself.",
         imagelink: "https://images.pokemontcg.io/base1/14_hires.png",
         inventorycount: 2,
-        isactive: true
-      }
+        isactive: true,
+      },
     ];
 
     console.log("PRODUCTS TO CREATE", productsToCreate);

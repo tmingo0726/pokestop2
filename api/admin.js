@@ -48,6 +48,7 @@ adminRouter.post("/products", requireAdmin, async (req, res, next) => {
 
 adminRouter.patch("/editproduct", requireAdmin, async (req, res, next) => {
   const adminInputs = ({
+    currentName,
     name: productName,
     price,
     condition,
@@ -58,24 +59,40 @@ adminRouter.patch("/editproduct", requireAdmin, async (req, res, next) => {
     inventorycount,
     isactive,
   } = req.body);
+  console.log("ADMIN INPUTS", adminInputs);
 
-  const { id } = await adminGetProductIdByName(productName);
+  Object.keys(adminInputs).forEach((key) => {
+    if (adminInputs[key] === "") {
+      delete adminInputs[key];
+    }
+  });
 
-  if (!id) {
+  console.log("ADMIN INPUTS AFTER CHANGE", adminInputs);
+  const product = await adminGetProductIdByName(currentName);
+  console.log("PRODUCT", product);
+  const _product = await adminGetProductIdByName(productName);
+
+  if (!product) {
     next({
       error: "Product doesn't exist",
-      message: `${productName} doesn't exist in our inventory yet.`,
+      message: `${currentName} doesn't exist in our inventory yet.`,
     });
   }
-  adminInputs.id = id;
-
+  if (_product) {
+    next({
+      error: "Product already exists",
+      message: `${productName} already exists in our inventory.`,
+    });
+  }
   try {
+    adminInputs.id = product.id;
+    delete adminInputs.currentName;
     const updatedProduct = await adminUpdateProductById(adminInputs);
 
     if (updatedProduct) {
       res.send({
         updatedProduct,
-        message: `Successfully updated fields: ${adminInputs}`,
+        success: `Successfully updated fields: ${adminInputs}`,
       });
     }
   } catch ({ error, message }) {
