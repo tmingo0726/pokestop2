@@ -6,15 +6,11 @@
 } 
 
 .v1 {
-    border-left: 3px solid #3B4CCA;
-    height: 800px;
+    border-left: 3px solid white;
+    height: 100%;
     margin-left: 500px;
     margin-top: 0;
     position: absolute;
-}
-
-.caption {
-    width: 300px;
 }
 
 #test {
@@ -40,15 +36,11 @@
     opacity: 0.9;
 }
 
-* {
-    color: #3B4CCA;
-    font-family: 'VT323', monospace;
-    
-}
-
 #quantity-count {
     font-size: xx-large;
     color: black;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 #plus, #minus {

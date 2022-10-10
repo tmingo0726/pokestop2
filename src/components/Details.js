@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import '../stylesheets/Details.css'
 
 const Details = (props) => {
 
     const product = props.chosenCard;
+    const cartItems = props.cartItems;
+    const setCartItems = props.setCartItems;
     let quantity = 0;
 
     console.log("Inside Product Details card picked is", product);
+    let navigate = useNavigate();
 
     const adjustQuantity = (op) => {
 
@@ -22,6 +26,18 @@ const Details = (props) => {
 
         document.getElementById("quantity-count").innerHTML = quantity;
 
+    }
+
+    const addToCart = (name, price, quantity) => {
+
+        console.log("Inside add to cart");
+        let item = {
+            name: name,
+            price: price,
+            quantity: quantity
+        };
+        setCartItems(item);
+        navigate("/MyCart");
     }
 
     return(
@@ -60,7 +76,7 @@ const Details = (props) => {
                 <p id="quantity-count" value={quantity}>{quantity}</p>
             </div>
         <button onClick={() => adjustQuantity("add")} id="plus">+</button>
-        <div><button id="addcard">Add To Cart</button></div>
+        <div><button onClick={() => addToCart(product.name, product.price, quantity)} id="addcard">Add To Cart</button></div>
         </div>
         </div>
         </div>
