@@ -6,7 +6,8 @@ const {
   adminUpdateProductById,
   adminSetActiveProductById,
   adminGetCustomerByUsername,
-  setAdminStatus
+  setAdminStatus,
+  adminDeleteCustomer
 } = require("../db");
 const { requireAdmin } = require("./utils");
 
@@ -144,6 +145,19 @@ adminRouter.get("/:username/info", requireAdmin, async (req, res, next) => {
   }
 });
 
+adminRouter.delete("/deletecustomer", requireAdmin, async (req, res, next) => {
+  const { id } = req.body;
+  try {
+    const { username } = await adminDeleteCustomer(id);
+
+    res.send({
+      success: `${username} successfully deleted`
+    })
+  } catch ({ error, message }) {
+    next({ error, message });
+  }
+})
+
 adminRouter.patch("/setadmin", requireAdmin, async (req, res, next) => {
   const { id, isadmin } = req.body;
   try {
@@ -162,5 +176,6 @@ adminRouter.patch("/setadmin", requireAdmin, async (req, res, next) => {
     next({ error, message });
   }
 })
+
 
 module.exports = adminRouter;
