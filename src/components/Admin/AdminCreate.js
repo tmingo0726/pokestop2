@@ -13,8 +13,12 @@ const AdminCreate = () => {
   const [newImagelink, setNewImagelink] = useState("");
   const [newInventorycount, setNewInventorycount] = useState("");
   const [newIsactive, setNewIsactive] = useState(true);
+  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [success, setSuccess] = useState("");
 
   const token = localStorage.getItem("token");
+
   const createProduct = async (
     productName,
     price,
@@ -24,7 +28,7 @@ const AdminCreate = () => {
     ability2,
     imagelink,
     inventorycount,
-    newIsactive
+    isactive
   ) => {
     try {
       console.log("ISACTIVE", newIsactive);
@@ -43,10 +47,13 @@ const AdminCreate = () => {
           ability2,
           imagelink,
           inventorycount,
-          isactive: newIsactive,
+          isactive,
         }),
       });
       const result = await response.json();
+      setSuccess(result.success);
+      setError(result.error);
+      setErrorMessage(result.message);
       console.log("RESULT", result);
     } catch (err) {
       console.error(err);
@@ -269,6 +276,7 @@ const AdminCreate = () => {
           </div>
         </fieldset>
         <button className="form-btn" type="submit">Create New Product!</button>
+
       </form>
     </div>
   );
