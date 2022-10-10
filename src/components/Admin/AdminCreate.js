@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../stylesheets/AdminCreate.css";
+import "../../stylesheets/AdminCreate.css";
 
 const BASE_URL = "http://localhost:4000/api";
 

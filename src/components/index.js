@@ -5,4 +5,4 @@ export { default as Login } from "./Login";
 export { default as Products } from "./Products";
 export { default as Details } from "./Details";
 export { default as Admin } from "./Admin";
-export { default as AdminCreate } from "./AdminCreate";
+// export { default as AdminCreate } from "./AdminCreate";

@@ -1,6 +1,5 @@
-import AdminActiveStatus from "./AdminActiveStatus";
-
-const { default: AdminCreate } = require("./AdminCreate");
+import AdminActiveStatus from "./Admin/AdminActiveStatus";
+import AdminCreate from "./Admin/AdminCreate";
 
 const Admin = () => {
   return (
