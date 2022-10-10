@@ -19,19 +19,17 @@ const Header = ({
 
   return (
     <div id="header">
-      <h1>
-        <Link id="links" to="/">
-          Pokestop
+        <Link id="brand-name" to="/">
+          Pokéstop
         </Link>
-      </h1>
       {loggedIn ? (
         <>
           <nav id="links">
-            <Link to="profile">Profile</Link> | {""}
+            <Link to="/profile">Profile</Link> | {""}
             {isadmin ? <Link to="admin">Admin | {""}</Link> : null}
-            <Link to="products">Products</Link> | {""}
-            <Link to="mycart">My Cart</Link> | {""}
-            <Link to="Login" onClick={logout}>
+            <Link to="/products">Products</Link> | {""}
+            <Link to="/mycart">My Cart</Link> | {""}
+            <Link to="/login" onClick={logout}>
               Logout
             </Link>
           </nav>
@@ -39,10 +37,9 @@ const Header = ({
       ) : (
         <>
           <nav id="links">
-            <Link to="Login">Login</Link> | {""}
-            <Link to="register">Register</Link> | {""}
-            <Link to="products">Products</Link> | {""}
-            <Link to="mycart">My Cart</Link>
+            <Link to="/login">Login/Register</Link> | {""}
+            <Link to="/products">Products</Link> | {""}
+            <Link to="/mycart">My Cart</Link>
           </nav>
         </>
       )}
