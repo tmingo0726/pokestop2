@@ -4,7 +4,7 @@ const { default: AdminCreate } = require("./AdminCreate");
 
 const Admin = () => {
   return (
-    <div>
+    <div id="admin-panel-wrap">
       <div>
         <AdminCreate />
       </div>

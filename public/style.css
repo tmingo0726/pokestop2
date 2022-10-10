@@ -47,18 +47,21 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 95%;
 }
 
 .form-inputs {
-    width: 70%;
+    width: 75%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
     margin-top: 6px;
     margin-bottom: 16px;
-    color:rgba(0, 0, 0);
+    color:rgb(0, 0, 0);
+}
+.form-inputs::placeholder {
+    color: rgba(87, 87, 87, 0.61);
 }
 
 .form-inputs:focus {
@@ -96,4 +99,16 @@ body {
 .error > h4 {
     color: red;
     text-align: center;
+}
+
+#admin-panel-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

@@ -1,8 +1,68 @@
 
-#new-product-form{
+#create-form {
+    width: 500px;
     display: flex;
-    justify-content: center;
-    flex-direction: column;
     align-items: center;
-    padding-top: 10px;
+    justify-content: center;
+}
+
+#create-header {
+    margin-top: 0;
+}
+
+#create-inputs {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: none;
+    padding-top: 0px;
+    margin-top: 0px;
+    padding: 5px;
+}
+
+#double-column-inputs {
+    width: 90%;
+}
+
+.input-pair {
+    width: 225px;
+}
+
+label {
+    color: #6060a3a8;
+}
+
+#abilities-txt {
+    height: 75px;
+    width: 90%;
+}
+
+.inner-input-wrap {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+
+
+#inv-ct {
+    margin-left: 10px;
+    padding-left: 10px;
+    max-width: 5%;
+}
+
+#inv-ct::placeholder {
+    color: rgba(87, 87, 87, 0.61);
+}
+
+#sl-input > input {
+    width: 90%;
+}
+
+#radio-choices {
+    display: flex;
+    flex-direction: column;
+}
+
+#form-legend {
+    color: #6060a3;
 }
