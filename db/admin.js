@@ -138,10 +138,10 @@ const adminGetCustomerByUsername = async (username) => {
       rows: [customer],
     } = await client.query(
       `
-            SELECT id, username, firstname, lastname, email, address, isadmin
-            FROM customers
-            WHERE username = '${username}';
-        `
+        SELECT id, username, firstname, lastname, email, address, isadmin
+        FROM customers
+        WHERE username = '${username}';
+      `
     );
 
     return customer;
@@ -151,6 +151,25 @@ const adminGetCustomerByUsername = async (username) => {
   }
 };
 
+const setAdminStatus = async (id, bool) => {
+  try {
+    const {
+      rows: [customer],
+    } = await client.query(
+      `
+        UPDATE customers
+        SET isadmin = ${bool}
+        WHERE id = ${id}
+        RETURNING username, isadmin;
+      `
+    );
+    return customer;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 module.exports = {
   adminCheckById,
   adminCreateProduct,
@@ -158,4 +177,5 @@ module.exports = {
   adminUpdateProductById,
   adminSetActiveProductById,
   adminGetCustomerByUsername,
+  setAdminStatus
 };
