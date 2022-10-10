@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../stylesheets/AdminCreate.css";
+import "../../stylesheets/AdminCreate.css";
 
 const BASE_URL = "http://localhost:4000/api";
 
@@ -13,8 +13,12 @@ const AdminCreate = () => {
   const [newImagelink, setNewImagelink] = useState("");
   const [newInventorycount, setNewInventorycount] = useState("");
   const [newIsactive, setNewIsactive] = useState(true);
+  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [success, setSuccess] = useState("");
 
   const token = localStorage.getItem("token");
+
   const createProduct = async (
     productName,
     price,
@@ -24,7 +28,7 @@ const AdminCreate = () => {
     ability2,
     imagelink,
     inventorycount,
-    newIsactive
+    isactive
   ) => {
     try {
       console.log("ISACTIVE", newIsactive);
@@ -43,10 +47,13 @@ const AdminCreate = () => {
           ability2,
           imagelink,
           inventorycount,
-          isactive: newIsactive,
+          isactive,
         }),
       });
       const result = await response.json();
+      setSuccess(result.success);
+      setError(result.error);
+      setErrorMessage(result.message);
       console.log("RESULT", result);
     } catch (err) {
       console.error(err);
@@ -138,10 +145,10 @@ const AdminCreate = () => {
                 name="rarity"
                 value={newRarity}
                 onChange={() => {
-                  setNewRarity("Holographic");
+                  setNewRarity("Holo");
                 }}
               ></input>
-              <label htmlFor="rarityChoice1"> Holographic </label>
+              <label htmlFor="rarityChoice1"> Holo </label>
               <input
                 type="radio"
                 id="rarityChoice2"
@@ -229,6 +236,7 @@ const AdminCreate = () => {
           </div>
         </fieldset>
         <button type="submit">Create New Product!</button>
+        <div>{error ? `${errorMessage}` : `${success}`}</div>
       </form>
     </div>
   );
