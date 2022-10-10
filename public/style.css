@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 body {
-
     background-image: url('night-bg.png');
     background-attachment: fixed;
     margin: 0;
@@ -13,8 +12,46 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-.form-inputs {
+/* FORM TEMPLATE */
+
+.form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    width: 600px;
+    margin: 50px auto;
+    padding: 10px;
+    position: relative; 
+  
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 3px 7px rgba(0, 0, 0, 0.3),
+      inset 0 1px rgba(255, 255, 255, 1), inset 0 -3px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    background: linear-gradient(#eeefef, #ffffff 10%);
+}
+
+.form-header{
+  font-size: 40px;
+  color: #6060a3;
+  margin: 20px;
+}
+
+.form-divider {
+    border: 1px solid #717177;
     width: 100%;
+    margin-bottom: 25px;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.form-inputs {
+    width: 70%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -29,59 +66,34 @@ body {
     outline: none;
 }
 
-#products-heading {
+.form-btn {
+    background-color: #3B4CCA;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+  
+.form-btn:hover {
+    opacity:1;
+}
+
+/* .form-inputs {
+    width: 75%;
+} */
+
+.form-redirect-text {
+  color: #717177;
+}
+
+.form-redirect-link {
+  color: #6060a3;
+}
+
+.error > h4 {
+    color: red;
     text-align: center;
-    margin: 0 auto;
-}
-
-.main {
-    margin-left: 50px;
-    font-size: 20px;
-    padding: 0px 10px;
-} 
-
-.v1 {
-    border-left: 3px solid #3B4CCA;
-    height: 500px;
-    margin-left: 125px;
-}
-
-#instock {
-    background-color: green;
-    width: 120px;
-    color: black;
-}
-
-#addcard {
-    margin-top: 10px;
-    background-color: #3B4CCA;
-    color: white;
-    padding: 16px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 25%;
-    opacity: 0.9;
-}
-
-
-#quantity-count {
-    font-size: xx-large;
-    color: black;
-}
-
-#plus, #minus {
-    background-color: #3B4CCA;
-    font-size: large;
-    color: white;
-    padding: 16px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 10%;
-    opacity: 0.9;
-}
-
-#details-header {
-    color: #FFDE00;
 }
