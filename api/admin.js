@@ -122,8 +122,8 @@ adminRouter.patch("/setactiveproduct", requireAdmin, async (req, res, next) => {
   }
 });
 
-adminRouter.get("/customerinfo", requireAdmin, async (req, res, next) => {
-  const { username } = req.body;
+adminRouter.get("/:username/info", requireAdmin, async (req, res, next) => {
+  const { username } = req.params;
   try {
     const viewCustomer = await adminGetCustomerByUsername(username);
     console.log("CUST", viewCustomer);
@@ -134,7 +134,8 @@ adminRouter.get("/customerinfo", requireAdmin, async (req, res, next) => {
       });
     } else {
       res.send({
-        success: `${viewCustomer}`,
+        viewCustomer,
+        success: `${username}`,
       });
     }
   } catch ({ error, message }) {

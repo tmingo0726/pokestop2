@@ -1,6 +1,7 @@
 import AdminActiveStatus from "./Admin/AdminActiveStatus";
 import AdminCreate from "./Admin/AdminCreate";
 import AdminUpdateProduct from "./Admin/AdminUpdateProduct";
+import AdminCustomer from "./Admin/AdminCustomer";
 
 const Admin = () => {
   return (
@@ -13,6 +14,9 @@ const Admin = () => {
       </div>
       <div>
         <AdminUpdateProduct />
+      </div>
+      <div>
+        <AdminCustomer />
       </div>
     </div>
   );
