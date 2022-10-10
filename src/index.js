@@ -1,7 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { MyCart } from "./components";
 import {
   Footer,
   Register,
@@ -10,6 +9,7 @@ import {
   Products,
   Details,
   Admin,
+  MyCart
 } from "./components";
 
 const container = document.getElementById("app");
