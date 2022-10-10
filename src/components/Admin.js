@@ -1,9 +1,16 @@
+import AdminActiveStatus from "./AdminActiveStatus";
+
 const { default: AdminCreate } = require("./AdminCreate");
 
 const Admin = () => {
   return (
     <div>
-      <AdminCreate />
+      <div>
+        <AdminCreate />
+      </div>
+      <div>
+        <AdminActiveStatus />
+      </div>
     </div>
   );
 };

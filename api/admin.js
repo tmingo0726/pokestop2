@@ -85,14 +85,15 @@ adminRouter.patch("/editproduct", requireAdmin, async (req, res, next) => {
 
 adminRouter.patch("/setactiveproduct", requireAdmin, async (req, res, next) => {
   const { name: productName, isactive } = req.body;
-  const { id } = await adminGetProductIdByName(productName);
   try {
-    if (!id) {
+    const product = await adminGetProductIdByName(productName);
+    if (!product) {
       next({
         error: "Product doesn't exist",
         message: `${productName} doesn't exist in our inventory yet.`,
       });
     } else {
+      const id = product.id;
       await adminSetActiveProductById(id, isactive);
 
       res.send({
