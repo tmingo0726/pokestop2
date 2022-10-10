@@ -11,6 +11,16 @@ const MyCart = (props) => {
     const cartItems = props.cartItems;
     const setCartItems = props.setCartItems;
 
+
+    const purchaseItems = localStorage.getItem("cartItems");
+    const testItems = JSON.parse(purchaseItems);
+    console.log("Purchase Items are ", Object.keys(testItems));
+    //const testItems = purchaseItems.json();
+    //console.log("Item from local storage is ", itepym);
+    //console.log("Current cart item is ", testItems);
+
+
+
     /*
     const key = "pk_test_51Lr4m0KMgpGl7kEFPICUiPJ1j9Qs8mXMKCjWbDp8Z9fjbS8ptGQUkcjVtTnHJIz6hbA8DhpLhfNyEJifFiSb07GQ00bRqHvuil";
 
@@ -41,12 +51,26 @@ const MyCart = (props) => {
         console.log("Stripe checkout error", error);
     }
     */
-    console.log("Current cart item is ", cartItems);
+    
+
+    //Map through localStorage to retrieve all of the purchase items 
+    
     return (
         <div>
             <h1>Welcome to your Cart</h1>
-        </div>
-    )
+            {
+            testItems.map((singleItem, i) => {
+                console.log("single item is ", singleItem);
+                return (
+                    <div className="cart-item" key={i}>
+                        <h2>NAME: {singleItem.name}</h2>
+                        <h2>PRICE: {singleItem.price}</h2>
+                        <h2>QUANTITY: {singleItem.quantity}</h2>
+                    </div>
+                );
+        })}
+    </div>
+  );
 }
 
 

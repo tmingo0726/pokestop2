@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import '../stylesheets/Details.css'
 
+let purchaseItems = [];
 const Details = (props) => {
 
     const product = props.chosenCard;
     const cartItems = props.cartItems;
     const setCartItems = props.setCartItems;
     let quantity = 0;
-
+    
     console.log("Inside Product Details card picked is", product);
     let navigate = useNavigate();
 
@@ -31,19 +32,28 @@ const Details = (props) => {
     const addToCart = (name, price, quantity) => {
 
         console.log("Inside add to cart");
-        let item = {
-            name: name,
-            price: price,
-            quantity: quantity
-        };
-        setCartItems(item);
-        navigate("/MyCart");
+        if (!quantity) {
+            alert("Please select a quantity");
+        } else {
+
+            let item = {
+                name: name,
+                price: price,
+                quantity: quantity
+            };
+
+            setCartItems(item);
+
+            purchaseItems.push(item);
+            localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
+            navigate("/MyCart");
+        }
     }
 
     return(
         <div>
         <div className="grid-container">
-            <div className="caption"><img className="grid-item" src={product.imagelink} onClick={() => seeDetails(product)} alt="Pokemon"/>
+            <div className="caption"><img className="grid-item" src={product.imagelink} alt="Pokemon"/>
         </div>
         <div className="v1"></div>
         <div className="main">
