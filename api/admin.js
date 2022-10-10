@@ -6,7 +6,8 @@ const {
   adminUpdateProductById,
   adminSetActiveProductById,
   adminGetCustomerByUsername,
-  setAdminStatus
+  setAdminStatus,
+  adminDeleteCustomer
 } = require("../db");
 const { requireAdmin } = require("./utils");
 
@@ -123,8 +124,8 @@ adminRouter.patch("/setactiveproduct", requireAdmin, async (req, res, next) => {
   }
 });
 
-adminRouter.get("/customerinfo", requireAdmin, async (req, res, next) => {
-  const { username } = req.body;
+adminRouter.get("/:username/info", requireAdmin, async (req, res, next) => {
+  const { username } = req.params;
   try {
     const viewCustomer = await adminGetCustomerByUsername(username);
     console.log("CUST", viewCustomer);
@@ -142,6 +143,19 @@ adminRouter.get("/customerinfo", requireAdmin, async (req, res, next) => {
     next({ error, message });
   }
 });
+
+adminRouter.delete("/deletecustomer", requireAdmin, async (req, res, next) => {
+  const { id } = req.body;
+  try {
+    const { username } = await adminDeleteCustomer(id);
+
+    res.send({
+      success: `${username} successfully deleted`
+    })
+  } catch ({ error, message }) {
+    next({ error, message });
+  }
+})
 
 adminRouter.patch("/setadmin", requireAdmin, async (req, res, next) => {
   const { id, isadmin } = req.body;
@@ -161,5 +175,6 @@ adminRouter.patch("/setadmin", requireAdmin, async (req, res, next) => {
     next({ error, message });
   }
 })
+
 
 module.exports = adminRouter;

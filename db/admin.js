@@ -84,7 +84,6 @@ const adminGetProductIdByName = async (name) => {
 };
 
 const adminUpdateProductById = async ({ id, ...fields }) => {
-  console.log("ID AND FIELDS", id, fields);
   const columns = Object.keys(fields)
     .map((key, idx) => `"${key}"=$${idx + 1}`)
     .join(", ");
@@ -151,6 +150,25 @@ const adminGetCustomerByUsername = async (username) => {
   }
 };
 
+const adminDeleteCustomer = async (id) => {
+  try {
+    const {
+      rows: [customer],
+    } = await client.query(
+      `
+        DELETE FROM customers
+        WHERE customers.id = ${id}
+        RETURNING username;
+      `
+    );
+
+    return customer;
+  } catch (error) {
+    console.error(error);
+    throw error;    
+  }
+}
+
 const setAdminStatus = async (id, bool) => {
   try {
     const {
@@ -170,6 +188,7 @@ const setAdminStatus = async (id, bool) => {
   }
 }
 
+
 module.exports = {
   adminCheckById,
   adminCreateProduct,
@@ -177,5 +196,6 @@ module.exports = {
   adminUpdateProductById,
   adminSetActiveProductById,
   adminGetCustomerByUsername,
+  adminDeleteCustomer,
   setAdminStatus
 };
