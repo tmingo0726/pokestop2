@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { MyCart } from "./components";
 import {
   Footer,
   Register,
@@ -24,6 +25,7 @@ const App = () => {
   const [isadmin, setIsadmin] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
   const [chosenCard, setChosenCard] = useState(0);
+  const [cartItems, setCartItems] = useState([]);
 
   return (
     <div>
@@ -37,6 +39,7 @@ const App = () => {
       <Routes>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/admin" element={<Admin token={token} />}></Route>
+        <Route path="/MyCart" element={<MyCart  cartItems={cartItems} setCartItems={setCartItems}/>}></Route>
         <Route
           path="/products"
           element={
@@ -50,7 +53,7 @@ const App = () => {
         ></Route>
         <Route
           path="/products/details"
-          element={<Details chosenCard={chosenCard} />}
+          element={<Details chosenCard={chosenCard} cartItems={cartItems} setCartItems={setCartItems} />}
         ></Route>
         <Route
           exact

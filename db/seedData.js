@@ -1,5 +1,7 @@
 const {
   createCustomer,
+  createCart,
+  createCartProduct,
   adminCheckById,
   adminCreateProduct,
   adminGetProductIdByName,
@@ -13,6 +15,8 @@ const dropTables = async () => {
   console.log("DROPPING TABLES");
   try {
     await client.query(`
+      DROP TABLE IF EXISTS cart_products;
+      DROP TABLE IF EXISTS carts;
       DROP TABLE IF EXISTS products;      
       DROP TABLE IF EXISTS customers;
         `);
@@ -50,6 +54,19 @@ const createTables = async () => {
               imagelink VARCHAR(255) NOT NULL,
               inventorycount INTEGER NOT NULL,
               isactive BOOLEAN DEFAULT true
+            );
+
+            CREATE TABLE carts (
+              id SERIAL PRIMARY KEY,
+              customerid INTEGER REFERENCES customers(id),
+              isopen BOOLEAN DEFAULT true
+            );
+
+            CREATE TABLE cart_products (
+              id SERIAL PRIMARY KEY,
+              cartid INTEGER REFERENCES carts(id),
+              productid INTEGER REFERENCES products(id),
+              quantity INTEGER NOT NULL
             );
         `);
     console.log("FINISHED BUILDING TABLES!");
@@ -190,6 +207,65 @@ const createInitialProducts = async () => {
   }
 };
 
+const createInitialCarts = async () => {
+  console.log("STARTING TO CREATE CARTS");
+  try {
+    const cartsToCreate = [
+      {
+        customerid: "1",
+        isopen: false
+      },
+      {
+        customerid: "2",
+        isopen: false
+      },
+      {
+        customerid: "3",
+        isopen: true
+      }
+    ];
+
+    console.log("CARTS TO CREATE", cartsToCreate);
+    const carts = await Promise.all(cartsToCreate.map(createCart));
+    console.log("CARTS", carts);
+    console.log("FINISHED CREATING CARTS");
+  } catch (err) {
+    console.log("ERROR CREATING CARTS");
+    throw err;
+  }
+}
+
+const createInitialCartProducts = async () => {
+  console.log("STARTING TO CREATE CART-PRODUCTS");
+  try {
+    const cartProductsToCreate = [
+      {
+        cartid: "1",
+        productid: "2",
+        quantity: 3
+      },
+      {
+        cartid: "2",
+        productid: "2",
+        quantity: 2
+      },
+      {
+        cartid: "3",
+        productid: "3",
+        quantity: 1
+      }
+    ];
+
+    console.log("CART PRODUCTS TO CREATE", cartProductsToCreate);
+    const cartproducts = await Promise.all(cartProductsToCreate.map(createCartProduct));
+    console.log("CART PRODUCTS", cartproducts);
+    console.log("FINISHED CREATING CART PRODUCTS");
+  } catch (err) {
+    console.log("ERROR CREATING CART PRODUCTS");
+    throw err;
+  }
+}
+
 // const testAdminCheckById = async (id) => {
 //   try {
 //     const testing = await adminCheckById(id);
@@ -273,6 +349,8 @@ const rebuildDB = async () => {
     await createTables();
     await createInitialUsers();
     await createInitialProducts();
+    await createInitialCarts();
+    await createInitialCartProducts();
     // await testAdminCreateProduct({
     //   name: "Mewtwo",
     //   price: "1,000,000",
