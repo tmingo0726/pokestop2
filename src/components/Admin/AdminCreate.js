@@ -76,35 +76,47 @@ const AdminCreate = () => {
   };
   return (
     <div>
-      <form id="new-product-form" onSubmit={handleSubmit}>
-        <fieldset>
-          <legend>
-            <h2>Create A New Product</h2>
+      <form id="create-form" className="form admin-form" onSubmit={handleSubmit}>
+        <fieldset className="input-wrapper">
+          <legend id="header-legend">
+            <h2 id="create-header" className="form-header">Create New Product</h2>
           </legend>
-          <div id="new-product-inputs">
-            <br />
-            <legend>New Product Name:</legend>
-            <input
-              type="text"
-              value={newProductName}
-              placeholder="Name"
-              required
-              onChange={(event) => {
-                setNewProductName(event.target.value);
-              }}
-            ></input>
-            <legend>New Product Price:</legend>
-            <input
-              type="text"
-              value={newPrice}
-              placeholder="Price"
-              required
-              onChange={(event) => {
-                setNewPrice(event.target.value);
-              }}
-            ></input>
-            <legend>New Product Condition:</legend>
-            <div id="condition-choices">
+          <div id="create-inputs" className="form-inputs">
+            <div className="inner-input-wrap">
+              <div className="input-pair">
+                <legend id="form-legend">New Product Name:</legend>
+                <input
+                  id="double-column-inputs"
+                  className="form-inputs"
+                  type="text"
+                  value={newProductName}
+                  placeholder="Name"
+                  required
+                  onChange={(event) => {
+                    setNewProductName(event.target.value);
+                  }}
+                ></input>
+                </div>
+                <div className="input-pair">
+                <legend id="form-legend">New Product Price:</legend>
+                <input
+                  id="double-column-inputs"
+                  className="form-inputs"
+                  type="text"
+                  value={newPrice}
+                  placeholder="$$$"
+                  required
+                  onChange={(event) => {
+                    setNewPrice(event.target.value);
+                  }}
+                ></input>
+              </div>
+            </div>
+            <div className="inner-input-wrap">
+            <div id="radio-choices">
+            <div className="input-pair">
+              <legend id="form-legend">New Product Condition:</legend>
+              <div className="single-radio-choice">
               <input
                 type="radio"
                 id="conditionChoice1"
@@ -115,6 +127,8 @@ const AdminCreate = () => {
                 }}
               ></input>
               <label htmlFor="conditionChoice1"> Mint </label>
+              </div>
+              <div className="single-radio-choice">
               <input
                 type="radio"
                 id="conditionChoice2"
@@ -125,6 +139,8 @@ const AdminCreate = () => {
                 }}
               ></input>
               <label htmlFor="conditionChoice2"> Good </label>
+              </div>
+              <div className="single-radio-choice">
               <input
                 type="radio"
                 id="conditionChoice3"
@@ -135,20 +151,24 @@ const AdminCreate = () => {
                 }}
               ></input>
               <label htmlFor="conditionChoice3"> Damaged </label>
+              </div>
+              </div>
             </div>
-            <br />
-            <legend>New Product Rarity: </legend>
-            <div id="rarity-choices">
+            <div id="radio-choices">
+            <legend id="form-legend">New Product Rarity: </legend>
+            <div className="single-radio-choice">
               <input
                 type="radio"
                 id="rarityChoice1"
                 name="rarity"
                 value={newRarity}
                 onChange={() => {
-                  setNewRarity("Holo");
+                  setNewRarity("Holographic");
                 }}
               ></input>
-              <label htmlFor="rarityChoice1"> Holo </label>
+              <label htmlFor="rarityChoice1"> Holographic </label>
+              </div>
+              <div className="single-radio-choice">
               <input
                 type="radio"
                 id="rarityChoice2"
@@ -159,6 +179,8 @@ const AdminCreate = () => {
                 }}
               ></input>
               <label htmlFor="rarityChoice2"> Rare </label>
+              </div>
+              <div className="single-radio-choice">
               <input
                 type="radio"
                 id="rarityChoice3"
@@ -169,10 +191,15 @@ const AdminCreate = () => {
                 }}
               ></input>
               <label htmlFor="rarityChoice3"> Common </label>
+              </div>
             </div>
-            <br />
-            <legend>New Product Ability 1: </legend>
+            </div>
+            <div className="inner-input-wrap">
+              <div className="input-pair">
+            <legend id="form-legend">New Product Ability 1: </legend>
             <input
+              className="form-inputs"
+              id="abilities-txt"
               type="text"
               value={newAbility1}
               placeholder="Ability 1"
@@ -181,34 +208,47 @@ const AdminCreate = () => {
                 setNewAbility1(event.target.value);
               }}
             ></input>
-            <legend>New Product Ability 2: </legend>
-            <input
-              type="text"
-              value={newAbility2}
-              placeholder="Ability 2"
-              onChange={(event) => {
-                setNewAbility2(event.target.value);
-              }}
-            ></input>
-            <legend>New Product Image URL</legend>
-            <input
-              type="text"
-              value={newImagelink}
-              placeholder="Image URL"
-              onChange={(event) => {
-                setNewImagelink(event.target.value);
-              }}
-            ></input>
-            <legend>New Product Inventory</legend>
-            <input
-              type="text"
-              value={newInventorycount}
-              placeholder="How Many You Got?"
-              onChange={(event) => {
-                setNewInventorycount(event.target.value);
-              }}
-            ></input>
-            <legend>New Product Active Status</legend>
+            </div>
+            <div className="input-pair">
+              <legend id="form-legend">New Product Ability 2: </legend>
+              <input
+                className="form-inputs"
+                id="abilities-txt"
+                type="text"
+                value={newAbility2}
+                placeholder="Ability 2"
+                onChange={(event) => {
+                  setNewAbility2(event.target.value);
+                }}
+              ></input>
+              </div>
+            </div>
+            <legend id="form-legend">New Product Image URL</legend>
+              <div id="sl-input" className="inner-input-wrap">
+                <input
+                  className="form-inputs"
+                  type="text"
+                  value={newImagelink}
+                  placeholder="https://images.pokemontcg.io/base1/..."
+                  onChange={(event) => {
+                    setNewImagelink(event.target.value);
+                  }}
+                ></input>
+              </div>
+            <div id="sl-input" className="inner-input-wrap">
+            <legend id="form-legend">New Product Inventory:</legend>
+              <input
+                id="inv-ct"
+                type="text"
+                value={newInventorycount}
+                placeholder="#"
+                onChange={(event) => {
+                  setNewInventorycount(event.target.value);
+                }}
+              ></input>
+            </div>
+            <div className="inner-input-wrap">
+            <legend id="form-legend">New Product Status: </legend>
             <div id="isactive-choices">
               <input
                 type="radio"
@@ -220,7 +260,7 @@ const AdminCreate = () => {
                   setNewIsactive(true);
                 }}
               ></input>
-              <label htmlFor="isactiveChoice1"> True </label>
+              <label htmlFor="isactiveChoice1"> Active </label>
               <input
                 type="radio"
                 id="isactiveChoice2"
@@ -230,13 +270,13 @@ const AdminCreate = () => {
                   setNewIsactive(false);
                 }}
               ></input>
-              <label htmlFor="isactiveChoice2"> False </label>
+              <label htmlFor="isactiveChoice2"> Inactive </label>
             </div>
-            <br></br>
+            </div>
           </div>
         </fieldset>
-        <button type="submit">Create New Product!</button>
-        <div>{error ? `${errorMessage}` : `${success}`}</div>
+        <button className="form-btn" type="submit">Create New Product!</button>
+
       </form>
     </div>
   );

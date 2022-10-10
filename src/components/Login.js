@@ -56,14 +56,14 @@ const Login = ({
 
   return (
     <div>
-      <form id="login-form" onSubmit={handleSubmit}>
+      <form id="login" className="form" onSubmit={handleSubmit}>
         {loggedIn ? (
           <Navigate to="/" />
         ) : (
           <>
-            <h2 id="login-header">Login</h2>
-            <hr id="divider"></hr>
-            <div id="login-inputs">
+            <h2 className="form-header">Login</h2>
+            <hr className="form-divider"></hr>
+            <div className="input-wrapper">
               <input
                 type="text"
                 id="login-username"
@@ -75,8 +75,6 @@ const Login = ({
                   setUsername(event.target.value);
                 }}
               ></input>
-            </div>
-            <div id="login-inputs">
               <input
                 id="login-password"
                 className="form-inputs"
@@ -89,11 +87,11 @@ const Login = ({
                 }}
               ></input>
             </div>
-            <div id="error">
-              <h2>{error ? `${errorMessage}` : null}</h2>
+            <div className="error">
+              <h4>{error ? `${errorMessage}` : null}</h4>
             </div>
             <div>
-              <button id="submit" type="submit">Login</button>
+              <button className="form-btn" type="submit">Login</button>
               <div className="form-redirect-text">Not a member? <Link className="form-redirect-link" to='/register'>Sign Up!</Link></div>
             </div>
           </>

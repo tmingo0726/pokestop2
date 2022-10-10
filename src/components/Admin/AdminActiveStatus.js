@@ -42,10 +42,10 @@ const AdminActiveStatus = () => {
 
   return (
     <div>
-      <form id="active-status-form" onSubmit={handleSubmit}>
+      <form className="form" onSubmit={handleSubmit}>
         <fieldset>
           <legend>
-            <h2>Change Active Status</h2>
+            <h2 className="form-header">Change Active Status</h2>
           </legend>
           <div id="active-status-inputs">
             <br />

@@ -4,7 +4,7 @@ import AdminUpdateProduct from "./Admin/AdminUpdateProduct";
 
 const Admin = () => {
   return (
-    <div>
+    <div id="admin-panel-wrap">
       <div>
         <AdminCreate />
       </div>
