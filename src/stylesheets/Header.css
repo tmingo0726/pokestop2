@@ -3,24 +3,25 @@
 #header{
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     background-color: #3B4CCA;
     color: #FFDE00;
-    font-family: 'VT323', monospace;
     word-spacing: 2px;
-    padding: 15px;
+    padding: 0px 15px;
 }
 
-#links{
-    padding: 15px;
-    text-decoration: none;
+#brand-name{
+    font-family: 'VT323', monospace;
+    font-size: 48px;
+    font-weight: 600;
     color: #FFDE00;
+    padding: 0px 0px 5px 15px;
+    text-decoration: none;
 }
 
 #links a{
     color: #FFDE00;
     text-decoration: none;
-
-
 }
 
 

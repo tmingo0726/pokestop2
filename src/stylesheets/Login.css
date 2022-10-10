@@ -1,30 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-#login{
-    font-family: 'VT323', monospace;
+#login-form {
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    color: #FFDE00;
     margin-top: 100px;
-}
 
-#login-header{
-    margin: 20px;
-    font-size: 64px;
-}
-
-/* * {box-sizing: border-box} <-- Make specific so it doesn't apply to every component */
-
-#login {
-    /* Size & position */
     width: 300px;
     margin: 60px auto 30px;
     padding: 10px;
-    position: relative; /* For the submit button positioning */
-  
-    /* Styles */
+    position: relative; 
   
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 3px 7px rgba(0, 0, 0, 0.3),
       inset 0 1px rgba(255, 255, 255, 1), inset 0 -3px 2px rgba(0, 0, 0, 0.25);
@@ -32,27 +18,11 @@
     background: linear-gradient(#eeefef, #ffffff 10%);
 }
 
-input[type="text"] , input[type="password"], input[type="submit"] {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  margin-top: 6px;
-  margin-bottom: 16px;
- 
+#login-header{
+  font-size: 40px;
+  color: #6060a3;
+  margin: 20px;
 }
-
-
-input[type=text]:focus, input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
-}
-
-/*hr {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
-}*/
 
 #submit {
     background-color: #3B4CCA;
@@ -63,12 +33,26 @@ input[type=text]:focus, input[type=password]:focus {
     cursor: pointer;
     width: 100%;
     opacity: 0.9;
-  }
+}
   
-  #submit:hover {
+#submit:hover {
     opacity:1;
-  }
+}
 
-  #login-inputs {
+#login-inputs {
     width: 75%;
-  }
+}
+
+#divider {
+  border: 1px solid #717177;
+  width: 100% + 10px;
+  margin-bottom: 25px;
+}
+
+.form-redirect-text {
+  color: #717177;
+}
+
+.form-redirect-link {
+  color: #6060a3;
+}

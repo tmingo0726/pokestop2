@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import '../stylesheets/Login.css'
 
 // require("dotenv").config();
@@ -56,18 +56,19 @@ const Login = ({
 
   return (
     <div>
-      <form id="login" onSubmit={handleSubmit}>
+      <form id="login-form" onSubmit={handleSubmit}>
         {loggedIn ? (
           <Navigate to="/" />
         ) : (
           <>
-            <h2>Login</h2>
+            <h2 id="login-header">Login</h2>
+            <hr id="divider"></hr>
             <div id="login-inputs">
               <input
                 type="text"
                 id="login-username"
-                value={username}
-                placeholder="Please enter username"
+                className="form-inputs"
+                placeholder="Username"
                 required
                 minLength={5}
                 onChange={(event) => {
@@ -77,9 +78,9 @@ const Login = ({
             </div>
             <div id="login-inputs">
               <input
-                value={password}
                 id="login-password"
-                placeholder="Please enter password"
+                className="form-inputs"
+                placeholder="Password"
                 required
                 type="password"
                 minLength={8}
@@ -92,9 +93,8 @@ const Login = ({
               <h2>{error ? `${errorMessage}` : null}</h2>
             </div>
             <div>
-              <button id="submit" type="submit">
-                Login
-              </button>
+              <button id="submit" type="submit">Login</button>
+              <div className="form-redirect-text">Not a member? <Link className="form-redirect-link" to='/register'>Sign Up!</Link></div>
             </div>
           </>
         )}
