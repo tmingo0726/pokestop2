@@ -6,6 +6,7 @@ const {
   adminUpdateProductById,
   adminSetActiveProductById,
   adminGetCustomerByUsername,
+  setAdminStatus
 } = require("../db");
 const { requireAdmin } = require("./utils");
 
@@ -141,4 +142,24 @@ adminRouter.get("/customerinfo", requireAdmin, async (req, res, next) => {
     next({ error, message });
   }
 });
+
+adminRouter.patch("/setadmin", requireAdmin, async (req, res, next) => {
+  const { id, isadmin } = req.body;
+  try {
+    const { username, isadmin: adminStatus } = await setAdminStatus(id, isadmin)
+
+    if (adminStatus) {
+      res.send({
+        success: `${username} is now an Admin.`
+      })
+    } else {
+      res.send({
+        success: `${username} is no longer an Admin.`
+      })
+    }
+  } catch ({ error, message }) {
+    next({ error, message });
+  }
+})
+
 module.exports = adminRouter;
