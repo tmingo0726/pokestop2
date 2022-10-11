@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../../stylesheets/AdminCustomer.css";
 
 const BASE_URL = "http://localhost:4000/api";
 
@@ -81,6 +82,7 @@ const AdminCustomer = () => {
   };
 
   const handleDeleteCustomer = (customerId) => {
+    setSuccess("");
     deleteCustomer(customerId);
   };
 
@@ -96,14 +98,22 @@ const AdminCustomer = () => {
   };
   return (
     <div>
-      <form className="form" onSubmit={handleSubmit}>
-        <fieldset>
-          <legend>View Customer Information</legend>
-          <div id="active-status-inputs">
-            <br />
-            <legend>Customer Username: </legend>
+      <form
+        id="delete-form"
+        className="form admin-form"
+        onSubmit={handleSubmit}
+      >
+        <fieldset className="input-wrapper">
+          <legend id="header-legend">
+            <h2 id="delete header" className="form-header">
+              Customer Information
+            </h2>
+          </legend>
+          <div id="delete-inputs">
+            <legend id="form-legend">Customer Username: </legend>
             <input
               type="text"
+              id="delete-customer-input"
               value={customerUsername}
               placeholder="Username"
               required
@@ -113,27 +123,44 @@ const AdminCustomer = () => {
             ></input>
           </div>
         </fieldset>
-        <button type="submit">Search For Customer!</button>
+        <button id="search-customer-btn" className="form-btn" type="submit">
+          Search For Customer!
+        </button>
         {error ? `${errorMessage}` : null}
         {success ? (
           isadmin ? (
-            <button onClick={() => toggleAdminStatus(false)}>
+            <button
+              id="demote-btn"
+              className="form-btn"
+              //   className="toggle-admin-btn"
+              onClick={() => toggleAdminStatus(false)}
+            >
               Demote to scrub!
             </button>
           ) : (
-            <button onClick={() => toggleAdminStatus(true)}>
+            <button
+              id="promote-btn"
+              className="form-btn"
+              //   className="toggle-admin-btn"
+              onClick={() => toggleAdminStatus(true)}
+            >
               Promote to Admin!
             </button>
           )
         ) : null}
-
         {success ? (
-          <button onClick={() => handleDeleteCustomer(customerId)}>
+          <button
+            id="delete-btn"
+            className="form-btn"
+            onClick={() => handleDeleteCustomer(customerId)}
+          >
             Goodbye Forever!
           </button>
         ) : null}
-        {adminSuccess ? `${adminSuccess}` : null}
-        {deleteSuccess ? `${deleteSuccess}` : null}
+        <div className="error-message">
+          {adminSuccess ? `${adminSuccess}` : null}
+          {deleteSuccess ? `${deleteSuccess}` : null}
+        </div>
       </form>
     </div>
   );

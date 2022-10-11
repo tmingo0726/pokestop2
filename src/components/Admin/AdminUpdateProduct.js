@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import "../../stylesheets/AdminUpdateProduct.css";
 const BASE_URL = "http://localhost:4000/api";
 
 const AdminUpdateProduct = () => {
@@ -80,174 +80,233 @@ const AdminUpdateProduct = () => {
   };
   return (
     <div>
-      <form id="update-product-form" onSubmit={handleSubmit}>
-        <fieldset>
-          <legend>
-            <h2>Update A Product</h2>
+      <form
+        id="update-form"
+        className="form admin-form"
+        onSubmit={handleSubmit}
+      >
+        <fieldset className="input-wrapper">
+          <legend id="header-legend">
+            <h2 id="update-header" className="form-header">
+              Update A Product
+            </h2>
           </legend>
-          <div id="update-product-inputs">
-            <br />
-            <legend>Current Product Name:</legend>
-            <input
-              type="text"
-              //   value={currentProductName}
-              placeholder="Name"
-              required
-              onChange={(event) => {
-                setCurrentProductName(event.target.value);
-              }}
-            ></input>
-            <legend>Update Product Name:</legend>
-            <input
-              type="text"
-              //   value={updateProductName}
-              placeholder="Name"
-              onChange={(event) => {
-                setUpdateProductName(event.target.value);
-              }}
-            ></input>
-            <legend>Update Product Price:</legend>
-            <input
-              type="text"
-              //   value={updatePrice}
-              placeholder="Price"
-              onChange={(event) => {
-                setUpdatePrice(event.target.value);
-              }}
-            ></input>
-            <legend>Update Product Condition:</legend>
-            <div id="condition-choices">
-              <input
-                type="radio"
-                id="conditionChoice1"
-                name="condition"
-                // value={updateCondition}
-                onChange={() => {
-                  setUpdateCondition("Mint");
-                }}
-              ></input>
-              <label htmlFor="conditionChoice1"> Mint </label>
-              <input
-                type="radio"
-                id="conditionChoice2"
-                name="condition"
-                // value={updateCondition}
-                onChange={() => {
-                  setUpdateCondition("Good");
-                }}
-              ></input>
-              <label htmlFor="conditionChoice2"> Good </label>
-              <input
-                type="radio"
-                id="conditionChoice3"
-                name="condition"
-                // value={updateCondition}
-                onChange={() => {
-                  setUpdateCondition("Damaged");
-                }}
-              ></input>
-              <label htmlFor="conditionChoice3"> Damaged </label>
+          <div id="update-inputs" className="form-inputs">
+            <div id="update-product-inputs">
+              <div id="current-name">
+                <legend id="form-legend">Current Product Name: </legend>
+                <input
+                  id="current-name-input"
+                  type="text"
+                  //   value={currentProductName}
+                  placeholder="Current Name"
+                  required
+                  onChange={(event) => {
+                    setCurrentProductName(event.target.value);
+                  }}
+                ></input>
+              </div>
+              <div className="inner-input-wrap">
+                <div className="input-pair">
+                  <legend id="form-legend">Update Product Name:</legend>
+                  <input
+                    id="double-column-inputs"
+                    className="form-inputs"
+                    type="text"
+                    //   value={updateProductName}
+                    placeholder="Name"
+                    onChange={(event) => {
+                      setUpdateProductName(event.target.value);
+                    }}
+                  ></input>
+                </div>
+                <div className="input-pair">
+                  <legend id="form-legend">Update Product Price:</legend>
+                  <input
+                    id="double-column-inputs"
+                    className="form-inputs"
+                    type="text"
+                    //   value={updatePrice}
+                    placeholder="Price"
+                    onChange={(event) => {
+                      setUpdatePrice(event.target.value);
+                    }}
+                  ></input>
+                </div>
+              </div>
             </div>
-            <br />
-            <legend>Update Product Rarity: </legend>
-            <div id="rarity-choices">
-              <input
-                type="radio"
-                id="rarityChoice1"
-                name="rarity"
-                // value={updateRarity}
-                onChange={() => {
-                  setUpdateRarity("Holographic");
-                }}
-              ></input>
-              <label htmlFor="rarityChoice1"> Holographic </label>
-              <input
-                type="radio"
-                id="rarityChoice2"
-                name="rarity"
-                // value={updateRarity}
-                onChange={() => {
-                  setUpdateRarity("Rare");
-                }}
-              ></input>
-              <label htmlFor="rarityChoice2"> Rare </label>
-              <input
-                type="radio"
-                id="rarityChoice3"
-                name="rarity"
-                // value={updateRarity}
-                onChange={() => {
-                  setUpdateRarity("Common");
-                }}
-              ></input>
-              <label htmlFor="rarityChoice3"> Common </label>
+            <div className="inner-input-wrap">
+              <div id="radio-choices">
+                <div className="input-pair">
+                  <legend id="form-legend">Update Product Condition:</legend>
+                  <div id="condition-choices">
+                    <div className="single-radio-choice">
+                      <input
+                        type="radio"
+                        id="conditionChoice1"
+                        name="condition"
+                        // value={updateCondition}
+                        onChange={() => {
+                          setUpdateCondition("Mint");
+                        }}
+                      ></input>
+                      <label htmlFor="conditionChoice1"> Mint </label>
+                    </div>
+                    <div className="single-radio-choice">
+                      <input
+                        type="radio"
+                        id="conditionChoice2"
+                        name="condition"
+                        // value={updateCondition}
+                        onChange={() => {
+                          setUpdateCondition("Good");
+                        }}
+                      ></input>
+                      <label htmlFor="conditionChoice2"> Good </label>
+                    </div>
+                    <div className="single-radio-choice">
+                      <input
+                        type="radio"
+                        id="conditionChoice3"
+                        name="condition"
+                        // value={updateCondition}
+                        onChange={() => {
+                          setUpdateCondition("Damaged");
+                        }}
+                      ></input>
+                      <label htmlFor="conditionChoice3"> Damaged </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br />
+              <div id="radio-choices">
+                <legend id="form-legend">Update Product Rarity: </legend>
+                <div id="rarity-choices">
+                  <div className="single-radio-choice">
+                    <input
+                      type="radio"
+                      id="rarityChoice1"
+                      name="rarity"
+                      // value={updateRarity}
+                      onChange={() => {
+                        setUpdateRarity("Holographic");
+                      }}
+                    ></input>
+                    <label htmlFor="rarityChoice1"> Holographic </label>
+                  </div>
+                  <div className="single-radio-choice"></div>
+                  <input
+                    type="radio"
+                    id="rarityChoice2"
+                    name="rarity"
+                    // value={updateRarity}
+                    onChange={() => {
+                      setUpdateRarity("Rare");
+                    }}
+                  ></input>
+                  <label htmlFor="rarityChoice2"> Rare </label>
+                </div>
+                <div className="single-radio-choice">
+                  <input
+                    type="radio"
+                    id="rarityChoice3"
+                    name="rarity"
+                    // value={updateRarity}
+                    onChange={() => {
+                      setUpdateRarity("Common");
+                    }}
+                  ></input>
+                  <label htmlFor="rarityChoice3"> Common </label>
+                </div>
+              </div>
             </div>
-            <br />
-            <legend>Update Product Ability 1: </legend>
-            <input
-              type="text"
-              //   value={updateAbility1}
-              placeholder="Ability 1"
-              onChange={(event) => {
-                setUpdateAbility1(event.target.value);
-              }}
-            ></input>
-            <legend>Update Product Ability 2: </legend>
-            <input
-              type="text"
-              //   value={updateAbility2}
-              placeholder="Ability 2"
-              onChange={(event) => {
-                setUpdateAbility2(event.target.value);
-              }}
-            ></input>
-            <legend>Update Product Image URL</legend>
-            <input
-              type="text"
-              //   value={updateImagelink}
-              placeholder="Image URL"
-              onChange={(event) => {
-                setUpdateImagelink(event.target.value);
-              }}
-            ></input>
-            <legend>Update Product Inventory</legend>
-            <input
-              type="text"
-              //   value={updateInventorycount}
-              placeholder="How Many You Got?"
-              onChange={(event) => {
-                setUpdateInventorycount(event.target.value);
-              }}
-            ></input>
-            <legend>Update Product Active Status</legend>
-            <div id="isactive-choices">
-              <input
-                type="radio"
-                id="isactiveChoice1"
-                name="isactive"
-                // value={updateIsactive}
-                checked
-                onChange={() => {
-                  setUpdateIsactive(true);
-                }}
-              ></input>
-              <label htmlFor="isactiveChoice1"> True </label>
-              <input
-                type="radio"
-                id="isactiveChoice2"
-                name="isactive"
-                // value={updateIsactive}
-                onChange={() => {
-                  setUpdateIsactive(false);
-                }}
-              ></input>
-              <label htmlFor="isactiveChoice2"> False </label>
+            <div className="inner-input-wrap">
+              <div className="input-pair">
+                <legend id="form-legend">Update Product Ability 1: </legend>
+                <input
+                  className="form-inputs"
+                  id="abilities-txt"
+                  type="text"
+                  //   value={updateAbility1}
+                  placeholder="Ability 1"
+                  onChange={(event) => {
+                    setUpdateAbility1(event.target.value);
+                  }}
+                ></input>
+              </div>
+              <div className="input-pair">
+                <legend id="form-legend">Update Product Ability 2: </legend>
+                <input
+                  className="form-inputs"
+                  id="abilities-txt"
+                  type="text"
+                  //   value={updateAbility2}
+                  placeholder="Ability 2"
+                  onChange={(event) => {
+                    setUpdateAbility2(event.target.value);
+                  }}
+                ></input>
+              </div>
             </div>
-            <br></br>
+            <legend id="form-legend">Update Product Image URL</legend>
+            <div id="sl-input" className="inner-input-wrap">
+              <input
+                className="form-inputs"
+                type="text"
+                //   value={updateImagelink}
+                placeholder="https://different.image.than.before.pokemontcg.io/base1..."
+                onChange={(event) => {
+                  setUpdateImagelink(event.target.value);
+                }}
+              ></input>
+            </div>
+            <div id="sl-input" className="inner-input-wrap">
+              <legend id="form-legend">Update Product Inventory: </legend>
+              <input
+                id="inv-ct"
+                type="text"
+                //   value={updateInventorycount}
+                placeholder="#"
+                onChange={(event) => {
+                  setUpdateInventorycount(event.target.value);
+                }}
+              ></input>
+            </div>
+            <div className="inner-input-wrap">
+              <legend id="form-legend">Update Product Active Status</legend>
+              <div id="isactive-choices">
+                <input
+                  type="radio"
+                  id="isactiveChoice1"
+                  name="isactive"
+                  // value={updateIsactive}
+                  checked
+                  onChange={() => {
+                    setUpdateIsactive(true);
+                  }}
+                ></input>
+                <label htmlFor="isactiveChoice1"> Active </label>
+                <input
+                  type="radio"
+                  id="isactiveChoice2"
+                  name="isactive"
+                  // value={updateIsactive}
+                  onChange={() => {
+                    setUpdateIsactive(false);
+                  }}
+                ></input>
+                <label htmlFor="isactiveChoice2"> Inactive </label>
+              </div>
+            </div>
           </div>
         </fieldset>
-        <button type="submit">Update Product!</button>
-        <div>{error ? `${errorMessage}` : `${success}`}</div>
+        <button className="form-btn" type="submit">
+          Update Product!
+        </button>
+        <div className="error-message">
+          {error ? `${errorMessage}` : `${success}`}
+        </div>
       </form>
     </div>
   );

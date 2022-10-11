@@ -1,0 +1,38 @@
+#delete-header {
+    margin-top: 0;
+}
+
+#delete-inputs{
+    display: flex;
+    align-items: baseline;
+}
+#delete-customer-input{
+    width: 44%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-left: 38px;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    color:rgb(0, 0, 0);
+}
+
+#search-customer-btn{
+width: 40%;
+}
+
+#demote-btn{
+    width: 40%;
+
+}
+
+#promote-btn{
+    width: 40%;
+
+}
+
+#delete-btn{
+    width: 40%;
+
+}

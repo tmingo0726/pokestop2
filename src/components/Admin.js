@@ -9,9 +9,9 @@ const Admin = () => {
       <div>
         <AdminCreate />
       </div>
-      <div>
+      {/* <div>
         <AdminActiveStatus />
-      </div>
+      </div> */}
       <div>
         <AdminUpdateProduct />
       </div>
