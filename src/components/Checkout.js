@@ -10,11 +10,13 @@ const Checkout = () => {
       };
 
       const cart = localStorage.getItem("cartItems");
-      const cartItem = JSON.parse(cart);
-      if (cartItem.length){
-        cartItem.map((item, i) => {
-          subTotal += Number(item.price.replace(",", ""));
-        })
+      if (cart) {
+        const cartItem = JSON.parse(cart);
+        if (cartItem.length){
+          cartItem.map((item, i) => {
+            subTotal += Number(item.price.replace(",", ""));
+          })
+        }
       }
       console.log('Subtotal', subTotal)
       
