@@ -59,9 +59,9 @@ const Checkout = () => {
                   ></textarea>
                 </div>
                 <div>
-                  <p>Subtotal: &emsp; ${subTotal}</p>
-                  <p>Tax: &emsp; &emsp; &emsp; &nbsp; ${Tax}</p>
-                  <p>Total: &emsp; &emsp; &nbsp; ${Total}</p>
+                  <p className="misc-form-text">Subtotal: &emsp; ${subTotal}</p>
+                  <p className="misc-form-text">Tax: &emsp; &emsp; &emsp; &nbsp; ${Tax}</p>
+                  <p className="misc-form-text">Total: &emsp; &emsp; &nbsp; ${Total}</p>
                 </div>
                 <div>
                   <button className="form-btn" type="submit">Submit Payment!</button>
