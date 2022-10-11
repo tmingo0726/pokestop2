@@ -9,7 +9,8 @@ import {
   Products,
   Details,
   Admin,
-  MyCart
+  MyCart,
+  Checkout,
 } from "./components";
 
 const container = document.getElementById("app");
@@ -81,6 +82,7 @@ const App = () => {
             />
           }
         ></Route>
+        <Route path="/Checkout" element={<Checkout/>}></Route>
       </Routes>
       <Footer />
     </div>

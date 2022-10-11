@@ -46,6 +46,9 @@ const MyCart = (props) => {
         }
    }
     
+        const goToCheckout = () => {
+            Navigate("/Checkout")
+        }
 
     //Map through localStorage to retrieve all of the purchase items 
     return (
@@ -64,7 +67,7 @@ const MyCart = (props) => {
                 :
                 <></>
             }
-            <button className="form-btn">Proceed to Checkout</button>
+            <button className="form-btn" onClick={goToCheckout}>Proceed to Checkout</button>
     </div>
   );
 }
