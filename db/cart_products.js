@@ -23,18 +23,7 @@ const createCartProduct = async ({
   }
 };
 
-const getCartIdbyCustomerId = async(customerId) => {
-  try {
-    const { rows: [id] } = await client.query(`
-      SELECT id
-      FROM carts
-      WHERE carts.customerid = ${customerId}
-    `)
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-}
+const deleteCartProduct = async(cartProductId)
 
 const getOpenCartByCustomerId = async(customerId) => {
   try {
@@ -100,7 +89,6 @@ const getPastOrdersByCustomerId = async(customerId) => {
 
 module.exports = {
     createCartProduct,
-    getCartIdbyCustomerId,
     getOpenCartByCustomerId,
     getPastOrdersByCustomerId
 };
