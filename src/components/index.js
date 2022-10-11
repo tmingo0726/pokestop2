@@ -7,3 +7,4 @@ export { default as Details } from "./Details";
 export { default as Admin } from "./Admin";
 export { default as MyCart } from "./MyCart";
 export { default as Checkout } from "./Checkout";
+export { default as MyProfile } from "./MyProfile";
