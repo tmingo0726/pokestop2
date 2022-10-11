@@ -1,18 +1,15 @@
 const client = require("./client");
 
-const createCart = async ({
-  customerid,
-  isopen,
-}) => {
+const createCart = async(customerid) => {
   try {
     
     const { rows: [cart] } = await client.query(
       `
-            INSERT INTO carts (customerid, isopen)
-            VALUES ($1, $2)
+            INSERT INTO carts (customerid)
+            VALUES ($1)
             RETURNING *;
         `,
-      [customerid, isopen]
+      [customerid]
     );
 
     return cart;
@@ -22,6 +19,23 @@ const createCart = async ({
   }
 };
 
+const getCartIdbyCustomerId = async(customerId) => {
+  try {
+    const { rows: [id] } = await client.query(`
+      SELECT id
+      FROM carts
+      WHERE carts.customerid = ${customerId}
+    `)
+
+    return id;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+
 module.exports = {
-    createCart
+    createCart,
+    getCartIdbyCustomerId
 };

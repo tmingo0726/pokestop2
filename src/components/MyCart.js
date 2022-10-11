@@ -8,6 +8,7 @@ const MyCart = (props) => {
     const setCartItems = props.setCartItems;
     let purchaseItems = [];
     let checkLocalStorage = [];
+    const navigate = useNavigate();
     
     console.log("Cart items from props is ", cartItems);
 
@@ -47,7 +48,8 @@ const MyCart = (props) => {
    }
     
         const goToCheckout = () => {
-            Navigate("/Checkout")
+            console.log('NAV TO CHECKOUT')
+            navigate("/checkout")
         }
 
     //Map through localStorage to retrieve all of the purchase items 
