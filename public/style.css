@@ -112,3 +112,7 @@ body {
     flex-direction: column;
     align-items: center;
 }
+
+.misc-form-text {
+    color: #6060a3;
+}
