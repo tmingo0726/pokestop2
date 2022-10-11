@@ -8,7 +8,8 @@ const {
   adminUpdateProductById,
   adminSetActiveProductById,
   adminGetCustomerByUsername,
-  getProductsByCartId
+  getOpenCartByCustomerId,
+  getPastOrdersByCustomerId
 } = require("./");
 const client = require("./client");
 
@@ -369,9 +370,17 @@ const createInitialCartProducts = async () => {
 //   }
 // };
 
-const testGetProductsByCartId = async(cartId) => {
-  const test = await getProductsByCartId(1);
+const testGetOpenCartByCustomerId = async(customerId) => {
+  const test = await getOpenCartByCustomerId(customerId);
   console.log("ALBERT'S CART", test)
+  console.log("ALBERT'S FIRST PRODUCT", test[0].products)
+  // console.log("ALBERT'S SECOND PRODUCT", test[1].products)
+
+}
+const testGetPastOrderByCustomerId = async(customerId) => {
+  const test = await getPastOrdersByCustomerId(customerId);
+  console.log("ALBERT'S ORDERS", test)
+  console.log("ALBERT'S FIRST ORDER PRODUCT", test[0].products)
 }
 
 const rebuildDB = async () => {
@@ -382,7 +391,8 @@ const rebuildDB = async () => {
     await createInitialProducts();
     await createInitialCarts();
     await createInitialCartProducts();
-    await testGetProductsByCartId();
+    await testGetOpenCartByCustomerId(1);
+    await testGetPastOrderByCustomerId(1);
     // await testAdminCreateProduct({
     //   name: "Mewtwo",
     //   price: "1,000,000",
