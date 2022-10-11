@@ -8,6 +8,7 @@ const {
   adminUpdateProductById,
   adminSetActiveProductById,
   adminGetCustomerByUsername,
+  getProductsByCartId
 } = require("./");
 const client = require("./client");
 
@@ -65,7 +66,8 @@ const createTables = async () => {
               id SERIAL PRIMARY KEY,
               cartid INTEGER REFERENCES carts(id),
               productid INTEGER REFERENCES products(id),
-              quantity INTEGER NOT NULL
+              quantity INTEGER NOT NULL,
+              UNIQUE (cartid, productid)
             );
         `);
     console.log("FINISHED BUILDING TABLES!");
@@ -217,16 +219,20 @@ const createInitialCarts = async () => {
   try {
     const cartsToCreate = [
       {
-        customerid: "1",
-        isopen: false
-      },
-      {
-        customerid: "2",
-        isopen: false
-      },
-      {
-        customerid: "3",
+        customerid: 1,
         isopen: true
+      },
+      {
+        customerid: 2,
+        isopen: false
+      },
+      {
+        customerid: 3,
+        isopen: true
+      },
+      {
+        customerid: 1,
+        isopen: false
       }
     ];
 
@@ -245,20 +251,35 @@ const createInitialCartProducts = async () => {
   try {
     const cartProductsToCreate = [
       {
-        cartid: "1",
-        productid: "2",
+        cartid: 1,
+        productid: 2,
         quantity: 3
       },
       {
-        cartid: "2",
-        productid: "2",
+        cartid: 1,
+        productid: 4,
+        quantity: 1
+      },
+      {
+        cartid: 2,
+        productid: 2,
         quantity: 2
       },
       {
-        cartid: "3",
-        productid: "3",
+        cartid: 3,
+        productid: 3,
         quantity: 1
-      }
+      },
+      {
+        cartid: 4,
+        productid: 1,
+        quantity: 2
+      },
+      {
+        cartid: 4,
+        productid: 3,
+        quantity: 5
+      },
     ];
 
     console.log("CART PRODUCTS TO CREATE", cartProductsToCreate);
@@ -348,6 +369,11 @@ const createInitialCartProducts = async () => {
 //   }
 // };
 
+const testGetProductsByCartId = async(cartId) => {
+  const test = await getProductsByCartId(1);
+  console.log("ALBERT'S CART", test)
+}
+
 const rebuildDB = async () => {
   try {
     await dropTables();
@@ -356,6 +382,7 @@ const rebuildDB = async () => {
     await createInitialProducts();
     await createInitialCarts();
     await createInitialCartProducts();
+    await testGetProductsByCartId();
     // await testAdminCreateProduct({
     //   name: "Mewtwo",
     //   price: "1,000,000",
