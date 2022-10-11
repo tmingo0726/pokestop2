@@ -39,7 +39,8 @@ const Products = (props) => {
     const seeDetails = (product) => {
 
         setChosenCard(product);
-        console.log("Clicked on Card id", product);
+        localStorage.setItem("currentDetails", JSON.stringify(product));
+        console.log("Clicked on Card:", product);
         navigate("/products/details");
 
     }
