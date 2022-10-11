@@ -1,15 +1,25 @@
 import { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import '../stylesheets/Details.css'
+import '../stylesheets/Details.css';
 
 let purchaseItems = [];
 const Details = (props) => {
 
-    const product = props.chosenCard;
+    const chosenCard = props.chosenCard;
     const cartItems = props.cartItems;
     const setCartItems = props.setCartItems;
     let quantity = 0;
+    let checkLocalStorage = [];
     
+    const productNotParsed = localStorage.getItem("currentDetails");
+    const product = JSON.parse(productNotParsed);
+
+    checkLocalStorage = localStorage.getItem("cartItems");
+    console.log("checkLocalStorage is", checkLocalStorage);
+    if (checkLocalStorage === null || checkLocalStorage === [] || !checkLocalStorage.length) {
+        purchaseItems = [];
+    }
+
     console.log("Inside Product Details card picked is", product);
     let navigate = useNavigate();
 
@@ -31,7 +41,6 @@ const Details = (props) => {
 
     const addToCart = (name, price, quantity) => {
 
-        console.log("Inside add to cart");
         if (!quantity) {
             alert("Please select a quantity");
         } else {
@@ -42,11 +51,10 @@ const Details = (props) => {
                 quantity: quantity
             };
 
-            setCartItems(item);
-
             purchaseItems.push(item);
             localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
-            navigate("/MyCart");
+            setCartItems(JSON.stringify([...purchaseItems]));
+            alert("Item successfully added to your cart");
         }
     }
 
