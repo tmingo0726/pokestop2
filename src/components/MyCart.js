@@ -16,7 +16,7 @@ const MyCart = (props) => {
     //So I need to check local storage instead.
     checkLocalStorage = localStorage.getItem("cartItems");
     console.log("checkLocalStorage is", checkLocalStorage);
-    if (checkLocalStorage.length) {
+    if (checkLocalStorage && checkLocalStorage.length) {
         purchaseItems = JSON.parse(localStorage.getItem("cartItems"));
     } else {
         purchaseItems.length = 0;
@@ -57,7 +57,7 @@ const MyCart = (props) => {
         <div>
             <h1>Welcome to your Cart</h1>
             {
-                purchaseItems.length ?
+                purchaseItems && purchaseItems.length ?
                     purchaseItems.map((singleItem, i) => {
                         let str = `${singleItem.quantity}   ${singleItem.name} @ $${singleItem.price.replace(",","")} $${singleItem.price.replace(",", "") * singleItem.quantity}`;
                         return (

@@ -37,9 +37,7 @@ const Login = ({
       console.log("RESULT", result);
       setError(result.error);
       setErrorMessage(result.message);
-      {
-        result.token ? localStorage.setItem("token", result.token) : null;
-      }
+      result.token ? localStorage.setItem("token", result.token) : null;
       setLoggedIn(result.token);
       setIsadmin(result.customer.admin);
       return result.token;
