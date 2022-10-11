@@ -4,7 +4,6 @@ const {
   createCustomer,
   getCustomer,
   getCustomerByUsername,
-  getCustomerById,
   updateCustomer,
   getCustomerByEmail,
 } = require("../db");
