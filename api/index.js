@@ -47,4 +47,7 @@ apiRouter.use("/products", productsRouter);
 const adminRouter = require("./admin");
 apiRouter.use("/admin", adminRouter);
 
+const cartProductsRouter = require ("./cart_products");
+apiRouter.use("/cart_products", cartProductsRouter);
+
 module.exports = apiRouter;
