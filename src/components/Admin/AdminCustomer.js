@@ -87,6 +87,7 @@ const AdminCustomer = () => {
   };
 
   const toggleAdminStatus = (boolean) => {
+    setSuccess(null);
     setAdmin(customerId, boolean);
     setAdminSuccess("");
     setDeleteSuccess("");
@@ -95,6 +96,8 @@ const AdminCustomer = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     getCustomerInfo(customerUsername);
+    setAdminSuccess("");
+    setDeleteSuccess("");
   };
   return (
     <div>
@@ -126,7 +129,7 @@ const AdminCustomer = () => {
         <button id="search-customer-btn" className="form-btn" type="submit">
           Search For Customer!
         </button>
-        {error ? `${errorMessage}` : null}
+        <div className="error-message">{error ? `${errorMessage}` : null}</div>
         {success ? (
           isadmin ? (
             <button

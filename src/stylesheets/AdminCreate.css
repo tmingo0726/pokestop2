@@ -48,6 +48,7 @@ label {
     margin-left: 10px;
     padding-left: 10px;
     max-width: 5%;
+    color:rgb(0, 0, 0)
 }
 
 #inv-ct::placeholder {
