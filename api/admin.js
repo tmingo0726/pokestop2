@@ -7,7 +7,7 @@ const {
   adminSetActiveProductById,
   adminGetCustomerByUsername,
   setAdminStatus,
-  adminDeleteCustomer
+  adminDeleteCustomer,
 } = require("../db");
 const { requireAdmin } = require("./utils");
 
@@ -132,7 +132,7 @@ adminRouter.get("/:username/info", requireAdmin, async (req, res, next) => {
     if (!viewCustomer) {
       next({
         error: "Customer doesn't exist",
-        message: `${username} is not a registerd customer.`,
+        message: `${username} is not a registered customer.`,
       });
     } else {
       res.send({
@@ -151,31 +151,33 @@ adminRouter.delete("/deletecustomer", requireAdmin, async (req, res, next) => {
     const { username } = await adminDeleteCustomer(id);
 
     res.send({
-      success: `${username} successfully deleted`
-    })
+      success: `${username} successfully deleted`,
+    });
   } catch ({ error, message }) {
     next({ error, message });
   }
-})
+});
 
 adminRouter.patch("/setadmin", requireAdmin, async (req, res, next) => {
   const { id, isadmin } = req.body;
   try {
-    const { username, isadmin: adminStatus } = await setAdminStatus(id, isadmin)
+    const { username, isadmin: adminStatus } = await setAdminStatus(
+      id,
+      isadmin
+    );
 
     if (adminStatus) {
       res.send({
-        success: `${username} is now an Admin.`
-      })
+        success: `${username} is now an Admin.`,
+      });
     } else {
       res.send({
-        success: `${username} is no longer an Admin.`
-      })
+        success: `${username} is no longer an Admin.`,
+      });
     }
   } catch ({ error, message }) {
     next({ error, message });
   }
-})
-
+});
 
 module.exports = adminRouter;
