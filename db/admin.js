@@ -142,7 +142,6 @@ const adminGetCustomerByUsername = async (username) => {
         WHERE username = '${username}';
       `
     );
-
     return customer;
   } catch (error) {
     console.error(error);
@@ -150,8 +149,60 @@ const adminGetCustomerByUsername = async (username) => {
   }
 };
 
-const adminDeleteCustomer = async (id) => {
+const getCartsByCustomerId = async (id) => {
   try {
+    const {
+      rows: [carts],
+    } = await client.query(
+      `
+      SELECT * 
+      FROM carts
+      WHERE carts.customerid = ${id};
+      `
+    );
+    return carts;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+const getCartProductsByCartId = async (cartid) => {
+  try {
+    const {
+      rows: [cartproducts],
+    } = await client.query(
+      `
+      SELECT * 
+      FROM cart_products
+      WHERE cart_products.cartid = ${cartid};
+      `
+    );
+    console.log("cartproducts", cartproducts);
+    return cartproducts;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+const adminDeleteCustomer = async (id) => {
+  const { id: cartid } = await getCartsByCustomerId(id);
+  const { cartid: _cartid } = await getCartProductsByCartId(cartid);
+  try {
+    await client.query(
+      `
+      DELETE FROM cart_products
+      WHERE cart_products.cartid = ${_cartid};
+      `
+    );
+    await client.query(
+      `
+        DELETE FROM carts
+        WHERE carts.customerid = ${id}
+        RETURNING carts.id;
+      `
+    );
     const {
       rows: [customer],
     } = await client.query(
@@ -161,13 +212,12 @@ const adminDeleteCustomer = async (id) => {
         RETURNING username;
       `
     );
-
     return customer;
   } catch (error) {
     console.error(error);
-    throw error;    
+    throw error;
   }
-}
+};
 
 const setAdminStatus = async (id, bool) => {
   try {
@@ -186,8 +236,7 @@ const setAdminStatus = async (id, bool) => {
     console.error(error);
     throw error;
   }
-}
-
+};
 
 module.exports = {
   adminCheckById,
@@ -197,5 +246,5 @@ module.exports = {
   adminSetActiveProductById,
   adminGetCustomerByUsername,
   adminDeleteCustomer,
-  setAdminStatus
+  setAdminStatus,
 };

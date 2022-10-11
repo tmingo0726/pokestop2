@@ -10,6 +10,7 @@ const AdminCustomer = () => {
   const [customerId, setCustomerId] = useState("");
   const [isadmin, setIsadmin] = useState(false);
   const [adminSuccess, setAdminSuccess] = useState("");
+  const [deleteSuccess, setDeleteSuccess] = useState("");
 
   const token = localStorage.getItem("token");
 
@@ -59,9 +60,34 @@ const AdminCustomer = () => {
     }
   };
 
+  const deleteCustomer = async (id) => {
+    try {
+      const response = await fetch(`${BASE_URL}/admin/deletecustomer`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          id,
+        }),
+      });
+      const result = await response.json();
+      setDeleteSuccess(result.success);
+      console.log("RESULT", result);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDeleteCustomer = (customerId) => {
+    deleteCustomer(customerId);
+  };
+
   const toggleAdminStatus = (boolean) => {
     setAdmin(customerId, boolean);
     setAdminSuccess("");
+    setDeleteSuccess("");
   };
 
   const handleSubmit = (event) => {
@@ -100,7 +126,14 @@ const AdminCustomer = () => {
             </button>
           )
         ) : null}
+
+        {success ? (
+          <button onClick={() => handleDeleteCustomer(customerId)}>
+            Goodbye Forever!
+          </button>
+        ) : null}
         {adminSuccess ? `${adminSuccess}` : null}
+        {deleteSuccess ? `${deleteSuccess}` : null}
       </form>
     </div>
   );
