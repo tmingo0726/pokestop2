@@ -1,7 +1,7 @@
 const express = require("express");
 const cartProductsRouter = express.Router();
 const {
-    getOpenCartByCustomerId, getCartIdbyCustomerId, createCartProduct
+    getOpenCartByCustomerId, getCartIdbyCustomerId, createCartProduct, deleteCartProduct
 } = require("../db");
 const { requireUser } = require("./utils");
 
@@ -45,7 +45,24 @@ cartProductsRouter.post("/", requireUser, async(req, res, next) => {
 })
 
 cartProductsRouter.delete("/", requireUser, async(req, res, next) => {
-    
+    const { id: cartProductId } = req.body;
+
+    try {
+        const deletedProduct = await deleteCartProduct(cartProductId);
+
+        if (Object.keys(deletedProduct).length === 0) {
+            next({
+                error: "Item already deleted, please refresh."
+            })
+        } else {
+            res.send({
+                deletedProduct,
+                success: `Successfully removed from cart`
+            })
+        }
+    } catch ({ error, message }) {
+        next({ error, message });
+    }
 })
 
 module.exports = cartProductsRouter;
