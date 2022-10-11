@@ -16,8 +16,6 @@ import {
 const container = document.getElementById("app");
 const root = createRoot(container);
 
-const { REACT_APP_BASE_URL: BASE_URL } = process.env; // ask tom how this works
-
 const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

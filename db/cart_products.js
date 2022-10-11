@@ -7,7 +7,7 @@ const createCartProduct = async ({
 }) => {
   try {
     
-    const { rows: [cartitem] } = await client.query(
+    const { rows: [cartItem] } = await client.query(
       `
             INSERT INTO cart_products (cartid, productid, quantity)
             VALUES ($1, $2, $3)
@@ -16,12 +16,28 @@ const createCartProduct = async ({
       [cartid, productid, quantity]
     );
 
-    return cartitem;
+    return cartItem;
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
+
+const deleteCartProduct = async(cartProductId) => {
+  try {
+    const { rows: [cartItem] } = await client.query(
+      `
+      DELETE FROM cart_products
+      WHERE cart_products.id = ${cartProductId}
+      RETURNING *;
+    `);
+    
+    return cartItem;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
 
 const getOpenCartByCustomerId = async(customerId) => {
   try {
@@ -87,6 +103,7 @@ const getPastOrdersByCustomerId = async(customerId) => {
 
 module.exports = {
     createCartProduct,
+    deleteCartProduct,
     getOpenCartByCustomerId,
     getPastOrdersByCustomerId
 };

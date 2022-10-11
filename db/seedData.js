@@ -8,6 +8,7 @@ const {
   adminUpdateProductById,
   adminSetActiveProductById,
   adminGetCustomerByUsername,
+  getCartIdbyCustomerId,
   getOpenCartByCustomerId,
   getPastOrdersByCustomerId
 } = require("./");
@@ -218,24 +219,7 @@ const createInitialProducts = async () => {
 const createInitialCarts = async () => {
   console.log("STARTING TO CREATE CARTS");
   try {
-    const cartsToCreate = [
-      {
-        customerid: 1,
-        isopen: true
-      },
-      {
-        customerid: 2,
-        isopen: false
-      },
-      {
-        customerid: 3,
-        isopen: true
-      },
-      {
-        customerid: 1,
-        isopen: false
-      }
-    ];
+    const cartsToCreate = [3,2,1];
 
     console.log("CARTS TO CREATE", cartsToCreate);
     const carts = await Promise.all(cartsToCreate.map(createCart));
@@ -270,17 +254,7 @@ const createInitialCartProducts = async () => {
         cartid: 3,
         productid: 3,
         quantity: 1
-      },
-      {
-        cartid: 4,
-        productid: 1,
-        quantity: 2
-      },
-      {
-        cartid: 4,
-        productid: 3,
-        quantity: 5
-      },
+      }
     ];
 
     console.log("CART PRODUCTS TO CREATE", cartProductsToCreate);
@@ -370,18 +344,23 @@ const createInitialCartProducts = async () => {
 //   }
 // };
 
-const testGetOpenCartByCustomerId = async(customerId) => {
-  const test = await getOpenCartByCustomerId(customerId);
-  console.log("ALBERT'S CART", test)
-  console.log("ALBERT'S FIRST PRODUCT", test[0].products)
-  // console.log("ALBERT'S SECOND PRODUCT", test[1].products)
+// const testGetOpenCartByCustomerId = async(customerId) => {
+//   const test = await getOpenCartByCustomerId(customerId);
+//   console.log("ALBERT'S CART", test)
+//   console.log("ALBERT'S FIRST PRODUCT", test[0].products)
+//   // console.log("ALBERT'S SECOND PRODUCT", test[1].products)
 
-}
-const testGetPastOrderByCustomerId = async(customerId) => {
-  const test = await getPastOrdersByCustomerId(customerId);
-  console.log("ALBERT'S ORDERS", test)
-  console.log("ALBERT'S FIRST ORDER PRODUCT", test[0].products)
-}
+// }
+// const testGetPastOrderByCustomerId = async(customerId) => {
+//   const test = await getPastOrdersByCustomerId(customerId);
+//   console.log("ALBERT'S ORDERS", test)
+//   // console.log("ALBERT'S FIRST ORDER PRODUCT", test[0].products)
+// }
+
+// const testGetCartIdbyCustomerId = async(customerId) => {
+//   const test = await getCartIdbyCustomerId(customerId);
+//   console.log("ALBERTS CART ID", test)
+// }
 
 const rebuildDB = async () => {
   try {
@@ -391,8 +370,9 @@ const rebuildDB = async () => {
     await createInitialProducts();
     await createInitialCarts();
     await createInitialCartProducts();
-    await testGetOpenCartByCustomerId(1);
-    await testGetPastOrderByCustomerId(1);
+    // await testGetOpenCartByCustomerId(1);
+    // await testGetPastOrderByCustomerId(1);
+    // await testGetCartIdbyCustomerId(3);
     // await testAdminCreateProduct({
     //   name: "Mewtwo",
     //   price: "1,000,000",

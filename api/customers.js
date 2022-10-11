@@ -95,6 +95,9 @@ customersRouter.post("/register", async (req, res, next) => {
         password,
       });
 
+      const { id } = customerData;
+      await createCart(id);
+
       const token = jwt.sign(customerData, JWT_SECRET, {
         expiresIn: "1w",
       });
