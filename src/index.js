@@ -37,7 +37,13 @@ const App = () => {
         isadmin={isadmin}
       />
       <Routes>
-        <Route path="/register" element={<Register />}></Route>
+        <Route path="/register" element={
+          <Register 
+            loggedIn={loggedIn}
+            setLoggedIn={setLoggedIn}
+          />
+        }
+        ></Route>
         <Route path="/admin" element={<Admin token={token} />}></Route>
         <Route
           path="/MyCart"
