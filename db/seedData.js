@@ -8,6 +8,7 @@ const {
   adminUpdateProductById,
   adminSetActiveProductById,
   adminGetCustomerByUsername,
+  getCartIdbyCustomerId,
   getOpenCartByCustomerId,
   getPastOrdersByCustomerId
 } = require("./");
@@ -374,13 +375,18 @@ const testGetOpenCartByCustomerId = async(customerId) => {
   const test = await getOpenCartByCustomerId(customerId);
   console.log("ALBERT'S CART", test)
   console.log("ALBERT'S FIRST PRODUCT", test[0].products)
-  // console.log("ALBERT'S SECOND PRODUCT", test[1].products)
+  console.log("ALBERT'S SECOND PRODUCT", test[1].products)
 
 }
 const testGetPastOrderByCustomerId = async(customerId) => {
   const test = await getPastOrdersByCustomerId(customerId);
   console.log("ALBERT'S ORDERS", test)
   console.log("ALBERT'S FIRST ORDER PRODUCT", test[0].products)
+}
+
+const testGetCartIdbyCustomerId = async(customerId) => {
+  const test = await getCartIdbyCustomerId(customerId);
+  console.log("ALBERTS CART ID", getCartIdbyCustomerId)
 }
 
 const rebuildDB = async () => {
