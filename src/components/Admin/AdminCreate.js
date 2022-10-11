@@ -283,6 +283,9 @@ const AdminCreate = () => {
         <button className="form-btn" type="submit">
           Create New Product!
         </button>
+        <div className="error-message">
+          {error ? `${errorMessage}` : `${success}`}
+        </div>
       </form>
     </div>
   );
