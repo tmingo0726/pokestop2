@@ -12,6 +12,7 @@ import {
   MyCart,
   Checkout,
   MyProfile,
+  Thanks,
 } from "./components";
 
 const container = document.getElementById("app");
@@ -45,6 +46,7 @@ const App = () => {
         }
         ></Route>
         <Route path="/admin" element={<Admin token={token} />}></Route>
+        <Route path="/thanks" element={<Thanks />}></Route>
         <Route
           path="/MyCart"
           element={<MyCart cartItems={cartItems} setCartItems={setCartItems} />}
