@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import '../stylesheets/Details.css';
 
 let purchaseItems = [];
 const Details = (props) => {
 
     const chosenCard = props.chosenCard;
-    const cartItems = props.cartItems;
-    const setCartItems = props.setCartItems;
+    // const cartItems = props.cartItems;
+    // const setCartItems = props.setCartItems;
     let quantity = 1;
     let checkLocalStorage = [];
     
@@ -21,15 +21,13 @@ const Details = (props) => {
     }
 
     console.log("Inside Product Details card picked is", product);
-    let navigate = useNavigate();
+    // let navigate = useNavigate();
 
     const adjustQuantity = (op) => {
 
         if (op === "add") {
             if (quantity < product.inventorycount) {
                 quantity++;
-            } else {
-                //alert("Quantity selected exceeds what's available in inventory");
             }
         } else {
             if (quantity > 1) quantity--;
@@ -58,7 +56,7 @@ const Details = (props) => {
 
           purchaseItems.push(item);
           localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
-          setCartItems(JSON.stringify([...purchaseItems]));
+        //   setCartItems(JSON.stringify([...purchaseItems]));
 
           //Here I am ready to POST to cart_products table with data I have
           if (token) {

@@ -9,8 +9,8 @@ const Products = (props) => {
     
     const allProducts = props.allProducts;
     const setAllProducts = props.setAllProducts;
-    const chosenCard = props.chosenCard;
-    const setChosenCard = props.setChosenCard;
+    // const chosenCard = props.chosenCard;
+    // const setChosenCard = props.setChosenCard;
 
     const navigate = useNavigate();
 
@@ -38,10 +38,10 @@ const Products = (props) => {
     
     const seeDetails = (product) => {
 
-        setChosenCard(product);
-        localStorage.setItem("currentDetails", JSON.stringify(product));
-        console.log("Clicked on Card:", product);
-        navigate("/products/details");
+        // setChosenCard(product);
+        // localStorage.setItem("currentDetails", JSON.stringify(product));
+        // console.log("Clicked on Card:", product);
+        navigate(`/products/${product.id}`);
 
     }
 

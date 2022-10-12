@@ -49,10 +49,10 @@ const Register = ({
       setError(result.error);
       setErrorMessage(result.message);
       result.token ? localStorage.setItem("token", result.token) : null;
-      setLoggedIn(result.token);
+      setLoggedIn(true);
+      setToken(result.token);
       console.log("resulterror", result.error);
       console.log("resultmessage", result.message);
-      // setRegistered(result.token);
     } catch (err) {
       console.error(err);
       setLoggedIn(false)

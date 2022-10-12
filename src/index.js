@@ -24,8 +24,10 @@ const App = () => {
   const [token, setToken] = useState("");
   const [isadmin, setIsadmin] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
-  const [chosenCard, setChosenCard] = useState(0);
-  const [cartItems, setCartItems] = useState([]);
+  // const [chosenCard, setChosenCard] = useState(0);
+  // const [cartItems, setCartItems] = useState([]);
+
+  console.log("LOGGED IN WHOLE", loggedIn)
 
   return (
     <div>
@@ -39,6 +41,7 @@ const App = () => {
       <Routes>
         <Route path="/register" element={
           <Register 
+            setToken={setToken}
             loggedIn={loggedIn}
             setLoggedIn={setLoggedIn}
           />
@@ -47,7 +50,12 @@ const App = () => {
         <Route path="/admin" element={<Admin token={token} />}></Route>
         <Route
           path="/MyCart"
-          element={<MyCart cartItems={cartItems} setCartItems={setCartItems} />}
+          element={<MyCart 
+            token={token}
+            loggedIn={loggedIn}
+            // cartItems={cartItems} 
+            // setCartItems={setCartItems} 
+            />}
         ></Route>
         <Route
           path="/products"
@@ -55,8 +63,8 @@ const App = () => {
             <Products
               allProducts={allProducts}
               setAllProducts={setAllProducts}
-              chosenCard={chosenCard}
-              setChosenCard={setChosenCard}
+              // chosenCard={chosenCard}
+              // setChosenCard={setChosenCard}
             />
           }
         ></Route>
@@ -64,9 +72,9 @@ const App = () => {
           path="/products/details"
           element={
             <Details
-              chosenCard={chosenCard}
-              cartItems={cartItems}
-              setCartItems={setCartItems}
+              // chosenCard={chosenCard}
+              // cartItems={cartItems}
+              // setCartItems={setCartItems}
             />
           }
         ></Route>
@@ -77,8 +85,8 @@ const App = () => {
             <Products
               allProducts={allProducts}
               setAllProducts={setAllProducts}
-              chosenCard={chosenCard}
-              setChosenCard={setChosenCard}
+              // chosenCard={chosenCard}
+              // setChosenCard={setChosenCard}
             />
           }
         ></Route>
@@ -86,6 +94,7 @@ const App = () => {
           path="/login"
           element={
             <Login
+              setToken={setToken}
               loggedIn={loggedIn}
               setLoggedIn={setLoggedIn}
               username={username}
