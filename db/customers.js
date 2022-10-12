@@ -70,7 +70,6 @@ const updateCustomer = async ({ id, ...fields }) => {
 const getCustomer = async ({ username, password }) => {
   try {
     const customer = await getCustomerByUsername(username);
-
     if (!customer) {
       return;
     }
