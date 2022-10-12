@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
+const path = "http://localhost:4000/api";
 
 const MyCart = (props) => {
 
@@ -25,7 +26,7 @@ const MyCart = (props) => {
     const deleteItem = async (index, productId) => {
 
         console.log("Inside delete item", index);
-        const path = "http://localhost:4000/api";
+        
         
         if (index === 0) {
             purchaseItems.shift();
@@ -69,6 +70,29 @@ const MyCart = (props) => {
             }
         } 
     }
+
+    const adjustQuantity = async (index, productId, quantity) => {
+
+        console.log("Index and product are", index, productId, quantity);
+        //Here we need to increase the quantity by ONLY 1 each time the button is clicked.
+        //However, we need to make sure the current inventory can handle the increase.
+        const response = await fetch(`${path}/products/${productId}`);
+        const data = await response.json();
+        if (data.success) {
+            console.log("INVENTORY COUNT is", data.data.inventorycount);
+            if (data.data.inventorycount < quantity + 1) {
+                alert("Unable to add this extra card to your card due to inventory constraints");
+            } else {
+                purchaseItems[index].quantity++;
+                await setCartItems(JSON.stringify([...purchaseItems]));
+                await localStorage.setItem("cartItems", cartItems);
+                //console.log("New quantity is ", purchaseItems[0].inventorycount);
+            }
+        } else {
+            alert("Error attempting to increase purchase quantity");
+        }
+
+    }
        
     const goToCheckout = () => {
             
@@ -85,7 +109,8 @@ const MyCart = (props) => {
                         let str = `${singleItem.quantity}   ${singleItem.name} @ $${singleItem.price.replace(",","")} $${singleItem.price.replace(",", "") * singleItem.quantity}`;
                         return (
                             <div className="cart-item" key={i}>
-                                <h2>{str} <a onClick={() => deleteItem(i, singleItem.productid)} href="#" className="fa fa-trash"></a></h2>
+                                <h2>{str} <a onClick={() => deleteItem(i, singleItem.productid)} href="#" className="fa fa-trash"></a>
+                                <a onClick={() => adjustQuantity(i, singleItem.productid, singleItem.quantity)} href="#" className="fa fa-plus"></a></h2>
                             </div>
                         );
                     })
