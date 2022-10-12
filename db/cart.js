@@ -34,8 +34,25 @@ const getCartIdbyCustomerId = async(customerId) => {
   }
 }
 
+const closeCart = async(cartId) => {
+
+  try {
+    const { rows: [cart] } = await client.query(`
+      UPDATE carts 
+      SET isopen = false
+      WHERE id = ${cartId}
+    `)
+
+    return cart;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 
 module.exports = {
     createCart,
-    getCartIdbyCustomerId
+    getCartIdbyCustomerId,
+    closeCart,
 };

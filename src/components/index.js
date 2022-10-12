@@ -8,3 +8,4 @@ export { default as Admin } from "./Admin";
 export { default as MyCart } from "./MyCart";
 export { default as Checkout } from "./Checkout";
 export { default as MyProfile } from "./MyProfile";
+export { default as Thanks } from "./Thanks";

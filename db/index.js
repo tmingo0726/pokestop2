@@ -4,5 +4,5 @@ module.exports = {
   ...require("./products"),
   ...require("./admin"),
   ...require("./cart"),
-  ...require("./cart_products")
+  ...require("./cart_products"),
 };
