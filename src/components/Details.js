@@ -126,7 +126,7 @@ const Details = (props) => {
                     <p id="quantity-count" value={quantity}>{quantity}</p>
                 </div>
             <button onClick={() => adjustQuantity("add")} id="plus">+</button>
-            <div><button onClick={() => addToCart(product.name, product.price, quantity, product.productid)} id="addcard">Add To Cart</button></div>
+            <div><button onClick={() => addToCart(product.name, product.price, quantity, product.id)} id="addcard">Add To Cart</button></div>
             </div>
             </div>
             </div>
