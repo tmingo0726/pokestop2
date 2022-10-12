@@ -1,5 +1,6 @@
 const express = require("express");
 const productsRouter = express.Router();
+const client = require("../db/client");
 
 const { 
   getAllProducts, 
@@ -39,6 +40,27 @@ productsRouter.get("/:productId", async (req, res, next) => {
         success: true
       })
     }
+  } catch ({ error, message }) {
+    next({ error, message });
+  }
+})
+
+productsRouter.patch("/", async (req, res, next) => {
+
+  const { id, amountToSubtract } = req.body;
+
+  console.log("inside patch product and params are", id, amountToSubtract);
+
+  try {
+    const { rows: [product] } = await client.query(
+      `
+      UPDATE products
+      SET inventorycount = inventorycount - ${amountToSubtract}
+      WHERE products.id = ${id}
+      RETURNING *;
+    `);
+    
+    return product;
   } catch ({ error, message }) {
     next({ error, message });
   }
