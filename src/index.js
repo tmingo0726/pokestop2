@@ -61,7 +61,7 @@ const App = () => {
           }
         ></Route>
         <Route
-          path="/products/details"
+          path="/products/:productId"
           element={
             <Details
               chosenCard={chosenCard}
