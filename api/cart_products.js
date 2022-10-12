@@ -57,7 +57,7 @@ cartProductsRouter.delete("/", requireUser, async(req, res, next) => {
         } else {
             res.send({
                 deletedProduct,
-                success: `Successfully removed from cart`
+                success: `Successfully removed ${deletedProduct.name} from cart`
             })
         }
     } catch ({ error, message }) {
