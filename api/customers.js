@@ -130,6 +130,12 @@ customersRouter.patch(
     } = req.body);
     customerInputs.id = id;
 
+    Object.keys(customerInputs).forEach((key) => {
+      if (customerInputs[key] === "") {
+        delete customerInputs[key];
+      }
+    });
+
     if (password && password !== confirmPassword) {
       next({
         error: "Passwords do not match",
@@ -165,11 +171,12 @@ customersRouter.patch(
           }
 
           await updateCustomer(customerInputs);
-          const customer = await getCustomer({ username, password });
+          // const customer = await getCustomer({ username, password });
+          // const customer = await getCustomerByUsername(username);
 
           res.send({
-            customer,
-            success: `Successfully updated fields: ${customerInputs}`,
+            customerInputs,
+            success: `Successfully updated ${username}'s profile!`,
           });
         }
       } catch ({ error, message }) {
@@ -179,6 +186,13 @@ customersRouter.patch(
   }
 );
 
-// GET /api/users/me PLACEHOLDER
-
+customersRouter.get("/me", requireUser, async (req, res, next) => {
+  const { username } = req.user;
+  try {
+    const customer = await getCustomerByUsername(username);
+    res.send(customer);
+  } catch ({ error, message }) {
+    next({ error, message });
+  }
+});
 module.exports = customersRouter;
