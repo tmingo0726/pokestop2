@@ -67,9 +67,7 @@ const MyCart = (props) => {
                 console.log('data', data);
                 alert("Item successfully deleted from your cart");
             }
-        } else {
-            alert("No valid user is logged in.");
-        }
+        } 
     }
        
     const goToCheckout = () => {

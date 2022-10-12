@@ -94,7 +94,7 @@ const Details = (props) => {
                     alert("Item successfully added to your cart");
                 }
             } else {
-                alert("No valid user is logged in.");
+                alert("Item successfully added to your cart");
             }
         }
     }
@@ -126,7 +126,7 @@ const Details = (props) => {
                     <p id="quantity-count" value={quantity}>{quantity}</p>
                 </div>
             <button onClick={() => adjustQuantity("add")} id="plus">+</button>
-            <div><button onClick={() => addToCart(product.name, product.price, quantity)} id="addcard">Add To Cart</button></div>
+            <div><button onClick={() => addToCart(product.name, product.price, quantity, product.productid)} id="addcard">Add To Cart</button></div>
             </div>
             </div>
             </div>
