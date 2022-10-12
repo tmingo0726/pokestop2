@@ -8,7 +8,7 @@ const Details = (props) => {
     const chosenCard = props.chosenCard;
     const cartItems = props.cartItems;
     const setCartItems = props.setCartItems;
-    let quantity = 0;
+    let quantity = 1;
     let checkLocalStorage = [];
     
     const productNotParsed = localStorage.getItem("currentDetails");
@@ -29,10 +29,10 @@ const Details = (props) => {
             if (quantity < product.inventorycount) {
                 quantity++;
             } else {
-                alert("Quantity selected exceeds what's available in inventory");
+                //alert("Quantity selected exceeds what's available in inventory");
             }
         } else {
-            if (quantity > 0) quantity--;
+            if (quantity > 1) quantity--;
         }
 
         document.getElementById("quantity-count").innerHTML = quantity;
