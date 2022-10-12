@@ -30,6 +30,7 @@ const MyProfile = (props) => {
           firstname,
           lastname,
           email,
+          address
         }),
       });
       const result = await response.json();
