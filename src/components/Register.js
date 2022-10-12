@@ -2,8 +2,11 @@ import { useState } from "react";
 import { Navigate, Link } from "react-router-dom";
 import '../stylesheets/Register.css'
 
-const { REACT_APP_BASE_URL: BASE_URL } = process.env;
-const Register = () => {
+const BASE_URL = "http://localhost:4000/api"
+const Register = ({
+  loggedIn,
+  setLoggedIn
+}) => {
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -11,7 +14,7 @@ const Register = () => {
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
-  const [registered, setRegistered] = useState(false);
+  // const [registered, setRegistered] = useState(false);
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -24,7 +27,7 @@ const Register = () => {
     email,
     address
   ) => {
-    // console.log("PATH", path);
+
     try {
       const response = await fetch(`${BASE_URL}/customers/register`, {
         method: "POST",
@@ -45,11 +48,14 @@ const Register = () => {
       console.log("result", result);
       setError(result.error);
       setErrorMessage(result.message);
+      result.token ? localStorage.setItem("token", result.token) : null;
+      setLoggedIn(result.token);
       console.log("resulterror", result.error);
       console.log("resultmessage", result.message);
-      setRegistered(result.token);
+      // setRegistered(result.token);
     } catch (err) {
       console.error(err);
+      setLoggedIn(false)
     }
   };
 
@@ -76,8 +82,8 @@ const Register = () => {
   return (
     <div>
       <form id="register" className="form" onSubmit={handleSubmit}>
-        {registered ? (
-          <Navigate to="/login" />
+        {loggedIn ? (
+          <Navigate to="/" />
         ) : (
           <>
             <h2 className="form-header">Register</h2>

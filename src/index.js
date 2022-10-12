@@ -11,6 +11,7 @@ import {
   Admin,
   MyCart,
   Checkout,
+  MyProfile,
 } from "./components";
 
 const container = document.getElementById("app");
@@ -36,9 +37,18 @@ const App = () => {
         isadmin={isadmin}
       />
       <Routes>
-        <Route path="/register" element={<Register />}></Route>
+        <Route path="/register" element={
+          <Register 
+            loggedIn={loggedIn}
+            setLoggedIn={setLoggedIn}
+          />
+        }
+        ></Route>
         <Route path="/admin" element={<Admin token={token} />}></Route>
-        <Route path="/MyCart" element={<MyCart  cartItems={cartItems} setCartItems={setCartItems}/>}></Route>
+        <Route
+          path="/MyCart"
+          element={<MyCart cartItems={cartItems} setCartItems={setCartItems} />}
+        ></Route>
         <Route
           path="/products"
           element={
@@ -52,7 +62,13 @@ const App = () => {
         ></Route>
         <Route
           path="/products/details"
-          element={<Details chosenCard={chosenCard} cartItems={cartItems} setCartItems={setCartItems} />}
+          element={
+            <Details
+              chosenCard={chosenCard}
+              cartItems={cartItems}
+              setCartItems={setCartItems}
+            />
+          }
         ></Route>
         <Route
           exact
@@ -80,7 +96,11 @@ const App = () => {
             />
           }
         ></Route>
-        <Route path="/checkout" element={<Checkout/>}></Route>
+        <Route path="/checkout" element={<Checkout />}></Route>
+        <Route
+          path="/profile"
+          element={<MyProfile username={username} />}
+        ></Route>
       </Routes>
       <Footer />
     </div>
