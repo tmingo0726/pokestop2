@@ -2,7 +2,10 @@ const express = require("express");
 const productsRouter = express.Router();
 const client = require("../db/client");
 
-const { getAllProducts } = require("../db");
+const { 
+  getAllProducts, 
+  getProductById 
+} = require("../db");
 
 //Get all the products
 productsRouter.get("/", async (req, res, next) => {
@@ -17,6 +20,30 @@ productsRouter.get("/", async (req, res, next) => {
     next({ error, message });
   }
 });
+
+productsRouter.get("/:productId", async (req, res, next) => {
+  const { productId } = req.params;
+
+  console.log("PRODUCT ID", productId)
+
+  try {
+    const product = await getProductById(productId);
+
+    if (!product) {
+      next({
+        error: "InvalidProductID",
+        message: `No product found matching ID: ${productId}`
+      })
+    } else {
+      res.send({
+        data: product,
+        success: true
+      })
+    }
+  } catch ({ error, message }) {
+    next({ error, message });
+  }
+})
 
 productsRouter.patch("/", async (req, res, next) => {
 
@@ -34,12 +61,9 @@ productsRouter.patch("/", async (req, res, next) => {
     `);
     
     return product;
-  } catch (error) {
-    console.error(error);
-    throw error;
+  } catch ({ error, message }) {
+    next({ error, message });
   }
-
-
 })
 
 module.exports = productsRouter;

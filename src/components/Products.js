@@ -9,8 +9,8 @@ const Products = (props) => {
     
     const allProducts = props.allProducts;
     const setAllProducts = props.setAllProducts;
-    const chosenCard = props.chosenCard;
-    const setChosenCard = props.setChosenCard;
+    // const chosenCard = props.chosenCard;
+    // const setChosenCard = props.setChosenCard;
 
     const navigate = useNavigate();
 
@@ -36,12 +36,10 @@ const Products = (props) => {
         }
     }
     
-    const seeDetails = (product) => {
+    const seeDetails = (productId) => {
 
-        setChosenCard(product);
-        localStorage.setItem("currentDetails", JSON.stringify(product));
-        console.log("Clicked on Card:", product);
-        navigate("/products/details");
+        // console.log("Clicked on Card:", product);
+        navigate(`/products/${productId}`);
 
     }
 
@@ -52,10 +50,11 @@ const Products = (props) => {
             <div id="products-wrapper">
             {
                 allProducts.map((product, i) => {
+                    console.log("PRODUCT", product)
                     return (
                         
                         <div className="product-container" key={i}>
-                            <img className="card" src={product.imagelink} onClick={() => seeDetails(product)} alt="Pokemon"/>
+                            <img className="card" src={product.imagelink} onClick={() => seeDetails(product.id)} alt="Pokemon"/>
                             <div className="caption">
                                 <p>Price: ${product.price}</p>
                                 <p>Cards in Stock: {product.inventorycount}</p>

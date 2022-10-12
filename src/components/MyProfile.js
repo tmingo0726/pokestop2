@@ -18,7 +18,7 @@ const MyProfile = (props) => {
 
   const token = localStorage.getItem("token");
 
-  const updateMyProfile = async (firstname, lastname, email) => {
+  const updateMyProfile = async () => {
     try {
       const response = await fetch(`${BASE_URL}/customers/${username}/edit`, {
         method: "PATCH",
