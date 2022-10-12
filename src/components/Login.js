@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Navigate, Link } from "react-router-dom";
-import '../stylesheets/Login.css'
+import "../stylesheets/Login.css";
 
 // require("dotenv").config();
 // const path = process.env.REACT_APP_BASE_URL;
@@ -89,8 +89,15 @@ const Login = ({
               <h4>{error ? `${errorMessage}` : null}</h4>
             </div>
             <div>
-              <button className="form-btn" type="submit">Login</button>
-              <div className="form-redirect-text">Not a member? <Link className="form-redirect-link" to='/register'>Sign Up!</Link></div>
+              <button className="form-btn" type="submit">
+                Login
+              </button>
+              <div className="form-redirect-text">
+                Not a member?{" "}
+                <Link className="form-redirect-link" to="/register">
+                  Sign Up!
+                </Link>
+              </div>
             </div>
           </>
         )}

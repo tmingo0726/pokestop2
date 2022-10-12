@@ -37,12 +37,9 @@ const App = () => {
         isadmin={isadmin}
       />
       <Routes>
-        <Route path="/register" element={
-          <Register 
-            loggedIn={loggedIn}
-            setLoggedIn={setLoggedIn}
-          />
-        }
+        <Route
+          path="/register"
+          element={<Register loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
         ></Route>
         <Route path="/admin" element={<Admin token={token} />}></Route>
         <Route
@@ -99,7 +96,7 @@ const App = () => {
         <Route path="/checkout" element={<Checkout />}></Route>
         <Route
           path="/profile"
-          element={<MyProfile username={username} />}
+          element={<MyProfile username={username} password={password} />}
         ></Route>
       </Routes>
       <Footer />
