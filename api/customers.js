@@ -7,6 +7,7 @@ const {
   updateCustomer,
   getCustomerByEmail,
   createCart,
+  getCustomerById,
 } = require("../db");
 const { requireUser } = require("./utils");
 
@@ -179,6 +180,6 @@ customersRouter.patch(
   }
 );
 
-// GET /api/users/me PLACEHOLDER
+// GET /api/customers/me PLACEHOLDER
 
 module.exports = customersRouter;

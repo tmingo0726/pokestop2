@@ -31,9 +31,9 @@ cartProductsRouter.post("/", requireUser, async(req, res, next) => {
     const { productid, quantity } = req.body;
 
     try {
-        const { id: cartId } = await getCartIdbyCustomerId(customerId);
+        const { id: cartid } = await getCartIdbyCustomerId(customerId);
 
-        const cartItem = await createCartProduct({cartId, productid, quantity})
+        const cartItem = await createCartProduct({cartid, productid, quantity})
 
         res.send({
             cartItem,
