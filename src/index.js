@@ -98,7 +98,13 @@ const App = () => {
         <Route path="/checkout" element={<Checkout />}></Route>
         <Route
           path="/profile"
-          element={<MyProfile username={username} password={password} />}
+          element={
+            <MyProfile
+              username={username}
+              password={password}
+              setPassword={setPassword}
+            />
+          }
         ></Route>
       </Routes>
       <Footer />
