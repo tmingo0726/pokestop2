@@ -8,6 +8,7 @@ const Checkout = () => {
     let cartItem = [];
 
     const path = "http://localhost:4000/api";
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -34,7 +35,6 @@ const Checkout = () => {
       //Call backend to decrease the inventory for product ID
       //We may need to add more items to change but for right now
       //it's probably just inventory count.
-
       const response = await fetch(`${path}/products`, {
         method: "PATCH",
         headers: {
@@ -54,15 +54,32 @@ const Checkout = () => {
 
     const submitPayment = async () => {
 
+      const token = localStorage.getItem("token");
+
       cartItem.map((item, i) => {
         updateInventory(item);
       });
 
       //now that payment has been received, clear the data from localStorage
-      localStorage.clear("cartItems");
+      localStorage.setItem("cartItems", []);
+      localStorage.setItem("currentDetails", {});
 
-      //Close the order from carts -- Ask CJ if all he needs is a token for this
-
+      //Close the order from carts -- but only for a registered customer
+      //Otherwise, there won't be an associated cart.
+      if (token) {
+        const response = await fetch(`${path}/carts`, {
+          method: "PATCH",
+          headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : `Bearer ${token}`,
+                }
+          });
+          const data = await response.json();
+          if (data.success) {
+            console.log('data', data);
+            navigate("/Thanks");
+          }
+       }
     }
 
       

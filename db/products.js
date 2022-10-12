@@ -15,6 +15,22 @@ const getAllProducts = async () => {
   }
 };
 
+const getProductById = async(productId) => {
+  try {
+    const { rows: [product] } = await client.query(`
+      SELECT * FROM products
+      WHERE id = ${productId}
+        AND isactive = true;
+    `)
+    console.log("PRODUCT", product)
+    return product;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+} 
+
 module.exports = {
   getAllProducts,
+  getProductById
 };
