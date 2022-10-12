@@ -34,6 +34,11 @@ const createCustomer = async ({
 };
 
 const updateCustomer = async ({ id, ...fields }) => {
+  console.log("FIELDS", fields);
+  if (fields.password) {
+    const SALT_COUNT = 10;
+    fields.password = await bcrypt.hash(fields.password, SALT_COUNT);
+  }
   const columns = Object.keys(fields)
     .map((key, idx) => `"${key}"=$${idx + 1}`)
     .join(", ");

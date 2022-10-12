@@ -12,6 +12,7 @@ import {
   MyCart,
   Checkout,
   MyProfile,
+  Thanks,
 } from "./components";
 
 const container = document.getElementById("app");
@@ -48,6 +49,7 @@ const App = () => {
         }
         ></Route>
         <Route path="/admin" element={<Admin token={token} />}></Route>
+        <Route path="/thanks" element={<Thanks />}></Route>
         <Route
           path="/MyCart"
           element={<MyCart 
@@ -108,7 +110,7 @@ const App = () => {
         <Route path="/checkout" element={<Checkout />}></Route>
         <Route
           path="/profile"
-          element={<MyProfile username={username} />}
+          element={<MyProfile username={username} password={password} />}
         ></Route>
       </Routes>
       <Footer />

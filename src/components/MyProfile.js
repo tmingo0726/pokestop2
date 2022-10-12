@@ -4,8 +4,9 @@ import "../stylesheets/MyProfile.css";
 const BASE_URL = "http://localhost:4000/api";
 
 const MyProfile = (props) => {
-  const { username } = props;
+  const { username, password } = props;
   const [profile, setProfile] = useState({});
+  const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [firstname, setFirstname] = useState("");
@@ -18,7 +19,8 @@ const MyProfile = (props) => {
 
   const token = localStorage.getItem("token");
 
-  const updateMyProfile = async (firstname, lastname, email) => {
+  const updateMyProfile = async () => {
+
     try {
       const response = await fetch(`${BASE_URL}/customers/${username}/edit`, {
         method: "PATCH",
@@ -29,8 +31,10 @@ const MyProfile = (props) => {
         body: JSON.stringify({
           firstname,
           lastname,
+          password: newPassword,
+          confirmPassword,
           email,
-          address
+          address,
         }),
       });
       const result = await response.json();
@@ -61,11 +65,21 @@ const MyProfile = (props) => {
 
   useEffect(() => {
     getMyProfile();
+    console.log("PASSWORD", password);
   }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await updateMyProfile(firstname, lastname, email);
+    oldPassword !== password
+      ? setError(true) && setErrorMessage("Password is incorrect")
+      : await updateMyProfile(
+          firstname,
+          lastname,
+          newPassword,
+          confirmPassword,
+          email,
+          address
+        );
     await getMyProfile();
     setFirstname("");
     setLastname("");
@@ -114,6 +128,43 @@ const MyProfile = (props) => {
                 ></input>
               </div>
               <div className="profile-input-wrap">
+                <p className="profile-info" id="profile-old-password">
+                  Password: *******{password.slice(-3)}
+                </p>
+                <input
+                  type="password"
+                  id="update-profile-input"
+                  value={oldPassword}
+                  placeholder="Password"
+                  onChange={(event) => {
+                    setOldPassword(event.target.value);
+                  }}
+                ></input>
+              </div>
+              <div id="new-pw-input" className="right-side">
+                <input
+                  type="text"
+                  id="update-profile-input"
+                  value={newPassword}
+                  placeholder="New Password"
+                  onChange={(event) => {
+                    setNewPassword(event.target.value);
+                  }}
+                ></input>
+              </div>
+              <br />
+              <div id="confirm-pw-input" className="right-side">
+                <input
+                  type="text"
+                  id="update-profile-input"
+                  value={confirmPassword}
+                  placeholder="Confirm New Password"
+                  onChange={(event) => {
+                    setConfirmPassword(event.target.value);
+                  }}
+                ></input>
+              </div>
+              <div className="profile-input-wrap">
                 <p className="profile-info" id="profile-email">
                   Email: {profile.email}
                 </p>
@@ -143,7 +194,14 @@ const MyProfile = (props) => {
               </div>
               <br />
               <button
-                disabled={!firstname && !lastname && !email && !address}
+                disabled={
+                  (!firstname &&
+                    !lastname &&
+                    !email &&
+                    !address &&
+                    !newPassword) ||
+                  newPassword !== confirmPassword
+                }
                 className="form-btn"
                 type="submit"
               >
