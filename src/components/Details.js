@@ -130,12 +130,9 @@ const Details = (props) => {
             </div>
             </div>
             </div>
-        <button onClick={() => adjustQuantity("add")} id="plus">+</button>
-        <div><button onClick={() => addToCart(product.name, product.price, quantity, product.id)} id="addcard">Add To Cart</button></div>
         </div>
-        </div>
-        </div>
-        </div>
+        
+        
     )
 
 }
