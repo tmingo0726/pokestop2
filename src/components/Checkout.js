@@ -19,7 +19,7 @@ const Checkout = () => {
       cartItem = JSON.parse(cart);
       if (cartItem.length){
         cartItem.map((item, i) => {
-          subTotal += Number(item.price.replace(",", ""));
+          subTotal += Number(item.price.replace(",", "") * item.quantity);
         })
       }
     }
