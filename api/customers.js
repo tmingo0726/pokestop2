@@ -186,7 +186,6 @@ customersRouter.patch(
   }
 );
 
-// GET /api/users/me PLACEHOLDER
 customersRouter.get("/me", requireUser, async (req, res, next) => {
   const { username } = req.user;
   try {
