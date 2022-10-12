@@ -12,6 +12,7 @@ const AdminCustomer = () => {
   const [isadmin, setIsadmin] = useState(false);
   const [adminSuccess, setAdminSuccess] = useState("");
   const [deleteSuccess, setDeleteSuccess] = useState("");
+  const [profile, setProfile] = useState({});
 
   const token = localStorage.getItem("token");
 
@@ -29,6 +30,7 @@ const AdminCustomer = () => {
       const result = await response.json();
       console.log("RESULT", result);
       console.log("RESULT", result.success);
+      setProfile(result.viewCustomer);
       setSuccess(result.success);
       setError(result.error);
       setErrorMessage(result.message);
@@ -84,11 +86,13 @@ const AdminCustomer = () => {
   const handleDeleteCustomer = (customerId) => {
     setSuccess("");
     deleteCustomer(customerId);
+    setCustomerUsername("");
   };
 
   const toggleAdminStatus = (boolean) => {
     setSuccess(null);
     setAdmin(customerId, boolean);
+    setCustomerUsername("");
     setAdminSuccess("");
     setDeleteSuccess("");
   };
@@ -125,6 +129,28 @@ const AdminCustomer = () => {
               }}
             ></input>
           </div>
+          {success ? (
+            <>
+              <p className="profile-info" id="profile-email">
+                Customer ID: {profile.id}
+              </p>
+              <p className="profile-info" id="profile-firstname">
+                First Name: {profile.firstname}
+              </p>
+              <p className="profile-info" id="profile-lastname">
+                Last Name: {profile.lastname}
+              </p>
+              <p className="profile-info" id="profile-address">
+                Address: {profile.address}
+              </p>
+              <p className="profile-info" id="profile-email">
+                Email: {profile.email}
+              </p>
+              <p className="profile-info" id="profile-admin-status">
+                Admin Status: {String(isadmin)}
+              </p>
+            </>
+          ) : null}
         </fieldset>
         <button id="search-customer-btn" className="form-btn" type="submit">
           Search For Customer!
