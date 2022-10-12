@@ -16,9 +16,17 @@
     margin-top: 0px;
     padding: 5px;
 }
+
+.right-side{
+    display:flex;
+    justify-content: right;
+}
+
+#confirm-pw-input{
+    margin-bottom: 23px;
+}
 .profile-input-wrap {
     display: flex;
-    /* justify-content: flex-start; */
     justify-content: space-between;
     align-items: baseline;
     margin-bottom: 10px;
@@ -31,3 +39,4 @@
 :disabled{
     background-color: grey
 }
+
