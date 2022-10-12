@@ -13,7 +13,7 @@ const Details = (props) => {
     
     const productNotParsed = localStorage.getItem("currentDetails");
     const product = JSON.parse(productNotParsed);
-
+    
     checkLocalStorage = localStorage.getItem("cartItems");
     console.log("checkLocalStorage is", checkLocalStorage);
     if (checkLocalStorage === null || checkLocalStorage === [] || !checkLocalStorage.length) {
@@ -39,22 +39,52 @@ const Details = (props) => {
 
     }
 
-    const addToCart = (name, price, quantity) => {
+    const addToCart = async (name, price, quantity, productId) => {
+
+        console.log("name price quantity product id: ", name, price, quantity, productId);
+        const path = "http://localhost:4000/api";
+        const token = localStorage.getItem("token");
 
         if (!quantity) {
             alert("Please select a quantity");
         } else {
 
-            let item = {
-                name: name,
-                price: price,
-                quantity: quantity
-            };
+          let item = {
+            name: name,
+            price: price,
+            quantity: quantity,
+            productid: productId,
+          };
 
-            purchaseItems.push(item);
-            localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
-            setCartItems(JSON.stringify([...purchaseItems]));
-            alert("Item successfully added to your cart");
+          purchaseItems.push(item);
+          localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
+          setCartItems(JSON.stringify([...purchaseItems]));
+
+          //Here I am ready to POST to cart_products table with data I have
+          if (token) {
+                const response = await fetch(`${path}/cart_products`, {
+                method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body : JSON.stringify({
+                    
+                          productid: productId,
+                          quantity: quantity
+                 
+                    })
+                });
+                const data = await response.json();
+                if (!data.success) {
+                    alert("Error adding purchase item to cart");
+                } else {
+                    console.log('data', data);
+                    alert("Item successfully added to your cart");
+                }
+            } else {
+                alert("No valid user is logged in.");
+            }
         }
     }
 
@@ -94,7 +124,7 @@ const Details = (props) => {
                 <p id="quantity-count" value={quantity}>{quantity}</p>
             </div>
         <button onClick={() => adjustQuantity("add")} id="plus">+</button>
-        <div><button onClick={() => addToCart(product.name, product.price, quantity)} id="addcard">Add To Cart</button></div>
+        <div><button onClick={() => addToCart(product.name, product.price, quantity, product.id)} id="addcard">Add To Cart</button></div>
         </div>
         </div>
         </div>

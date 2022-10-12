@@ -7,6 +7,7 @@ const {
   updateCustomer,
   getCustomerByEmail,
   createCart,
+  getCustomerById,
 } = require("../db");
 const { requireUser } = require("./utils");
 
@@ -186,6 +187,7 @@ customersRouter.patch(
   }
 );
 
+// GET /api/customers/me PLACEHOLDER
 customersRouter.get("/me", requireUser, async (req, res, next) => {
   const { username } = req.user;
   try {
@@ -195,4 +197,5 @@ customersRouter.get("/me", requireUser, async (req, res, next) => {
     next({ error, message });
   }
 });
+
 module.exports = customersRouter;
