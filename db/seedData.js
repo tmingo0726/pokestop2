@@ -10,7 +10,7 @@ const {
   adminGetCustomerByUsername,
   getCartIdbyCustomerId,
   getOpenCartByCustomerId,
-  getPastOrdersByCustomerId
+  getPastOrdersByCustomerId,
 } = require("./");
 const client = require("./client");
 
@@ -126,6 +126,58 @@ const createInitialProducts = async () => {
   try {
     const productsToCreate = [
       {
+        name: "Gardevoir",
+        price: "Coming Soon!",
+        condition: "Mint",
+        rarity: "Holo",
+        ability1:
+          "Astonish: Flip a coin. If heads, choose a random card from your opponent's hand. Your opponent reveals that cards and shuffles it into his or her deck.",
+        ability2:
+          "Miracle Powder: Flip a coin. If heads, choose a Special Condition. The Defending Pokémon is now affected by that Special Condition.",
+        imagelink: "https://images.pokemontcg.io/bw8/13_hires.png",
+        inventorycount: 0,
+        isactive: true,
+      },
+      {
+        name: "Amoonguss",
+        price: "Coming Soon!",
+        condition: "Mint",
+        rarity: "Holo",
+        ability1:
+          "Bright Heal: Once during your turn (before your attack), you may heal 20 damage from each of your Pokémon.",
+        ability2:
+          "Telekinesis: This attack does 50 damage to 1 of your opponent's Pokémon. This attack's damage isn't affected by Weakness or Resistance.",
+        imagelink: "https://images.pokemontcg.io/xy7/54_hires.png",
+        inventorycount: 0,
+        isactive: true,
+      },
+      {
+        name: "Mewtwo",
+        price: "10,000",
+        condition: "Good",
+        rarity: "Holo",
+        ability1:
+          "Psychic: Does 10 damage plus 10 more damage for each Energy card attached to the Defending Pokémon.",
+        ability2:
+          "Barrier: Discard 1 Psychic Energy card attached to Mewtwo in order to prevent all effects of attacks, including damage, done to Mewtwo during your opponent's next turn.",
+        imagelink: "https://images.pokemontcg.io/base1/10_hires.png",
+        inventorycount: 3,
+        isactive: true,
+      },
+      {
+        name: "Snorlax",
+        price: "1,000",
+        condition: "Mint",
+        rarity: "Holo",
+        ability1:
+          "Thick Skinned: Snorlax can't become Asleep, Confused, Paralyzed, or Poisoned. This power can't be used if Snorlax is already Asleep, Confused, or Paralyzed.",
+        ability2:
+          "	Body Slam: Flip a coin. If heads, the Defending Pokémon is now Paralyzed.",
+        imagelink: "https://images.pokemontcg.io/base2/11_hires.png",
+        inventorycount: 3,
+        isactive: true,
+      },
+      {
         name: "Charizard",
         price: "30,000",
         condition: "Good",
@@ -164,19 +216,6 @@ const createInitialProducts = async () => {
         isactive: true,
       },
       {
-        name: "Mewtwo",
-        price: "10,000",
-        condition: "Good",
-        rarity: "Holo",
-        ability1:
-          "Psychic: Does 10 damage plus 10 more damage for each Energy card attached to the Defending Pokémon.",
-        ability2:
-          "Barrier: Discard 1 Psychic Energy card attached to Mewtwo in order to prevent all effects of attacks, including damage, done to Mewtwo during your opponent's next turn.",
-        imagelink: "https://images.pokemontcg.io/base1/10_hires.png",
-        inventorycount: 3,
-        isactive: true,
-      },
-      {
         name: "Zapdos",
         price: "300",
         condition: "Poor",
@@ -202,6 +241,104 @@ const createInitialProducts = async () => {
         inventorycount: 2,
         isactive: true,
       },
+      {
+        name: "Dragonair",
+        price: "77",
+        condition: "Mint",
+        rarity: "Holo",
+        ability1:
+          "Slam: Flip 2 coins. This attack does 30 damage times the number of heads.",
+        ability2:
+          "Hyper Beam: If the Defending Pokémon has any Energy cards attached to it, choose 1 of them and discard it.",
+        imagelink: "https://images.pokemontcg.io/base4/22_hires.png",
+        inventorycount: 2,
+        isactive: true,
+      },
+      {
+        name: "Chansey",
+        price: "100",
+        condition: "Good",
+        rarity: "Holo",
+        ability1:
+          "Scrunch: Flip a coin. If heads, prevent all damage done to Chansey during your opponent's next turn. (Any other effects of attacks still happen.)",
+        ability2: "Double-edge: Chansey does 80 damage to itself.",
+        imagelink: "https://images.pokemontcg.io/base4/3_hires.png",
+        inventorycount: 5,
+        isactive: true,
+      },
+      {
+        name: "Hitmonchan",
+        price: "1111",
+        condition: "Mint",
+        rarity: "Holo",
+        ability1: "Jab",
+        ability2: "Special Punch",
+        imagelink: "https://images.pokemontcg.io/base4/8_hires.png",
+        inventorycount: 13,
+        isactive: true,
+      },
+      {
+        name: "Aerodactyl",
+        price: "8",
+        condition: "Damaged",
+        rarity: "Holo",
+        ability1:
+          "Prehistoric Power: No more Evolution cards can be played. This power stops working while Aerodactyl is Asleep, Confused, or Paralyzed.",
+        ability2: "Wing Attack",
+        imagelink: "https://images.pokemontcg.io/base3/1_hires.png",
+        inventorycount: 9,
+        isactive: true,
+      },
+      {
+        name: "Ditto",
+        price: "132",
+        condition: "Good",
+        rarity: "Holo",
+        ability1: "Transform",
+        ability2: "",
+        imagelink: "https://images.pokemontcg.io/base3/3_hires.png",
+        inventorycount: 132,
+        isactive: true,
+      },
+      {
+        name: "Gengar",
+        price: "94",
+        condition: "Good",
+        rarity: "Holo",
+        ability1:
+          "Curse:Once during your turn (before your attack), you may move 1 damage counter from 1 of your opponent's Pokémon to another (even if it would Knock Out the other Pokémon). This power can't be used if Gengar is Asleep, Confused, or Paralyzed.",
+        ability2:
+          "Dark Mind:If your opponent has any Benched Pokémon, choose 1 of them and this attack does 10 damage to it. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+        imagelink: "https://images.pokemontcg.io/base3/5_hires.png",
+        inventorycount: 94,
+        isactive: true,
+      },
+      {
+        name: "Lapras",
+        price: "131",
+        condition: "Good",
+        rarity: "Holo",
+        ability1:
+          "Water Gun: Does 10 damage plus 10 more damage for each Water Energy attached to Lapras but not used to pay for this attack's Energy cost. You can't add more than 20 damage in this way.",
+        ability2:
+          "Confuse Ray: Flip a coin. If heads, the Defending Pokémon is now Confused.",
+        imagelink: "https://images.pokemontcg.io/base3/10_hires.png",
+        inventorycount: 31,
+        isactive: true,
+      },
+      {
+        name: "Mew",
+        price: "151",
+        condition: "Mint",
+        rarity: "Holo",
+        ability1:
+          "Psywave: Does 10 damage times the number of Energy cards attached to the Defending Pokémon.",
+        ability2:
+          "Devolution Beam: Choose an evolved Pokémon (your own or your opponent's). Return the highest Stage Evolution card on that Pokémon to its player's hand. That Pokémon is no longer Asleep, Confused, Paralyzed, or Poisoned, or anything else that might be the result of an attack (just as if you had evolved it).",
+        imagelink: "https://images.pokemontcg.io/basep/9_hires.png",
+        inventorycount: 51,
+        isactive: true,
+      },
     ];
 
     console.log("PRODUCTS TO CREATE", productsToCreate);
@@ -219,7 +356,7 @@ const createInitialProducts = async () => {
 const createInitialCarts = async () => {
   console.log("STARTING TO CREATE CARTS");
   try {
-    const cartsToCreate = [3,2,1];
+    const cartsToCreate = [3, 2, 1];
 
     console.log("CARTS TO CREATE", cartsToCreate);
     const carts = await Promise.all(cartsToCreate.map(createCart));
@@ -229,7 +366,7 @@ const createInitialCarts = async () => {
     console.log("ERROR CREATING CARTS");
     throw err;
   }
-}
+};
 
 const createInitialCartProducts = async () => {
   console.log("STARTING TO CREATE CART-PRODUCTS");
@@ -238,34 +375,36 @@ const createInitialCartProducts = async () => {
       {
         cartid: 1,
         productid: 2,
-        quantity: 3
+        quantity: 3,
       },
       {
         cartid: 1,
         productid: 4,
-        quantity: 1
+        quantity: 1,
       },
       {
         cartid: 2,
         productid: 2,
-        quantity: 2
+        quantity: 2,
       },
       {
         cartid: 3,
         productid: 3,
-        quantity: 1
-      }
+        quantity: 1,
+      },
     ];
 
     console.log("CART PRODUCTS TO CREATE", cartProductsToCreate);
-    const cartproducts = await Promise.all(cartProductsToCreate.map(createCartProduct));
+    const cartproducts = await Promise.all(
+      cartProductsToCreate.map(createCartProduct)
+    );
     console.log("CART PRODUCTS", cartproducts);
     console.log("FINISHED CREATING CART PRODUCTS");
   } catch (err) {
     console.log("ERROR CREATING CART PRODUCTS");
     throw err;
   }
-}
+};
 
 // const testAdminCheckById = async (id) => {
 //   try {
