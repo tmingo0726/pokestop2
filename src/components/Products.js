@@ -9,8 +9,8 @@ const Products = (props) => {
     
     const allProducts = props.allProducts;
     const setAllProducts = props.setAllProducts;
-    // const chosenCard = props.chosenCard;
-    // const setChosenCard = props.setChosenCard;
+    // // const chosenCard = props.chosenCard;
+    // // const setChosenCard = props.setChosenCard;
 
     const navigate = useNavigate();
 

@@ -5,6 +5,7 @@ const createCartProduct = async ({
   productid,
   quantity
 }) => {
+  console.log("COLUMNS", cartid, productid, quantity)
   try {
     
     const { rows: [cartItem] } = await client.query(
@@ -45,14 +46,9 @@ const getOpenCartByCustomerId = async(customerId) => {
       rows
     } = await client.query(
       `
-        SELECT cart_products.id,
-          jsonb_agg(jsonb_build_object(
-            'id', products.id,
-            'name', products.name,
-            'price', products.price,
-            'quantity', cart_products.quantity,
-            'imagelink', products.imagelink
-          )) as products
+        SELECT cart_products.id AS "cartProductId",
+          products.id, products.name, cart_products.quantity,
+          products.price, products.imagelink
         FROM products
         JOIN cart_products
           ON cart_products.productid = products.id
@@ -60,9 +56,10 @@ const getOpenCartByCustomerId = async(customerId) => {
           ON carts.id = cart_products.cartid
         WHERE carts.isopen = true
           AND carts.customerid = ${customerId}
-        GROUP BY cart_products.id;
       `
     );
+
+    console.log("CART ITEMS DB", rows)
     return rows;
   } catch (error) {
     console.error(error);
@@ -76,22 +73,16 @@ const getPastOrdersByCustomerId = async(customerId) => {
       rows
     } = await client.query(
       `
-        SELECT cart_products.id,
-          jsonb_agg(jsonb_build_object(
-            'id', products.id,
-            'name', products.name,
-            'price', products.price,
-            'quantity', cart_products.quantity,
-            'imagelink', products.imagelink
-          )) as products
-        FROM products
-        JOIN cart_products
-          ON cart_products.productid = products.id
-        JOIN carts
-          ON carts.id = cart_products.cartid
-        WHERE carts.isopen = false
-          AND carts.customerid = ${customerId}
-        GROUP BY cart_products.id;
+      SELECT cart_products.id AS "cartProductId",
+      products.id, products.name, cart_products.quantity,
+      products.price, products.imagelink
+    FROM products
+    JOIN cart_products
+      ON cart_products.productid = products.id
+    JOIN carts
+      ON carts.id = cart_products.cartid
+    WHERE carts.isopen = false
+      AND carts.customerid = ${customerId}
       `
     );
     return rows;

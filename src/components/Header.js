@@ -13,7 +13,7 @@ const Header = ({
     setLoggedIn(false);
     setUsername("");
     setPassword("");
-    localStorage.clear();
+    localStorage.removeItem("token");
     navigate("/");
   };
 

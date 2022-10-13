@@ -7,6 +7,7 @@ import "../stylesheets/Login.css";
 const BASE_URL = "http://localhost:4000/api";
 
 const Login = ({
+  setToken,
   loggedIn,
   setLoggedIn,
   username,
@@ -38,7 +39,9 @@ const Login = ({
       setError(result.error);
       setErrorMessage(result.message);
       result.token ? localStorage.setItem("token", result.token) : null;
-      setLoggedIn(result.token);
+      setLoggedIn(true);
+      console.log("STATUS", await loggedIn)
+      setToken(result.token);
       setIsadmin(result.customer.admin);
       return result.token;
     } catch (err) {
