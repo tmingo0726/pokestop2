@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+#thanks-header{
+    /* font-family: 'VT323', monospace; */
+    text-align: center;
+    color: white;
+}
+
+#thanks-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
