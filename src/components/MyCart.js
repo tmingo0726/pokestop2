@@ -46,7 +46,7 @@ const MyCart = (props) => {
                 console.log("PRODOUCT", cartItem)
                 addCartItemsToExistingCart({
                     cartid,
-                    productid: cartItem.productid,
+                    productid: cartItem.id,
                     quantity: cartItem.quantity
                 })
             }))
@@ -144,7 +144,7 @@ const MyCart = (props) => {
                 item.id === id ? storageCart.splice(item) : null
             })
             if (storageCart.length) {
-                localStorage.setItem("cartItems", storageCart)
+                localStorage.setItem("cartItems", JSON.stringify(storageCart))
             } else {
                 localStorage.removeItem("cartItems")
             }
