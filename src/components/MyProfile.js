@@ -4,7 +4,7 @@ import "../stylesheets/MyProfile.css";
 const BASE_URL = "http://localhost:4000/api";
 
 const MyProfile = (props) => {
-  const { username, password } = props;
+  const { username, password, setPassword } = props;
   const [profile, setProfile] = useState({});
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -19,8 +19,14 @@ const MyProfile = (props) => {
 
   const token = localStorage.getItem("token");
 
-  const updateMyProfile = async () => {
-
+  const updateMyProfile = async (
+    firstname,
+    lastname,
+    newPassword,
+    confirmPassword,
+    email,
+    address
+  ) => {
     try {
       const response = await fetch(`${BASE_URL}/customers/${username}/edit`, {
         method: "PATCH",
@@ -68,23 +74,54 @@ const MyProfile = (props) => {
     console.log("PASSWORD", password);
   }, []);
 
+  const passwordChange = async () => {
+    await updateMyProfile(
+      firstname,
+      lastname,
+      newPassword,
+      confirmPassword,
+      email,
+      address
+    );
+    await setPassword(newPassword);
+  };
+  const showErrors = () => {
+    setError("true");
+    setErrorMessage("Incorrect Password");
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    oldPassword !== password
-      ? setError(true) && setErrorMessage("Password is incorrect")
-      : await updateMyProfile(
-          firstname,
-          lastname,
-          newPassword,
-          confirmPassword,
-          email,
-          address
-        );
+    // await updateMyProfile(
+    //   firstname,
+    //   lastname,
+    //   newPassword,
+    //   confirmPassword,
+    //   email,
+    //   address
+    // );
+    // await getMyProfile();
+    {
+      newPassword
+        ? oldPassword === password
+          ? passwordChange()
+          : showErrors()
+        : await updateMyProfile(
+            firstname,
+            lastname,
+            newPassword,
+            confirmPassword,
+            email,
+            address
+          );
+    }
     await getMyProfile();
     setFirstname("");
     setLastname("");
     setEmail("");
     setAddress("");
+    setOldPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
   };
   return (
     <div>
@@ -105,7 +142,7 @@ const MyProfile = (props) => {
                 </p>
                 <input
                   type="text"
-                  id="update-profile-input"
+                  className="update-profile-input"
                   value={firstname}
                   placeholder="First Name"
                   onChange={(event) => {
@@ -119,7 +156,7 @@ const MyProfile = (props) => {
                 </p>
                 <input
                   type="text"
-                  id="update-profile-input"
+                  className="update-profile-input"
                   value={lastname}
                   placeholder="Last Name"
                   onChange={(event) => {
@@ -133,7 +170,7 @@ const MyProfile = (props) => {
                 </p>
                 <input
                   type="password"
-                  id="update-profile-input"
+                  className="update-profile-input"
                   value={oldPassword}
                   placeholder="Password"
                   onChange={(event) => {
@@ -144,7 +181,7 @@ const MyProfile = (props) => {
               <div id="new-pw-input" className="right-side">
                 <input
                   type="text"
-                  id="update-profile-input"
+                  className="update-profile-input"
                   value={newPassword}
                   placeholder="New Password"
                   onChange={(event) => {
@@ -156,7 +193,7 @@ const MyProfile = (props) => {
               <div id="confirm-pw-input" className="right-side">
                 <input
                   type="text"
-                  id="update-profile-input"
+                  className="update-profile-input"
                   value={confirmPassword}
                   placeholder="Confirm New Password"
                   onChange={(event) => {
@@ -170,7 +207,7 @@ const MyProfile = (props) => {
                 </p>
                 <input
                   type="text"
-                  id="update-profile-input"
+                  className="update-profile-input"
                   value={email}
                   placeholder="Email"
                   onChange={(event) => {
@@ -184,7 +221,7 @@ const MyProfile = (props) => {
                 </p>
                 <input
                   type="text"
-                  id="update-profile-input"
+                  className="update-profile-input"
                   value={address}
                   placeholder="Address"
                   onChange={(event) => {

@@ -122,10 +122,10 @@ customersRouter.patch(
     const { id, username: _username } = req.user;
     const { username } = req.params;
     const customerInputs = ({
-      password,
-      confirmPassword,
       firstname,
       lastname,
+      password,
+      confirmPassword,
       email,
       address,
     } = req.body);
@@ -170,10 +170,8 @@ customersRouter.patch(
           if (customerInputs.confirmPassword) {
             delete customerInputs.confirmPassword;
           }
-
+          console.log("CUSTOMER INPUTS", customerInputs);
           await updateCustomer(customerInputs);
-          // const customer = await getCustomer({ username, password });
-          // const customer = await getCustomerByUsername(username);
 
           res.send({
             customerInputs,
