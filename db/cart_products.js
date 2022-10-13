@@ -97,14 +97,14 @@ const getPastOrdersByCustomerId = async (customerId) => {
       `
     SELECT cart_products.id, products.id AS "productId",
       products.name, cart_products.quantity,
-      products.price, products.imagelink
+      products.price, products.imagelink, 
+      carts.isopen, cart_products.cartid
     FROM products
     JOIN cart_products
       ON cart_products.productid = products.id
     JOIN carts
       ON carts.id = cart_products.cartid
-    WHERE carts.isopen = false
-      AND carts.customerid = ${customerId}
+    WHERE carts.customerid = ${customerId}
       `
     );
     return rows;

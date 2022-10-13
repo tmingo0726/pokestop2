@@ -1,4 +1,29 @@
+#purchase-history-table{
+    display: flex;
+    justify-content: center;
+    background-color:white;
+}
 .purchase-picture{
     height: 150px;
     width: 100px;
+}
+
+#purchase-info{
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+}
+
+.purchase-info-text{
+    color: black;
+    margin: 5px;
+
+}
+/* #purchase {
+    display: flex;
+} */
+
+.view-order-btn{
+    color:black;
+    margin: 10px;   
 }

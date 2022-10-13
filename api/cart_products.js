@@ -3,6 +3,7 @@ const cartProductsRouter = express.Router();
 const {
   getOpenCartByCustomerId,
   getClosedCartByCustomerId,
+  getPastOrdersByCustomerId,
   getCartIdbyCustomerId,
   createCartProduct,
   deleteCartProduct,
@@ -35,7 +36,7 @@ cartProductsRouter.get("/closedcarts", requireUser, async (req, res, next) => {
   console.log("USER", req.user);
 
   try {
-    const cart = await getClosedCartByCustomerId(id);
+    const cart = await getPastOrdersByCustomerId(id);
 
     console.log("CART", cart);
 
