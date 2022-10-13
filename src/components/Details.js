@@ -108,7 +108,7 @@ const Details = ({
             name: name,
             price: price,
             quantity: quantity,
-            productid: productId,
+            id: productId,
           };
 
           purchaseItems.push(item);

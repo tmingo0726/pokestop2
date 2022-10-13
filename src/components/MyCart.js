@@ -17,15 +17,6 @@ const MyCart = (props) => {
     
     // console.log("Cart items from props is ", cartItems);
 
-    useEffect(() =>{
-        const awaitCart = async() =>{
-            await getCurrentCart()
-            console.log("UE CART", cart)
-        }
-        awaitCart()
-        // console.log("TEST", test)
-    }, [])
-
     //When I refresh the page it clears the props cartItems variable thereby not rendering what's TRULY in the cart.
     //So I need to check local storage instead.
     // checkLocalStorage = localStorage.getItem("cartItems");
@@ -124,7 +115,45 @@ const MyCart = (props) => {
             setCart([])
         }
     }
-        
+      
+    const deleteItem = async (id) => {
+        if (loggedIn) {
+            try {
+                const response = await fetch(`${path}/cart_products`, {
+                    method: "DELETE",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body : JSON.stringify({
+                        id
+                    })
+                });
+                const result = await response.json();
+                console.log("DEL RESULT", id, result.deletedProduct.id)
+                await getCurrentCart()               
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            console.log("CART? Del", cart)
+            const storageCart = JSON.parse(localStorage.getItem("cartItems"))
+            console.log("storage cart", storageCart)
+            storageCart.map(item => {
+                console.log("IDs", item.id, id)
+                item.id === id ? storageCart.splice(item) : null
+            })
+            if (storageCart.length) {
+                localStorage.setItem("cartItems", storageCart)
+            } else {
+                localStorage.removeItem("cartItems")
+            }
+            console.log("AFTER SPLICE", storageCart)     
+            getCurrentCart()
+        }
+    }
+    
+
     // const deleteItem = async (index, productId) => {
 
     //     console.log("Inside delete item", index);
@@ -171,36 +200,46 @@ const MyCart = (props) => {
     //     } 
     // }
 
-    const adjustQuantity = async (index, productId, quantity) => {
+    
+    // const adjustQuantity = async (index, productId, quantity) => {
 
-        console.log("Index and product are", index, productId, quantity);
-        //Here we need to increase the quantity by ONLY 1 each time the button is clicked.
-        //However, we need to make sure the current inventory can handle the increase.
-        const response = await fetch(`${path}/products/${productId}`);
-        const data = await response.json();
-        if (data.success) {
-            console.log("INVENTORY COUNT is", data.data.inventorycount);
-            if (data.data.inventorycount < quantity + 1) {
-                alert("Unable to add this extra card to your card due to inventory constraints");
-            } else {
-                purchaseItems[index].quantity++;
-                await setCartItems(JSON.stringify([...purchaseItems]));
-                localStorage.setItem("cartItems", cartItems);
-                //console.log("New quantity is ", purchaseItems[0].inventorycount);
-            }
-        } else {
-            alert("Error attempting to increase purchase quantity");
-        }
+    //     console.log("Index and product are", index, productId, quantity);
+    //     //Here we need to increase the quantity by ONLY 1 each time the button is clicked.
+    //     //However, we need to make sure the current inventory can handle the increase.
+    //     const response = await fetch(`${path}/products/${productId}`);
+    //     const data = await response.json();
+    //     if (data.success) {
+    //         console.log("INVENTORY COUNT is", data.data.inventorycount);
+    //         if (data.data.inventorycount < quantity + 1) {
+    //             alert("Unable to add this extra card to your card due to inventory constraints");
+    //         } else {
+    //             purchaseItems[index].quantity++;
+    //             await setCartItems(JSON.stringify([...purchaseItems]));
+    //             localStorage.setItem("cartItems", cartItems);
+    //             //console.log("New quantity is ", purchaseItems[0].inventorycount);
+    //         }
+    //     } else {
+    //         alert("Error attempting to increase purchase quantity");
+    //     }
 
-    }
+    // }
        
     const goToCheckout = () => {   
        navigate("/checkout")
     }
 
+    useEffect(() =>{
+        const awaitCart = async() =>{
+            await getCurrentCart()
+            console.log("UE CART", cart)
+        }
+        awaitCart()
+        // console.log("TEST", test)
+    }, [])
+
     //Map through localStorage to retrieve all of the purchase items 
     return (
-        <div> {console.log("CART RENDER", cart)}
+        <div>
             <h1>Welcome to your Cart</h1>
             {   
                 cart && cart.length ?
