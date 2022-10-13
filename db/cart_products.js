@@ -12,6 +12,7 @@ const createCartProduct = async ({
       `
             INSERT INTO cart_products (cartid, productid, quantity)
             VALUES ($1, $2, $3)
+            ON CONFLICT (cartid, productid) DO NOTHING
             RETURNING *;
         `,
       [cartid, productid, quantity]
