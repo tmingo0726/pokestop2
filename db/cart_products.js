@@ -12,6 +12,7 @@ const createCartProduct = async ({
       `
             INSERT INTO cart_products (cartid, productid, quantity)
             VALUES ($1, $2, $3)
+            ON CONFLICT (cartid, productid) DO NOTHING
             RETURNING *;
         `,
       [cartid, productid, quantity]
@@ -46,8 +47,8 @@ const getOpenCartByCustomerId = async(customerId) => {
       rows
     } = await client.query(
       `
-        SELECT cart_products.id AS "cartProductId",
-          products.id, products.name, cart_products.quantity,
+        SELECT cart_products.id, products.id AS "productId",
+          products.name, cart_products.quantity,
           products.price, products.imagelink
         FROM products
         JOIN cart_products
@@ -73,8 +74,8 @@ const getPastOrdersByCustomerId = async(customerId) => {
       rows
     } = await client.query(
       `
-      SELECT cart_products.id AS "cartProductId",
-      products.id, products.name, cart_products.quantity,
+    SELECT cart_products.id, products.id AS "productId",
+      products.name, cart_products.quantity,
       products.price, products.imagelink
     FROM products
     JOIN cart_products
