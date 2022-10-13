@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "../stylesheets/MyProfile.css";
+import PurchaseHistory from "./PurchaseHistory";
 
 const BASE_URL = "http://localhost:4000/api";
 
@@ -251,6 +252,9 @@ const MyProfile = (props) => {
             </div>
           </fieldset>
         </form>
+      </div>
+      <div id="purchase-history-table">
+        <PurchaseHistory />
       </div>
     </div>
   );

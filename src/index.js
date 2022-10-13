@@ -130,6 +130,7 @@ const App = () => {
           path="/profile"
           element={<MyProfile password={password} setPassword={setPassword} />}
         ></Route>
+        <Route path="/thanks" element={<Thanks />}></Route>
       </Routes>
       <Footer />
     </div>
