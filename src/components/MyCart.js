@@ -5,12 +5,12 @@ const BASE_URL = "http://localhost:4000/api";
 
 const MyCart = (props) => {
 
-    const cartItems = props.cartItems;
-    const setCartItems = props.setCartItems;
+    // const cartItems = props.cartItems;
+    // const setCartItems = props.setCartItems;
     const loggedIn = props.loggedIn;
     const token = props.token;
-    let purchaseItems = [];
-    let checkLocalStorage = [];
+    // let purchaseItems = [];
+    // let checkLocalStorage = [];
     const navigate = useNavigate();
     const [cart, setCart] = useState([]);
     
@@ -18,11 +18,11 @@ const MyCart = (props) => {
 
     useEffect(() =>{
         const awaitCart = async() =>{
-            setCart(await getCurrentCart())
+            await getCurrentCart()
             console.log("UE CART", cart)
         }
-        const test = awaitCart()
-        console.log("TEST", test)
+        awaitCart()
+        // console.log("TEST", test)
     }, [])
 
     //When I refresh the page it clears the props cartItems variable thereby not rendering what's TRULY in the cart.
@@ -37,22 +37,51 @@ const MyCart = (props) => {
 
     const getCurrentCart = async () => {
         const sessionCart = localStorage.getItem("cartItems");
-        console.log("INITIAL CART", cart)
-        console.log("LOGGED IN?", loggedIn)
+        const cartArr = sessionCart ? JSON.parse(sessionCart) : null;
+        const cartid = loggedIn ? getCartId() : null;
+        console.log("CART ID", cartid);
+        console.log("LOGGED IN?", loggedIn);
+        console.log("STORAGE RESULT", cartArr);
         if (!loggedIn && sessionCart) {
-            setCart(sessionCart);
+            setCart(cartArr);
             console.log("SESSION CART", cart)
         } else if(loggedIn && !sessionCart) {
             setCart(await fetchCustomerCart());
             console.log("DB CART", cart)
         } else if(loggedIn && sessionCart) {
-            await Promise.all(sessionCart.map(addCartItemsToExistingCart));
-            console.log("LOCAL + DB CART", cart)
+            console.log("CART?", cartArr)
+            await Promise.all(cartArr.map(cartItem => {
+                console.log("PRODOUCT", cartItem)
+                addCartItemsToExistingCart({
+                    cartid,
+                    productid: cartItem.productid,
+                    quantity: cartItem.quantity
+                })
+            }))
             setCart(await fetchCustomerCart());
+            localStorage.removeItem("cartItems")
+            console.log("LOCAL + DB CART", cart)
         } else {
             setCart([])
         }
     }
+
+    const getCartId = async() => {
+        try {
+            const response = await fetch(`${BASE_URL}/cart_products`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+            )
+            const result = await response.json();
+            console.log("CART ID", result)
+            return result;
+        } catch (error) {
+            console.error(error);
+        }
+    } 
 
     const fetchCustomerCart = async() => {
         try {
@@ -63,7 +92,7 @@ const MyCart = (props) => {
                     }
                 }
             )
-            const result = response.json();
+            const result = await response.json();
             console.log("FETCH CART", result)
             return result;
         } catch (error) {
@@ -72,7 +101,8 @@ const MyCart = (props) => {
         }
     }
 
-    const addCartItemsToExistingCart = async(cartItem) => {
+    const addCartItemsToExistingCart = async({cartid, productid, quantity}) => {
+        // console.log("CART ITEM", cartItem)
         try {
             const response = await fetch(`${BASE_URL}/cart_products`, {
                 method: "POST",
@@ -81,7 +111,9 @@ const MyCart = (props) => {
                         'Authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify({
-                        cartItem
+                        cartid,
+                        productid,
+                        quantity
                     })
             })
             const result = await response.json();
@@ -92,51 +124,51 @@ const MyCart = (props) => {
         }
     }
         
-    const deleteItem = async (index, productId) => {
+    // const deleteItem = async (index, productId) => {
 
-        console.log("Inside delete item", index);
+    //     console.log("Inside delete item", index);
         
-        if (index === 0) {
-            purchaseItems.shift();
-        } else if (index === purchaseItems.length - 1) {
-            purchaseItems.pop();
-        } else {
-            for (let i = index; i < purchaseItems.length; i++) {
-                purchaseItems[i] = purchaseItems[i + 1];
-            }
-            purchaseItems.length -= 1;
-        }   
+    //     if (index === 0) {
+    //         purchaseItems.shift();
+    //     } else if (index === purchaseItems.length - 1) {
+    //         purchaseItems.pop();
+    //     } else {
+    //         for (let i = index; i < purchaseItems.length; i++) {
+    //             purchaseItems[i] = purchaseItems[i + 1];
+    //         }
+    //         purchaseItems.length -= 1;
+    //     }   
         
-        localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
-        if (purchaseItems.length === 0) {
-            setCartItems([]);
-            localStorage.setItem("cartItems", []);
-        } else {
-            await setCartItems(JSON.stringify([...purchaseItems]));
-            //localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
-        }
+    //     localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
+    //     if (purchaseItems.length === 0) {
+    //         setCartItems([]);
+    //         localStorage.setItem("cartItems", []);
+    //     } else {
+    //         await setCartItems(JSON.stringify([...purchaseItems]));
+    //         //localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
+    //     }
 
-        //Now call the backend to delete the item from the customer's cart
-        if (token) {
-            const response = await fetch(`${path}/cart_products`, {
-            method: "DELETE",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body : JSON.stringify({
-                    id: productId
-                })
-            });
-            const data = await response.json();
-            if (!data.success) {
-                alert("Error removing purchase item from cart");
-            } else {
-                console.log('data', data);
-                alert("Item successfully deleted from your cart");
-            }
-        } 
-    }
+    //     //Now call the backend to delete the item from the customer's cart
+    //     if (token) {
+    //         const response = await fetch(`${path}/cart_products`, {
+    //         method: "DELETE",
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${token}`
+    //             },
+    //             body : JSON.stringify({
+    //                 id: productId
+    //             })
+    //         });
+    //         const data = await response.json();
+    //         if (!data.success) {
+    //             alert("Error removing purchase item from cart");
+    //         } else {
+    //             console.log('data', data);
+    //             alert("Item successfully deleted from your cart");
+    //         }
+    //     } 
+    // }
        
     const goToCheckout = () => {
             
@@ -158,7 +190,7 @@ const MyCart = (props) => {
                         );
                     })
                 :
-                <></>
+                <h2>No Items In Cart</h2>
             }
             <button className="form-btn" onClick={goToCheckout}>Proceed to Checkout</button>
     </div>

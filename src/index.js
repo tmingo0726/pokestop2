@@ -34,7 +34,7 @@ const App = () => {
     <div>
       <Header
         loggedIn={loggedIn}
-        setLoggedIn={setLoggedIn}
+        // setLoggedIn={setLoggedIn}
         setUsername={setUsername}
         setPassword={setPassword}
         isadmin={isadmin}
@@ -74,6 +74,8 @@ const App = () => {
           path="/products/:productId"
           element={
             <Details
+              token={token}
+              loggedIn={loggedIn}
               // chosenCard={chosenCard}
               // cartItems={cartItems}
               // setCartItems={setCartItems}

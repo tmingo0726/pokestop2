@@ -39,10 +39,10 @@ const Login = ({
       setError(result.error);
       setErrorMessage(result.message);
       result.token ? localStorage.setItem("token", result.token) : null;
-      await setLoggedIn(true);
+      setLoggedIn(true);
       console.log("STATUS", await loggedIn)
-      await setToken(result.token);
-      await setIsadmin(result.customer.admin);
+      setToken(result.token);
+      setIsadmin(result.customer.admin);
       return result.token;
     } catch (err) {
       console.error(err);

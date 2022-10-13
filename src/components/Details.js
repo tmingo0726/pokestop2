@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import '../stylesheets/Details.css';
 const BASE_URL = "http://localhost:4000/api";
 
 let purchaseItems = [];
-const Details = (props) => {
+const Details = ({
+    token,
+    loggedIn
+}) => {
     const { productId } = useParams();
     
     const [product, setProduct] = useState({})
-    const setCartItems = props.setCartItems;
+    const [error, setError] = useState("")
+    // const setCartItems = props.setCartItems;
     let quantity = 1;
     let checkLocalStorage = [];
     
@@ -17,18 +21,60 @@ const Details = (props) => {
     if (checkLocalStorage === null || checkLocalStorage === [] || !checkLocalStorage.length) {
         purchaseItems = [];
     }
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const selectedProduct = async (id) => {
-            setProduct(await fetchProductById(id))
+        const fetchData = async() => {
+
+        
+        // const selectedProduct = async (id) => {
+            setProduct(await fetchProductById(productId))
+        // }
+        // selectedProduct(productId);
+
+        // const getCart = async() => {
+            // console.log("PRODUCT", product)
+            await getCustomerCart()
+            // console.log("TESTER", test)
         }
-        selectedProduct(productId)
+        fetchData();
+        // getCart()
+        
     }, []);
+
+    const getCustomerCart = async() => {
+        if(loggedIn) {
+            try {
+                const response = await fetch(`${BASE_URL}/cart_products`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                const customerCart = await response.json();
+                console.log("CART", customerCart)
+                if (customerCart && customerCart.length) {
+                    Promise.all(customerCart.map(existingProduct => {
+                        console.log("IDs", existingProduct.id, productId)
+                        if (existingProduct.id == productId) {
+                            setError("Already in your cart");
+                            console.log("ERROR:", error)
+                            // return error;
+                        }
+                    }))
+                }
+                
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }
+
 
     const fetchProductById = async (id) => {
         try {
             const response = await fetch(`${BASE_URL}/products/${id}`);
-    //         const singleProduct = await response.json();
+            const singleProduct = await response.json();
             return singleProduct.data;
         } catch (error) {
             console.error(error);
@@ -53,8 +99,6 @@ const Details = (props) => {
     const addToCart = async (name, price, quantity, productId) => {
 
         console.log("name price quantity product id: ", name, price, quantity, productId);
-        const path = "http://localhost:4000/api";
-        const token = localStorage.getItem("token");
 
         if (!quantity) {
             alert("Please select a quantity");
@@ -72,18 +116,17 @@ const Details = (props) => {
         //   setCartItems(JSON.stringify([...purchaseItems]));
 
           //Here I am ready to POST to cart_products table with data I have
-          if (token) {
-                const response = await fetch(`${path}/cart_products`, {
-                method: "POST",
+            if(loggedIn) {
+                const response = await fetch(`${BASE_URL}/cart_products`, {
+                    method: "POST",
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
-                    body : JSON.stringify({
+                    body: JSON.stringify({
+                        productid: productId,
+                        quantity: quantity
                     
-                          productid: productId,
-                          quantity: quantity
-                 
                     })
                 });
                 const data = await response.json();
@@ -93,10 +136,16 @@ const Details = (props) => {
                     console.log('data', data);
                     alert("Item successfully added to your cart");
                 }
+
             } else {
                 alert("Item successfully added to your cart");
             }
+
         }
+    }
+
+    const navToCart = () => {
+        navigate("/mycart")
     }
 
     return(
@@ -126,7 +175,10 @@ const Details = (props) => {
                     <p id="quantity-count" value={quantity}>{quantity}</p>
                 </div>
             <button onClick={() => adjustQuantity("add")} id="plus">+</button>
-            <div><button onClick={() => addToCart(product.name, product.price, quantity, product.id)} id="addcard">Add To Cart</button></div>
+            <div>{ error
+            ? <button onClick={() => navToCart()} id="addcard">Already In Cart</button>
+            : <button onClick={() => addToCart(product.name, product.price, quantity, product.id)} id="addcard">Add To Cart</button>
+            }</div>
             </div>
             </div>
             </div>
