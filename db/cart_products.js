@@ -47,8 +47,8 @@ const getOpenCartByCustomerId = async(customerId) => {
       rows
     } = await client.query(
       `
-        SELECT cart_products.id AS "cartProductId",
-          products.id, products.name, cart_products.quantity,
+        SELECT cart_products.id, products.id AS "productId",
+          products.name, cart_products.quantity,
           products.price, products.imagelink
         FROM products
         JOIN cart_products
@@ -74,8 +74,8 @@ const getPastOrdersByCustomerId = async(customerId) => {
       rows
     } = await client.query(
       `
-      SELECT cart_products.id AS "cartProductId",
-      products.id, products.name, cart_products.quantity,
+    SELECT cart_products.id, products.id AS "productId",
+      products.name, cart_products.quantity,
       products.price, products.imagelink
     FROM products
     JOIN cart_products
