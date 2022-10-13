@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import {
   Footer,
@@ -28,7 +28,19 @@ const App = () => {
   // const [chosenCard, setChosenCard] = useState(0);
   // const [cartItems, setCartItems] = useState([]);
 
-  console.log("LOGGED IN WHOLE", loggedIn)
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("token");
+    if (loggedInUser) {
+      setLoggedIn(true);
+    }
+
+    const loggedInAdmin = localStorage.getItem("admin");
+    if (loggedInAdmin) {
+      setIsadmin(true);
+    }
+  }, []);
+
+  console.log("LOGGED IN WHOLE", loggedIn);
 
   return (
     <div>
@@ -40,24 +52,28 @@ const App = () => {
         isadmin={isadmin}
       />
       <Routes>
-        <Route path="/register" element={
-          <Register 
-            setToken={setToken}
-            loggedIn={loggedIn}
-            setLoggedIn={setLoggedIn}
-          />
-        }
+        <Route
+          path="/register"
+          element={
+            <Register
+              setToken={setToken}
+              loggedIn={loggedIn}
+              setLoggedIn={setLoggedIn}
+            />
+          }
         ></Route>
         <Route path="/admin" element={<Admin token={token} />}></Route>
         <Route path="/thanks" element={<Thanks />}></Route>
         <Route
           path="/MyCart"
-          element={<MyCart 
-            token={token}
-            loggedIn={loggedIn}
-            // cartItems={cartItems} 
-            // setCartItems={setCartItems} 
-            />}
+          element={
+            <MyCart
+              token={token}
+              loggedIn={loggedIn}
+              // cartItems={cartItems}
+              // setCartItems={setCartItems}
+            />
+          }
         ></Route>
         <Route
           path="/products"
@@ -112,13 +128,7 @@ const App = () => {
         <Route path="/checkout" element={<Checkout />}></Route>
         <Route
           path="/profile"
-          element={
-            <MyProfile
-              username={username}
-              password={password}
-              setPassword={setPassword}
-            />
-          }
+          element={<MyProfile password={password} setPassword={setPassword} />}
         ></Route>
       </Routes>
       <Footer />

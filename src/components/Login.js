@@ -36,11 +36,18 @@ const Login = ({
       });
       const result = await response.json();
       console.log("RESULT", result);
+
+      result.token ? localStorage.setItem("token", result.token) : null;
+      result.customer.admin
+        ? localStorage.setItem("admin", result.customer.admin)
+        : null;
+      result.customer.username
+        ? localStorage.setItem("username", result.customer.username)
+        : null;
+
+      setLoggedIn(true);
       setError(result.error);
       setErrorMessage(result.message);
-      result.token ? localStorage.setItem("token", result.token) : null;
-      setLoggedIn(true);
-      console.log("STATUS", await loggedIn)
       setToken(result.token);
       setIsadmin(result.customer.admin);
       return result.token;

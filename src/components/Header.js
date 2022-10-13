@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import '../stylesheets/Header.css'
+import "../stylesheets/Header.css";
 
 const Header = ({
   loggedIn,
@@ -10,18 +10,20 @@ const Header = ({
 }) => {
   let navigate = useNavigate();
   const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("admin");
+    localStorage.removeItem("username");
     setLoggedIn(false);
     setUsername("");
     setPassword("");
-    localStorage.removeItem("token");
     navigate("/");
   };
 
   return (
     <div id="header">
-        <Link id="brand-name" to="/">
-          Pokéstop
-        </Link>
+      <Link id="brand-name" to="/">
+        Pokéstop
+      </Link>
       {loggedIn ? (
         <>
           <nav id="links">
@@ -29,7 +31,7 @@ const Header = ({
             {isadmin ? <Link to="admin">Admin | {""}</Link> : null}
             <Link to="/products">Products</Link> | {""}
             <Link to="/mycart">My Cart</Link> | {""}
-            <Link to="/login" onClick={logout}>
+            <Link to="/" onClick={logout}>
               Logout
             </Link>
           </nav>
