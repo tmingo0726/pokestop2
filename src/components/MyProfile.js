@@ -4,7 +4,7 @@ import "../stylesheets/MyProfile.css";
 const BASE_URL = "http://localhost:4000/api";
 
 const MyProfile = (props) => {
-  const { username, password, setPassword } = props;
+  const { password, setPassword } = props;
   const [profile, setProfile] = useState({});
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -18,6 +18,7 @@ const MyProfile = (props) => {
   const [success, setSuccess] = useState("");
 
   const token = localStorage.getItem("token");
+  const username = localStorage.getItem("username");
 
   const updateMyProfile = async (
     firstname,
