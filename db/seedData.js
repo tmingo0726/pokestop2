@@ -1,5 +1,6 @@
 const {
   createCustomer,
+  closeCart,
   createCart,
   createCartProduct,
   adminCheckById,
@@ -134,7 +135,7 @@ const createInitialProducts = async () => {
           "Astonish: Flip a coin. If heads, choose a random card from your opponent's hand. Your opponent reveals that cards and shuffles it into his or her deck.",
         ability2:
           "Miracle Powder: Flip a coin. If heads, choose a Special Condition. The Defending Pokémon is now affected by that Special Condition.",
-        imagelink: "https://images.pokemontcg.io/bw8/13_hires.png",
+        imagelink: "https://images.pokemontcg.io/xy7/54_hires.png",
         inventorycount: 0,
         isactive: true,
       },
@@ -147,7 +148,7 @@ const createInitialProducts = async () => {
           "Bright Heal: Once during your turn (before your attack), you may heal 20 damage from each of your Pokémon.",
         ability2:
           "Telekinesis: This attack does 50 damage to 1 of your opponent's Pokémon. This attack's damage isn't affected by Weakness or Resistance.",
-        imagelink: "https://images.pokemontcg.io/xy7/54_hires.png",
+        imagelink: "https://images.pokemontcg.io/bw8/13_hires.png",
         inventorycount: 0,
         isactive: true,
       },
@@ -339,6 +340,116 @@ const createInitialProducts = async () => {
         inventorycount: 51,
         isactive: true,
       },
+
+      {
+        name: "Gyarados",
+        price: "130",
+        condition: "Good",
+        rarity: "Holo",
+        ability1: "Dragon Rage",
+        ability2:
+          "Bubblebeam: Flip a coin. If heads, the Defending Pokémon is now Paralyzed.",
+        imagelink: "https://images.pokemontcg.io/base1/6_hires.png",
+        inventorycount: 15,
+        isactive: true,
+      },
+
+      {
+        name: "Magneton",
+        price: "82",
+        condition: "Poor",
+        rarity: "Holo",
+        ability1:
+          "Thunder Wave: Flip a coin. If heads, the Defending Pokémon is now Paralyzed.",
+        ability2:
+          "Selfdestruct: Does 20 damage to each Pokémon on each player's Bench. (Don't apply Weakness and Resistance for Benched Pokémon.) Magneton does 80 damage to itself.",
+        imagelink: "https://images.pokemontcg.io/base1/9_hires.png",
+        inventorycount: 20,
+        isactive: true,
+      },
+
+      {
+        name: "Ninetails",
+        price: "38",
+        condition: "Mint",
+        rarity: "Holo",
+        ability1:
+          "Lure: If your opponent has any Benched Pokémon, choose 1 of them and switch it with his or her Active Pokémon.",
+        ability2:
+          "Fire Blast: Discard 1 Fire Energy card attached to Ninetales in order to use this attack.",
+        imagelink: "https://images.pokemontcg.io/base1/12_hires.png",
+        inventorycount: 5,
+        isactive: true,
+      },
+
+      {
+        name: "Beedrill",
+        price: "15",
+        condition: "Poor",
+        rarity: "Regular",
+        ability1:
+          "Twineedle: Flip 2 coins. This attack does 30 damage times the number of heads.",
+        ability2:
+          "Poison Sting: Flip a coin. If heads, the Defending Pokémon is now Poisoned.",
+        imagelink: "https://images.pokemontcg.io/base1/17_hires.png",
+        inventorycount: 30,
+        isactive: true,
+      },
+
+      {
+        name: "Nidoking",
+        price: "34",
+        condition: "Mint",
+        rarity: "Holo",
+        ability1:
+          "Thrash: Flip a coin. If heads, this attack does 30 damage plus 10 more damage; if tails, this attack does 30 damage and Nidoking does 10 damage to itself.",
+        ability2:
+          "Toxic: The Defending Pokémon is now Poisoned. It now takes 20 Poison damage instead of 10 after each player's turn (even if it was already Poisoned).",
+        imagelink: "https://images.pokemontcg.io/base1/11_hires.png",
+        inventorycount: 35,
+        isactive: true,
+      },
+
+      {
+        name: "Poliwrath",
+        price: "62",
+        condition: "Mint",
+        rarity: "Holo",
+        ability1:
+          "Water Gun: Does 30 damage plus 10 more damage for each Water Energy attached to Poliwrath but not used to pay for this attack's Energy cost. Extra Water Energy after the 2nd doesn't",
+        ability2:
+          "Whirlpool: If the Defending Pokémon has any Energy cards attached to it, choose 1 of them and discard it.",
+        imagelink: "https://images.pokemontcg.io/base1/13_hires.png",
+        inventorycount: 40,
+        isactive: true,
+      },
+
+      {
+        name: "Alakazam",
+        price: "65",
+        condition: "Mint",
+        rarity: "Holo",
+        ability1:
+          "Damage Swap: As often as you like during your turn (before your attack), you may move 1 damage counter from 1 of your Pokémon to another as long as you don't Knock Out that Pokémon. This power can't be used if Alakazam is Asleep, Confused, or Paralyzed.",
+        ability2:
+          "Confuse Ray: Flip a coin. If heads, the Defending Pokémon is now Confused.",
+        imagelink: "https://images.pokemontcg.io/base1/1_hires.png",
+        inventorycount: 50,
+        isactive: true,
+      },
+
+      {
+        name: "Arceus VSTAR",
+        price: "1000000",
+        condition: "Mint",
+        rarity: "Rainbow Rare",
+        ability1:
+          "Starbirth: During your turn, you may search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck. (You can't use more than 1 VSTAR Power in a game.)",
+        ability2: "Trinity Nova",
+        imagelink: "https://images.pokemontcg.io/swsh9/176_hires.png",
+        inventorycount: 1,
+        isactive: true,
+      },
     ];
 
     console.log("PRODUCTS TO CREATE", productsToCreate);
@@ -357,7 +468,6 @@ const createInitialCarts = async () => {
   console.log("STARTING TO CREATE CARTS");
   try {
     const cartsToCreate = [3, 2, 1];
-
     console.log("CARTS TO CREATE", cartsToCreate);
     const carts = await Promise.all(cartsToCreate.map(createCart));
     console.log("CARTS", carts);
@@ -508,6 +618,8 @@ const rebuildDB = async () => {
     await createInitialUsers();
     await createInitialProducts();
     await createInitialCarts();
+    //await closeCart(3);
+
     await createInitialCartProducts();
     // await testGetOpenCartByCustomerId(1);
     // await testGetPastOrderByCustomerId(1);

@@ -1,14 +1,11 @@
 const client = require("./client");
 
-const createCartProduct = async ({
-  cartid,
-  productid,
-  quantity
-}) => {
-  console.log("COLUMNS", cartid, productid, quantity)
+const createCartProduct = async ({ cartid, productid, quantity }) => {
+  console.log("COLUMNS", cartid, productid, quantity);
   try {
-    
-    const { rows: [cartItem] } = await client.query(
+    const {
+      rows: [cartItem],
+    } = await client.query(
       `
             INSERT INTO cart_products (cartid, productid, quantity)
             VALUES ($1, $2, $3)
@@ -43,27 +40,28 @@ const updateCartProductQty = async({id, quantity}) => {
   }
 }
 
-const deleteCartProduct = async(cartProductId) => {
+const deleteCartProduct = async (cartProductId) => {
   try {
-    const { rows: [cartItem] } = await client.query(
+    const {
+      rows: [cartItem],
+    } = await client.query(
       `
       DELETE FROM cart_products
       WHERE cart_products.id = ${cartProductId}
       RETURNING *;
-    `);
-    
+    `
+    );
+
     return cartItem;
   } catch (error) {
     console.error(error);
     throw error;
   }
-}
+};
 
-const getOpenCartByCustomerId = async(customerId) => {
+const getOpenCartByCustomerId = async (customerId) => {
   try {
-    const { 
-      rows
-    } = await client.query(
+    const { rows } = await client.query(
       `
         SELECT cart_products.id, products.id AS "productId",
           products.name, cart_products.quantity,
@@ -84,24 +82,47 @@ const getOpenCartByCustomerId = async(customerId) => {
     console.error(error);
     throw error;
   }
-}
+};
 
-const getPastOrdersByCustomerId = async(customerId) => {
+const getClosedCartByCustomerId = async (customerId) => {
   try {
-    const { 
-      rows
-    } = await client.query(
+    const { rows } = await client.query(
+      `
+        SELECT cart_products.id, products.id AS "productId",
+          products.name, cart_products.quantity, cart_products.cartid,
+          products.price, products.imagelink
+        FROM products
+        JOIN cart_products
+          ON cart_products.productid = products.id
+        JOIN carts
+          ON carts.id = cart_products.cartid
+        WHERE carts.isopen = false
+          AND carts.customerid = ${customerId}
+      `
+    );
+
+    console.log("CART ITEMS DB", rows);
+    return rows;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+const getPastOrdersByCustomerId = async (customerId) => {
+  try {
+    const { rows } = await client.query(
       `
     SELECT cart_products.id, products.id AS "productId",
       products.name, cart_products.quantity,
-      products.price, products.imagelink
+      products.price, products.imagelink, 
+      carts.isopen, cart_products.cartid
     FROM products
     JOIN cart_products
       ON cart_products.productid = products.id
     JOIN carts
       ON carts.id = cart_products.cartid
-    WHERE carts.isopen = false
-      AND carts.customerid = ${customerId}
+    WHERE carts.customerid = ${customerId}
       `
     );
     return rows;
@@ -109,12 +130,13 @@ const getPastOrdersByCustomerId = async(customerId) => {
     console.error(error);
     throw error;
   }
-}
+};
 
 module.exports = {
     createCartProduct,
     updateCartProductQty,
     deleteCartProduct,
     getOpenCartByCustomerId,
-    getPastOrdersByCustomerId
+    getPastOrdersByCustomerId,
+    getClosedCartByCustomerId
 };
