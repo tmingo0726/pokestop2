@@ -25,6 +25,23 @@ const createCartProduct = async ({
   }
 };
 
+const updateCartProductQty = async({id, quantity}) => {
+  try {
+    const { rows: [cartItem] } = await client.query(
+      `
+        UPDATE cart_products
+        SET quantity = ${quantity}
+        WHERE id = ${id}
+        RETURNING *;
+      `
+    )
+    return cartItem;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 const deleteCartProduct = async(cartProductId) => {
   try {
     const { rows: [cartItem] } = await client.query(
@@ -60,7 +77,7 @@ const getOpenCartByCustomerId = async(customerId) => {
       `
     );
 
-    console.log("CART ITEMS DB", rows)
+    // console.log("CART ITEMS DB", rows)
     return rows;
   } catch (error) {
     console.error(error);
@@ -95,6 +112,7 @@ const getPastOrdersByCustomerId = async(customerId) => {
 
 module.exports = {
     createCartProduct,
+    updateCartProductQty,
     deleteCartProduct,
     getOpenCartByCustomerId,
     getPastOrdersByCustomerId

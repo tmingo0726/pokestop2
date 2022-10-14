@@ -1,7 +1,7 @@
 const express = require("express");
 const cartProductsRouter = express.Router();
 const {
-    getOpenCartByCustomerId, getCartIdbyCustomerId, createCartProduct, deleteCartProduct
+    getOpenCartByCustomerId, getCartIdbyCustomerId, createCartProduct, deleteCartProduct, updateCartProductQty
 } = require("../db");
 const { requireUser } = require("./utils");
 
@@ -42,6 +42,25 @@ cartProductsRouter.post("/", requireUser, async(req, res, next) => {
     } catch ({ error, message }) {
         next({ error, message });
     } 
+})
+
+cartProductsRouter.patch("/", requireUser, async(req, res, next) => {
+  const { 
+  id,
+  quantity
+  } = req.body;
+  console.log("IN PATCH", id, quantity)
+  try {
+    const updatedItem = await updateCartProductQty({id, quantity});
+    console.log("IN PATCH", updatedItem)
+
+    res.send({
+      updatedItem,
+      success: `Updated ${updatedItem.name}'s quantity to ${updatedItem.quantity}`
+    })
+  } catch ({ error, message }) {
+    next({ error, message });
+  }
 })
 
 cartProductsRouter.delete("/", requireUser, async(req, res, next) => {
