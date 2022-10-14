@@ -55,6 +55,8 @@ const Checkout = () => {
     const submitPayment = async () => {
 
       const token = localStorage.getItem("token");
+      let response;
+      let data;
 
       cartItem.map((item, i) => {
         updateInventory(item);
@@ -67,19 +69,34 @@ const Checkout = () => {
       //Close the order from carts -- but only for a registered customer
       //Otherwise, there won't be an associated cart.
       if (token) {
-        const response = await fetch(`${path}/carts`, {
+        response = await fetch(`${path}/carts`, {
           method: "PATCH",
           headers: {
                 'Content-Type': 'application/json',
                 'Authorization' : `Bearer ${token}`,
                 }
           });
-          const data = await response.json();
+          data = await response.json();
           if (data.success) {
             console.log('data', data);
-            navigate("/Thanks");
           }
-       }
+
+          //Now we need to create a new open Cart for this customer
+          response = await fetch(`${path}/carts`, {
+            method: "POST",
+            headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization' : `Bearer ${token}`,
+                  }
+            });
+            data = await response.json();
+            if (data.success) {
+              console.log('data', data);
+              navigate("/Thanks");
+            } else {
+              console.log("Error creating new Open Cart", data.message);
+            }
+        }
     }
 
       

@@ -508,7 +508,7 @@ const rebuildDB = async () => {
     await createInitialUsers();
     await createInitialProducts();
     await createInitialCarts();
-    await closeCart(3);
+    //await closeCart(3);
     await createInitialCartProducts();
     // await testGetOpenCartByCustomerId(1);
     // await testGetPastOrderByCustomerId(1);
