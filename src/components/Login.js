@@ -22,6 +22,14 @@ const Login = ({
   const [errorMessage, setErrorMessage] = useState("");
   //   const [loggedIn, setLoggedIn] = useState(false);
 
+  // const store = () => {
+  //   result.token ? localStorage.setItem("token", result.token) : null
+  //   result.customer.admin ? localStorage.setItem("admin", result.customer.admin) : null
+  //       result.customer.username
+  //       ? localStorage.setItem("username", result.customer.username)
+  //       : null
+  // }
+
   const loginUser = async (username, password) => {
     try {
       const response = await fetch(`${BASE_URL}/customers/login`, {
@@ -36,17 +44,24 @@ const Login = ({
       });
       const result = await response.json();
       console.log("RESULT", result);
-
-      result.token ? localStorage.setItem("token", result.token) : null;
-      result.customer.admin
-        ? localStorage.setItem("admin", result.customer.admin)
-        : null;
-      result.customer.username
-        ? localStorage.setItem("username", result.customer.username)
-        : null;
+      {
+        result.customer
+          ? localStorage.setItem(
+              "token",
+              result.token
+            )(
+              result.customer.admin &&
+                localStorage.setItem("admin", result.customer.admin)
+            )(
+              result.customer.username &&
+                localStorage.setItem("username", result.customer.username)
+            )
+          : null;
+      }
 
       setLoggedIn(true);
       setError(result.error);
+      console.log("RESULT ERROR", result.error);
       setErrorMessage(result.message);
       setToken(result.token);
       setIsadmin(result.customer.admin);
@@ -96,7 +111,7 @@ const Login = ({
               ></input>
             </div>
             <div className="error">
-              <h4>{error ? `${errorMessage}` : null}</h4>
+              <h4>{error && `${errorMessage}`}</h4>
             </div>
             <div>
               <button className="form-btn" type="submit">

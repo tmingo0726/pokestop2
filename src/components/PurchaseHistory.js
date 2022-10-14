@@ -28,6 +28,11 @@ const PurchaseHistory = () => {
 
   useEffect(() => {
     getPurchaseHistory();
+    // const groupedCards = purchases.groupBy(({ cartid }) => cartid);
+    // const byCartId = purchases.groupBy((purchase) => {
+    //   return purchase.cartid;
+    // });
+    // console.log("GROUPED CARDS", byCartId);
   }, []);
 
   return (
@@ -36,60 +41,64 @@ const PurchaseHistory = () => {
         <legend id="form-legend">
           <h2 id="profile-header">{username}'s Purchase History</h2>
         </legend>
-        {purchases.map((purchase, i) => {
-          console.log("PURCHASE", purchase);
-          return (
-            <div className="purchase-container" key={i}>
-              <div>
-                {purchase.isopen ? (
-                  <div>"No Purchase History"</div>
-                ) : clicked ? (
-                  <div id="purchase">
-                    <div id="purchase-info">
-                      <img
-                        className="purchase-picture"
-                        src={purchase.imagelink}
-                      ></img>
-                      <p className="purchase-info-text">
-                        <b className="purchase-info-text">Name:</b>{" "}
-                        {purchase.name}
-                      </p>{" "}
-                      {""}
-                      <p className="purchase-info-text">
-                        <b className="purchase-info-text">Price: </b>{" "}
-                        {purchase.price}
-                      </p>{" "}
-                      {""}
-                      <p className="purchase-info-text">
-                        <b className="purchase-info-text">Quantity: </b>
-                        {purchase.quantity}
-                      </p>
-                      {""}
-                      <button
-                        className="view-order-btn"
-                        onClick={() => {
-                          setClicked(false);
-                        }}
-                      >
-                        Close Purchase Order
-                      </button>
+        {purchases.message ? (
+          <div>No Purchase History</div>
+        ) : (
+          purchases.map((purchase, i) => {
+            console.log("PURCHASE", purchase);
+            return (
+              <div className="purchase-container" key={i}>
+                <div>
+                  {purchase.isopen ? (
+                    <div>No Purchase History</div>
+                  ) : clicked ? (
+                    <div id="purchase">
+                      <div id="purchase-info">
+                        <img
+                          className="purchase-picture"
+                          src={purchase.imagelink}
+                        ></img>
+                        <p className="purchase-info-text">
+                          <b className="purchase-info-text">Name:</b>{" "}
+                          {purchase.name}
+                        </p>{" "}
+                        {""}
+                        <p className="purchase-info-text">
+                          <b className="purchase-info-text">Price: </b>{" "}
+                          {purchase.price}
+                        </p>{" "}
+                        {""}
+                        <p className="purchase-info-text">
+                          <b className="purchase-info-text">Quantity: </b>
+                          {purchase.quantity}
+                        </p>
+                        {""}
+                        <button
+                          className="view-order-btn"
+                          onClick={() => {
+                            setClicked(false);
+                          }}
+                        >
+                          Close Purchase Order
+                        </button>
+                      </div>
+                      <div></div>
                     </div>
-                    <div></div>
-                  </div>
-                ) : (
-                  <button
-                    className="view-order-btn"
-                    onClick={() => {
-                      setClicked(true);
-                    }}
-                  >
-                    View Purchase Order Number {purchase.cartid}
-                  </button>
-                )}
+                  ) : (
+                    <button
+                      className="view-order-btn"
+                      onClick={() => {
+                        setClicked(true);
+                      }}
+                    >
+                      View Purchase Order Number {purchase.cartid}
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </fieldset>
     </div>
   );

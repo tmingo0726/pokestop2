@@ -36,7 +36,7 @@ const AdminCustomer = () => {
       setErrorMessage(result.message);
       setIsadmin(result.viewCustomer.isadmin);
       setCustomerId(result.viewCustomer.id);
-      console.log("result.viewCustomer.isadmin", result.viewCustomer.isadmin);
+      console.log("result.viewCustomer.id", result.viewCustomer.id);
     } catch (err) {
       console.error(err);
     }
@@ -63,7 +63,7 @@ const AdminCustomer = () => {
     }
   };
 
-  const deleteCustomer = async (id) => {
+  const deleteCustomer = async (customerId) => {
     try {
       const response = await fetch(`${BASE_URL}/admin/deletecustomer`, {
         method: "DELETE",
@@ -72,7 +72,7 @@ const AdminCustomer = () => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          id,
+          id: customerId,
         }),
       });
       const result = await response.json();
