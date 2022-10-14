@@ -5,6 +5,8 @@ const BASE_URL = "http://localhost:4000/api";
 
 let purchaseItems = [];
 const Details = ({
+    setPriceTotal,
+    priceTotal,
     token,
     loggedIn
 }) => {
@@ -97,51 +99,49 @@ const Details = ({
     }
 
     const addToCart = async (name, price, quantity, productId) => {
+      setPriceTotal(priceTotal +
+        price.replace(",", "") * quantity)
 
-        console.log("name price quantity product id: ", name, price, quantity, productId);
+      if (!quantity) {
+          alert("Please select a quantity");
+      } else {
 
-        if (!quantity) {
-            alert("Please select a quantity");
-        } else {
+        let item = {
+          name: name,
+          price: price,
+          quantity: quantity,
+          id: productId,
+        };
 
-          let item = {
-            name: name,
-            price: price,
-            quantity: quantity,
-            id: productId,
-          };
+        purchaseItems.push(item);
+        localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
 
-          purchaseItems.push(item);
-          localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
-        //   setCartItems(JSON.stringify([...purchaseItems]));
+          if(loggedIn) {
+              const response = await fetch(`${BASE_URL}/cart_products`, {
+                  method: "POST",
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': `Bearer ${token}`
+                  },
+                  body: JSON.stringify({
+                      productid: productId,
+                      quantity: quantity
+                  
+                  })
+              });
+              const data = await response.json();
+              if (!data.success) {
+                  alert("Error adding purchase item to cart");
+              } else {
+                  console.log('data', data);
+                  alert("Item successfully added to your cart");
+              }
 
-          //Here I am ready to POST to cart_products table with data I have
-            if(loggedIn) {
-                const response = await fetch(`${BASE_URL}/cart_products`, {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        productid: productId,
-                        quantity: quantity
-                    
-                    })
-                });
-                const data = await response.json();
-                if (!data.success) {
-                    alert("Error adding purchase item to cart");
-                } else {
-                    console.log('data', data);
-                    alert("Item successfully added to your cart");
-                }
+          } else {
+              alert("Item successfully added to your cart");
+          }
 
-            } else {
-                alert("Item successfully added to your cart");
-            }
-
-        }
+      }
     }
 
     const navToCart = () => {
@@ -168,6 +168,7 @@ const Details = ({
                 null
             }
             <h4 id="instock">In Stock: {product.inventorycount}</h4>
+            <h4 id="price">Price: {product.price}</h4>
             <hr></hr>
             <div>
             <button  onClick={() => adjustQuantity("subtract")} id="minus">-</button>

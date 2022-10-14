@@ -112,6 +112,10 @@ body {
     align-items: center;
 }
 
+#double-column-inputs {
+  width: 90%;
+}
+
 .admin-form {
     display: flex;
     flex-direction: column;

@@ -26,6 +26,7 @@ const createCartProduct = async ({
 };
 
 const updateCartProductQty = async({id, quantity}) => {
+  
   try {
     const { rows: [cartItem] } = await client.query(
       `

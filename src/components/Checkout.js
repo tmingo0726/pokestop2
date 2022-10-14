@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import '../stylesheets/Checkout.css';
 
-const Checkout = () => {
+const Checkout = ({
+  priceTotal
+}) => {
     
     let subTotal = 0;
     let cartItem = [];
@@ -25,8 +27,8 @@ const Checkout = () => {
     }
     console.log('Subtotal', subTotal)
     
-    const Tax = subTotal * .0825;
-    const Total = subTotal + Tax;
+    const Tax = priceTotal * .0825;
+    const Total = priceTotal + Tax;
     console.log("Bill", subTotal, Tax, Total);
 
 
@@ -118,9 +120,9 @@ const Checkout = () => {
                   ></textarea>
                 </div>
                 <div>
-                  <p className="misc-form-text">Subtotal: &emsp; ${subTotal}</p>
-                  <p className="misc-form-text">Tax: &emsp; &emsp; &emsp; &nbsp; ${Tax}</p>
-                  <p className="misc-form-text">Total: &emsp; &emsp; &nbsp; ${Total}</p>
+                  <p className="misc-form-text">Subtotal: &emsp; ${priceTotal.toFixed(2)}</p>
+                  <p className="misc-form-text">Tax: &emsp; &emsp; &emsp; &nbsp; ${Tax.toFixed(2)}</p>
+                  <p className="misc-form-text">Total: &emsp; &emsp; &nbsp; ${Total.toFixed(2)}</p>
                 </div>
                 <div>
                   <button className="form-btn" type="submit" onClick={submitPayment}>Submit Payment!</button>
