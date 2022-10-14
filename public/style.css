@@ -121,3 +121,16 @@ body {
 .misc-form-text {
     color: #6060a3;
 }
+
+.mycart-str {
+    word-spacing: 60px;
+    color: white;
+}
+
+a.fa-trash {
+    color: red;
+}
+
+a.fa-plus {
+    color: rgb(22, 219, 22);
+}

@@ -139,9 +139,9 @@ const MyCart = (props) => {
             console.log("CART? Del", cart)
             const storageCart = JSON.parse(localStorage.getItem("cartItems"))
             console.log("storage cart", storageCart)
-            storageCart.map(item => {
+            storageCart.map((item, index) => {
                 console.log("IDs", item.id, id)
-                item.id === id ? storageCart.splice(item) : null
+                item.id === id ? storageCart.splice(index, 1) : null
             })
             if (storageCart.length) {
                 localStorage.setItem("cartItems", JSON.stringify(storageCart))
@@ -248,7 +248,7 @@ const MyCart = (props) => {
                         let str = `${singleItem.quantity}   ${singleItem.name} @ $${singleItem.price.replace(",","")} $${singleItem.price.replace(",", "") * singleItem.quantity}`;
                         return (
                             <div className="cart-item" key={i}>
-                                <h2>{str} <a onClick={() => deleteItem(singleItem.id)} href="#" className="fa fa-trash"></a>
+                                <h2 className="mycart-str">{str} <a onClick={() => deleteItem(singleItem.id)} href="#" className="fa fa-trash"></a>
                                 <a onClick={() => adjustQuantity(i, singleItem.productid, singleItem.quantity)} href="#" className="fa fa-plus"></a></h2>
                             </div>
                         );
