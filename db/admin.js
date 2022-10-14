@@ -187,8 +187,12 @@ const getCartProductsByCartId = async (cartid) => {
 };
 
 const adminDeleteCustomer = async (id) => {
+  console.log("ID", id);
   const { id: cartid } = await getCartsByCustomerId(id);
+  console.log("CARTID", cartid);
   const { cartid: _cartid } = await getCartProductsByCartId(cartid);
+  console.log("_CARTID", _cartid);
+
   try {
     await client.query(
       `
