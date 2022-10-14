@@ -1,5 +1,6 @@
 const {
   createCustomer,
+  closeCart,
   createCart,
   createCartProduct,
   adminCheckById,
@@ -134,7 +135,7 @@ const createInitialProducts = async () => {
           "Astonish: Flip a coin. If heads, choose a random card from your opponent's hand. Your opponent reveals that cards and shuffles it into his or her deck.",
         ability2:
           "Miracle Powder: Flip a coin. If heads, choose a Special Condition. The Defending Pokémon is now affected by that Special Condition.",
-        imagelink: "https://images.pokemontcg.io/bw8/13_hires.png",
+        imagelink: "https://images.pokemontcg.io/xy7/54_hires.png",
         inventorycount: 0,
         isactive: true,
       },
@@ -147,7 +148,7 @@ const createInitialProducts = async () => {
           "Bright Heal: Once during your turn (before your attack), you may heal 20 damage from each of your Pokémon.",
         ability2:
           "Telekinesis: This attack does 50 damage to 1 of your opponent's Pokémon. This attack's damage isn't affected by Weakness or Resistance.",
-        imagelink: "https://images.pokemontcg.io/xy7/54_hires.png",
+        imagelink: "https://images.pokemontcg.io/bw8/13_hires.png",
         inventorycount: 0,
         isactive: true,
       },
@@ -357,7 +358,6 @@ const createInitialCarts = async () => {
   console.log("STARTING TO CREATE CARTS");
   try {
     const cartsToCreate = [3, 2, 1];
-
     console.log("CARTS TO CREATE", cartsToCreate);
     const carts = await Promise.all(cartsToCreate.map(createCart));
     console.log("CARTS", carts);
@@ -508,6 +508,7 @@ const rebuildDB = async () => {
     await createInitialUsers();
     await createInitialProducts();
     await createInitialCarts();
+    await closeCart(3);
     await createInitialCartProducts();
     // await testGetOpenCartByCustomerId(1);
     // await testGetPastOrderByCustomerId(1);
