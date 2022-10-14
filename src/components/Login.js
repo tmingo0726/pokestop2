@@ -44,20 +44,20 @@ const Login = ({
       });
       const result = await response.json();
       console.log("RESULT", result);
-      {
-        result.customer
-          ? localStorage.setItem(
-              "token",
-              result.token
-            )(
-              result.customer.admin &&
-                localStorage.setItem("admin", result.customer.admin)
-            )(
-              result.customer.username &&
-                localStorage.setItem("username", result.customer.username)
-            )
-          : null;
-      }
+      // {
+      //   result.customer
+      //     ? localStorage.setItem(
+      //         "token",
+      //         result.token
+      //       )(
+      //         result.customer.admin &&
+      //           localStorage.setItem("admin", result.customer.admin)
+      //       )(
+      //         result.customer.username &&
+      //           localStorage.setItem("username", result.customer.username)
+      //       )
+      //     : null;
+      // }
 
       setLoggedIn(true);
       setError(result.error);
@@ -65,6 +65,9 @@ const Login = ({
       setErrorMessage(result.message);
       setToken(result.token);
       setIsadmin(result.customer.admin);
+      localStorage.setItem("token", result.token);
+      localStorage.setItem("admin", result.customer.admin);
+      localStorage.setItem("username", result.customer.username);
       return result.token;
     } catch (err) {
       console.error(err);
