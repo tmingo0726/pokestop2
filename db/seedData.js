@@ -357,7 +357,7 @@ const createInitialProducts = async () => {
 const createInitialCarts = async () => {
   console.log("STARTING TO CREATE CARTS");
   try {
-    const cartsToCreate = [3, 2, 1];
+    const cartsToCreate = [2, 2, 2];
     console.log("CARTS TO CREATE", cartsToCreate);
     const carts = await Promise.all(cartsToCreate.map(createCart));
     console.log("CARTS", carts);
@@ -508,6 +508,8 @@ const rebuildDB = async () => {
     await createInitialUsers();
     await createInitialProducts();
     await createInitialCarts();
+    await closeCart(1);
+    await closeCart(2);
     await closeCart(3);
     await createInitialCartProducts();
     // await testGetOpenCartByCustomerId(1);

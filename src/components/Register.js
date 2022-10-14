@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { Navigate, Link } from "react-router-dom";
-import '../stylesheets/Register.css'
+import "../stylesheets/Register.css";
 
-const BASE_URL = "http://localhost:4000/api"
-const Register = ({
-  loggedIn,
-  setLoggedIn
-}) => {
+const BASE_URL = "http://localhost:4000/api";
+const Register = ({ loggedIn, setLoggedIn, setToken }) => {
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -27,7 +24,6 @@ const Register = ({
     email,
     address
   ) => {
-
     try {
       const response = await fetch(`${BASE_URL}/customers/register`, {
         method: "POST",
@@ -49,13 +45,16 @@ const Register = ({
       setError(result.error);
       setErrorMessage(result.message);
       result.token ? localStorage.setItem("token", result.token) : null;
+      result.customer.username
+        ? localStorage.setItem("username", result.customer.username)
+        : null;
       setLoggedIn(true);
       setToken(result.token);
       console.log("resulterror", result.error);
       console.log("resultmessage", result.message);
     } catch (err) {
       console.error(err);
-      setLoggedIn(false)
+      setLoggedIn(false);
     }
   };
 
@@ -163,8 +162,15 @@ const Register = ({
               <UsernameError /> */}
             </div>
             <div>
-              <button className="form-btn" type="submit">Submit!</button>
-              <div className="form-redirect-text">Already a member? <Link className="form-redirect-link" to='/login'>Login!</Link></div>
+              <button className="form-btn" type="submit">
+                Submit!
+              </button>
+              <div className="form-redirect-text">
+                Already a member?{" "}
+                <Link className="form-redirect-link" to="/login">
+                  Login!
+                </Link>
+              </div>
             </div>
           </>
         )}
