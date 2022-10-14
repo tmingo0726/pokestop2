@@ -346,8 +346,7 @@ const createInitialProducts = async () => {
         price: "130",
         condition: "Good",
         rarity: "Holo",
-        ability1:
-          "Dragon Rage",
+        ability1: "Dragon Rage",
         ability2:
           "Bubblebeam: Flip a coin. If heads, the Defending Pokémon is now Paralyzed.",
         imagelink: "https://images.pokemontcg.io/base1/6_hires.png",
@@ -446,12 +445,11 @@ const createInitialProducts = async () => {
         rarity: "Rainbow Rare",
         ability1:
           "Starbirth: During your turn, you may search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck. (You can't use more than 1 VSTAR Power in a game.)",
-        ability2:
-          "Trinity Nova",
+        ability2: "Trinity Nova",
         imagelink: "https://images.pokemontcg.io/swsh9/176_hires.png",
         inventorycount: 1,
         isactive: true,
-      },  
+      },
     ];
 
     console.log("PRODUCTS TO CREATE", productsToCreate);
@@ -469,7 +467,7 @@ const createInitialProducts = async () => {
 const createInitialCarts = async () => {
   console.log("STARTING TO CREATE CARTS");
   try {
-    const cartsToCreate = [2, 2, 2];
+    const cartsToCreate = [3, 2, 1];
     console.log("CARTS TO CREATE", cartsToCreate);
     const carts = await Promise.all(cartsToCreate.map(createCart));
     console.log("CARTS", carts);
