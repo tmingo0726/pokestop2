@@ -1,7 +1,7 @@
 const express = require("express");
 const cartsRouter = express.Router();
 const { requireUser } = require("./utils");
-const { getCartIdbyCustomerId, closeCart } = require("../db");
+const { getCartIdbyCustomerId, closeCart, createCart } = require("../db");
 
 cartsRouter.patch("/", requireUser, async(req, res, next) => {
     const { id: customerId } = req.user;
@@ -20,6 +20,26 @@ cartsRouter.patch("/", requireUser, async(req, res, next) => {
     } catch ({ error, message }) {
         next({ error, message });
     } 
+})
+
+cartsRouter.post("/", requireUser, async(req, res, next) => {
+
+    const { id: customerId } = req.user;
+    console.log("Inside POST for  carts and customer is", customerId);
+
+    try {
+        const { id: cartid } = await createCart(customerId);
+
+        console.log("cartId is ", cartid);
+        
+        res.send({
+            cartid,
+            success: "Successfully created a new Open cart"
+        })
+    } catch ({ error, message }) {
+        next({ error, message });
+    } 
+
 })
 
 module.exports = cartsRouter;
