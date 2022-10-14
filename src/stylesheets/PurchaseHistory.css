@@ -2,6 +2,8 @@
     display: flex;
     justify-content: center;
     background-color:white;
+    padding: 3px;
+    border-radius: 5px;
 }
 .purchase-picture{
     height: 150px;

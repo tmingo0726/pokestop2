@@ -5,11 +5,11 @@ import "../stylesheets/Thanks.css";
 const Thanks = () => {
   const navigate = useNavigate();
 
-  //   useEffect(() => {
-  //     setTimeout(() => {
-  //       navigate("/");
-  //     }, 7000);
-  //   }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      navigate("/");
+    }, 7000);
+  }, []);
 
   return (
     <div id="thanks-page">
