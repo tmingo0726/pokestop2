@@ -99,6 +99,7 @@ const Checkout = ({
             } else {
               console.log("Error creating new Open Cart", data.message);
             }
+        }
     }
 
       
@@ -150,7 +151,5 @@ const Checkout = ({
 
     };
   
-
-
 
 export default Checkout;
