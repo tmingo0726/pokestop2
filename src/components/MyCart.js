@@ -113,6 +113,7 @@ const MyCart = ({
       
     const handleDelete = async (id, cartItemPrice) => {
       setPriceTotal(priceTotal - cartItemPrice)
+      console.log(priceTotal)
         if (loggedIn) {
             try {
                 const response = await fetch(`${path}/cart_products`, {
@@ -245,7 +246,7 @@ const MyCart = ({
                       ${singleItem.quantity}   
                       ${singleItem.name} 
                       $${
-                      singleItem.price.replace(",", "") * 
+                      Number(singleItem.price.replace(",", "")) * 
                       singleItem.quantity}
                       `
                         {console.log("TOTAL", priceTotal)}
@@ -255,7 +256,7 @@ const MyCart = ({
                                   <h2>{str}</h2>
                                     <i
                                     id="icon"
-                                    onClick={() => handleDelete(singleItem.id, singleItem.price * singleItem.quantity)}
+                                    onClick={() => handleDelete(singleItem.id, Number(singleItem.price.replace(",", "")) * singleItem.quantity)}
                                     className="fa-solid fa-trash-can"
                                     ></i>
                                 </div>
@@ -272,7 +273,7 @@ const MyCart = ({
                                   className="fa-solid fa-pen-to-square"
                                   onClick={
                                     () => handleQuantity(singleItem.id,
-                                      singleItem.price *
+                                      Number(singleItem.price.replace(",", "")) *
                                       (updateQuantity - singleItem.quantity) 
                                     )}
                                   ></i>
