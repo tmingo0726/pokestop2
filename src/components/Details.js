@@ -33,7 +33,7 @@ const Details = ({
             setProduct(await fetchProductById(productId))
         // }
         // selectedProduct(productId);
-
+        
         // const getCart = async() => {
             // console.log("PRODUCT", product)
             await getCustomerCart()
@@ -43,6 +43,15 @@ const Details = ({
         // getCart()
         
     }, []);
+
+    useEffect(() => {
+
+        console.log("Inside useEffect for product", product.inventorycount);
+        if (product.inventorycount === 0) {
+            document.getElementById("addcard").disabled = true;
+        }
+        
+    }, [product]);
 
     const getCustomerCart = async() => {
         if(loggedIn) {

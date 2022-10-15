@@ -128,7 +128,7 @@ const createInitialProducts = async () => {
     const productsToCreate = [
       {
         name: "Gardevoir",
-        price: "Coming Soon!",
+        price: "50",
         condition: "Mint",
         rarity: "Holo",
         ability1:
@@ -141,7 +141,7 @@ const createInitialProducts = async () => {
       },
       {
         name: "Amoonguss",
-        price: "Coming Soon!",
+        price: "50",
         condition: "Mint",
         rarity: "Holo",
         ability1:

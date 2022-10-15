@@ -37,6 +37,7 @@ const Checkout = ({
       //Call backend to decrease the inventory for product ID
       //We may need to add more items to change but for right now
       //it's probably just inventory count.
+      console.log("Product is ", product);
       const response = await fetch(`${path}/products`, {
         method: "PATCH",
         headers: {
@@ -44,7 +45,7 @@ const Checkout = ({
               },
               body : JSON.stringify({
                 
-                  id: product.productid,
+                  id: product.id,
                   amountToSubtract: product.quantity,
                       
               })
@@ -98,7 +99,6 @@ const Checkout = ({
             } else {
               console.log("Error creating new Open Cart", data.message);
             }
-        }
     }
 
       
