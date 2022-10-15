@@ -134,11 +134,8 @@ const getPastOrdersByCustomerId = async (customerId) => {
   }
 };
 
-//This function is for a brand new cart we created AFTER the logged in
-//customer checked out so we KNOW it has to be empty. I believe the other
-//routine above returns [] because there is nothing to match on with the
-//Join statments. 
-const getNewlyOpenedCartByCustomerId = async (customerId) => {
+//This routine simply gets the cart ID of the customer's Open cart. 
+const getOpenCartIdByCustomerId = async (customerId) => {
   try {
     const { rows: [cart] } = await client.query(
       `
@@ -163,5 +160,5 @@ module.exports = {
     getOpenCartByCustomerId,
     getPastOrdersByCustomerId,
     getClosedCartByCustomerId,
-    getNewlyOpenedCartByCustomerId,
+    getOpenCartIdByCustomerId,
 };
