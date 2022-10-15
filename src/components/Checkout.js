@@ -99,10 +99,6 @@ const Checkout = ({
             } else {
               console.log("Error creating new Open Cart", data.message);
             }
-        } else {
-          //We still need to navigate to thanks for a non-logged in customer
-          navigate("/Thanks");
-        }
     }
 
       
