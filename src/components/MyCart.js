@@ -212,6 +212,10 @@ const MyCart = ({
        navigate("/checkout")
     }
 
+    const goToLogin = () => {   
+      navigate("/login")
+   }
+
     useEffect(() =>{
       const awaitCart = async() =>{
         // console.log("CHECK")
@@ -281,7 +285,13 @@ const MyCart = ({
                   <h2>No Items In Cart</h2>
               }
             <div>Total: {priceTotal}</div>
-          <button className="form-btn" onClick={goToCheckout}>Proceed to Checkout</button>
+            {
+              loggedIn 
+              ?
+              <button className="form-btn" onClick={goToCheckout}>Proceed to Checkout</button>
+              :
+              <button className="form-btn" onClick={goToLogin}>Login to Proceed</button>
+            }
     </div>
   );
 }
