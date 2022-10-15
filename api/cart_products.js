@@ -3,6 +3,7 @@ const cartProductsRouter = express.Router();
 const {
   getOpenCartByCustomerId,
   getClosedCartByCustomerId,
+  getNewlyOpenedCartByCustomerId,
   getPastOrdersByCustomerId,
   getCartIdbyCustomerId,
   createCartProduct,
@@ -37,10 +38,11 @@ cartProductsRouter.post("/", requireUser, async(req, res, next) => {
     const { productid, quantity } = req.body;
 
     try {
-        const { id: cartid } = await getCartIdbyCustomerId(customerId);
+        const cart = await getNewlyOpenedCartByCustomerId(customerId);
+        const cartid = cart.id;
 
         const cartItem = await createCartProduct({cartid, productid, quantity})
-
+        
         res.send({
             cartItem,
             success: "Successfully added to cart"

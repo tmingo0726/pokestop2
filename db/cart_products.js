@@ -59,6 +59,8 @@ const deleteCartProduct = async (cartProductId) => {
   }
 };
 
+
+//This function is for an opened cart that has items in it.
 const getOpenCartByCustomerId = async (customerId) => {
   try {
     const { rows } = await client.query(
@@ -132,11 +134,34 @@ const getPastOrdersByCustomerId = async (customerId) => {
   }
 };
 
+//This function is for a brand new cart we created AFTER the logged in
+//customer checked out so we KNOW it has to be empty. I believe the other
+//routine above returns [] because there is nothing to match on with the
+//Join statments. 
+const getNewlyOpenedCartByCustomerId = async (customerId) => {
+  try {
+    const { rows: [cart] } = await client.query(
+      `
+        SELECT carts.id
+        FROM carts
+        WHERE carts.isopen = true
+        AND carts.customerid = ${customerId}
+      `
+    );
+
+    return cart;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 module.exports = {
     createCartProduct,
     updateCartProductQty,
     deleteCartProduct,
     getOpenCartByCustomerId,
     getPastOrdersByCustomerId,
-    getClosedCartByCustomerId
+    getClosedCartByCustomerId,
+    getNewlyOpenedCartByCustomerId,
 };
