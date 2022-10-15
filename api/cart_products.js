@@ -27,6 +27,9 @@ cartProductsRouter.get("/", requireUser, async (req, res, next) => {
     } else {
       res.send(cart);
     }
+  } catch ({ error, message }) {
+    next({ error, message });
+}
 })
 
 cartProductsRouter.post("/", requireUser, async(req, res, next) => {
@@ -83,10 +86,8 @@ cartProductsRouter.delete("/", requireUser, async(req, res, next) => {
             })
         }
     } catch ({ error, message }) {
-        next({ error, message });
-  } catch ({ error, message }) {
-    next({ error, message });
-  }
+        next({ error, message })
+    }
 });
 
 cartProductsRouter.get("/closedcarts", requireUser, async (req, res, next) => {
