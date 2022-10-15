@@ -1,199 +1,192 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "../stylesheets/Details.css";
+import '../stylesheets/Details.css';
 const BASE_URL = "http://localhost:4000/api";
 
 let purchaseItems = [];
-const Details = ({ token, loggedIn }) => {
-  const { productId } = useParams();
+const Details = ({
+    setPriceTotal,
+    priceTotal,
+    token,
+    loggedIn
+}) => {
+    const { productId } = useParams();
+    
+    const [product, setProduct] = useState({})
+    const [error, setError] = useState("")
+    // const setCartItems = props.setCartItems;
+    let quantity = 1;
+    let checkLocalStorage = [];
+    
+    checkLocalStorage = localStorage.getItem("cartItems");
+    console.log("checkLocalStorage is", checkLocalStorage);
+    if (checkLocalStorage === null || checkLocalStorage === [] || !checkLocalStorage.length) {
+        purchaseItems = [];
+    }
+    const navigate = useNavigate();
 
-  const [product, setProduct] = useState({});
-  const [error, setError] = useState("");
-  // const setCartItems = props.setCartItems;
-  let quantity = 1;
-  let checkLocalStorage = [];
+    useEffect(() => {
+        const fetchData = async() => {
 
-  checkLocalStorage = localStorage.getItem("cartItems");
-  console.log("checkLocalStorage is", checkLocalStorage);
-  if (
-    checkLocalStorage === null ||
-    checkLocalStorage === [] ||
-    !checkLocalStorage.length
-  ) {
-    purchaseItems = [];
-  }
-  const navigate = useNavigate();
+        
+        // const selectedProduct = async (id) => {
+            setProduct(await fetchProductById(productId))
+        // }
+        // selectedProduct(productId);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      // const selectedProduct = async (id) => {
-      setProduct(await fetchProductById(productId));
-      // }
-      // selectedProduct(productId);
-
-      // const getCart = async() => {
-      // console.log("PRODUCT", product)
-      await getCustomerCart();
-      // console.log("TESTER", test)
-    };
-    fetchData();
-    // getCart()
-  }, []);
-
-  const getCustomerCart = async () => {
-    if (loggedIn) {
-      try {
-        const response = await fetch(`${BASE_URL}/cart_products`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const customerCart = await response.json();
-        console.log("CART", customerCart);
-        if (customerCart && customerCart.length) {
-          Promise.all(
-            customerCart.map((existingProduct) => {
-              console.log("IDs", existingProduct.id, productId);
-              if (existingProduct.id == productId) {
-                setError("Already in your cart");
-                console.log("ERROR:", error);
-                // return error;
-              }
-            })
-          );
+        // const getCart = async() => {
+            // console.log("PRODUCT", product)
+            await getCustomerCart()
+            // console.log("TESTER", test)
         }
-      } catch (error) {
-        console.error(error);
-      }
+        fetchData();
+        // getCart()
+        
+    }, []);
+
+    const getCustomerCart = async() => {
+        if(loggedIn) {
+            try {
+                const response = await fetch(`${BASE_URL}/cart_products`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                const customerCart = await response.json();
+                console.log("CART", customerCart)
+                if (customerCart && customerCart.length) {
+                    Promise.all(customerCart.map(existingProduct => {
+                        console.log("IDs", existingProduct.id, productId)
+                        if (existingProduct.id == productId) {
+                            setError("Already in your cart");
+                            console.log("ERROR:", error)
+                            // return error;
+                        }
+                    }))
+                }
+                
+            } catch (error) {
+                console.error(error);
+            }
+        }
     }
-  };
 
-  const fetchProductById = async (id) => {
-    try {
-      const response = await fetch(`${BASE_URL}/products/${id}`);
-      const singleProduct = await response.json();
-      return singleProduct.data;
-    } catch (error) {
-      console.error(error);
-      setProduct(null);
-    }
-  };
 
-  const adjustQuantity = (op) => {
-    if (op === "add") {
-      if (quantity < product.inventorycount) {
-        quantity++;
-      }
-    } else {
-      if (quantity > 1) quantity--;
+    const fetchProductById = async (id) => {
+        try {
+            const response = await fetch(`${BASE_URL}/products/${id}`);
+            const singleProduct = await response.json();
+            return singleProduct.data;
+        } catch (error) {
+            console.error(error);
+            setProduct(null)
+        }
     }
 
-    document.getElementById("quantity-count").innerHTML = quantity;
-  };
+    const adjustQuantity = (op) => {
 
-  const addToCart = async (name, price, quantity, productId) => {
-    console.log(
-      "name price quantity product id: ",
-      name,
-      price,
-      quantity,
-      productId
-    );
-
-    if (!quantity) {
-      alert("Please select a quantity");
-    } else {
-      let item = {
-        name: name,
-        price: price,
-        quantity: quantity,
-        id: productId,
-      };
-
-      purchaseItems.push(item);
-      localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
-      //   setCartItems(JSON.stringify([...purchaseItems]));
-
-      //Here I am ready to POST to cart_products table with data I have
-      if (loggedIn) {
-        const response = await fetch(`${BASE_URL}/cart_products`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            productid: productId,
-            quantity: quantity,
-          }),
-        });
-        const data = await response.json();
-        if (!data.success) {
-          alert("Error adding purchase item to cart");
+        if (op === "add") {
+            if (quantity < product.inventorycount) {
+                quantity++;
+            }
         } else {
-          console.log("data", data);
-          alert("Item successfully added to your cart");
+            if (quantity > 1) quantity--;
         }
+
+        document.getElementById("quantity-count").innerHTML = quantity;
+    }
+
+    const addToCart = async (name, price, quantity, productId) => {
+      setPriceTotal(priceTotal +
+        price.replace(",", "") * quantity)
+
+      if (!quantity) {
+          alert("Please select a quantity");
       } else {
-        alert("Item successfully added to your cart");
+
+        let item = {
+          name: name,
+          price: price,
+          quantity: quantity,
+          id: productId,
+        };
+
+        purchaseItems.push(item);
+        localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
+
+          if(loggedIn) {
+              const response = await fetch(`${BASE_URL}/cart_products`, {
+                  method: "POST",
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': `Bearer ${token}`
+                  },
+                  body: JSON.stringify({
+                      productid: productId,
+                      quantity: quantity
+                  
+                  })
+              });
+              const data = await response.json();
+              if (!data.success) {
+                  alert("Error adding purchase item to cart");
+              } else {
+                  console.log('data', data);
+                  alert("Item successfully added to your cart");
+              }
+
+          } else {
+              alert("Item successfully added to your cart");
+          }
+
       }
     }
-  };
 
-  const navToCart = () => {
-    navigate("/mycart");
-  };
+    const navToCart = () => {
+        navigate("/mycart")
+    }
 
-  return (
-    <div>
-      <div className="grid-container">
-        <div className="caption">
-          <img className="grid-item" src={product.imagelink} alt="Pokemon" />
-        </div>
-        <div className="v1"></div>
-        <div className="main">
-          <h2 id="details-header">{product.name} Details</h2>
-          <hr></hr>
-          <h4>Condition: {product.condition}</h4>
-          <h4>Rarity: {product.rarity}</h4>
-          <h4>Ability 1: {product.ability1}</h4>
-          {product.ability2 ? <h4>Ability 2: {product.ability2}</h4> : null}
-          <h4 id="instock">In Stock: {product.inventorycount}</h4>
-          <hr></hr>
-          <div>
-            <button onClick={() => adjustQuantity("subtract")} id="minus">
-              -
-            </button>
-            <div>
-              <p id="quantity-count" value={quantity}>
-                {quantity}
-              </p>
+    return(
+        <div>
+            <div className="grid-container">
+                <div className="caption"><img className="grid-item" src={product.imagelink} alt="Pokemon"/>
             </div>
-            <button onClick={() => adjustQuantity("add")} id="plus">
-              +
-            </button>
+            <div className="v1"></div>
+            <div className="main">
+            <h2 id="details-header">{product.name} Details</h2>
+            <hr></hr>
+            <h4>Condition: {product.condition}</h4>
+            <h4>Rarity: {product.rarity}</h4>
+            <h4>Ability 1: {product.ability1}</h4>
+            {
+                product.ability2
+                ?
+                <h4>Ability 2: {product.ability2}</h4>
+                :
+                null
+            }
+            <h4 id="instock">In Stock: {product.inventorycount}</h4>
+            <h4 id="price">Price: {product.price}</h4>
+            <hr></hr>
             <div>
-              {error ? (
-                <button onClick={() => navToCart()} id="addcard">
-                  Already In Cart
-                </button>
-              ) : (
-                <button
-                  onClick={() =>
-                    addToCart(product.name, product.price, quantity, product.id)
-                  }
-                  id="addcard"
-                >
-                  Add To Cart
-                </button>
-              )}
+            <button  onClick={() => adjustQuantity("subtract")} id="minus">-</button>
+                <div>
+                    <p id="quantity-count" value={quantity}>{quantity}</p>
+                </div>
+            <button onClick={() => adjustQuantity("add")} id="plus">+</button>
+            <div>{ error
+            ? <button onClick={() => navToCart()} id="addcard">Already In Cart</button>
+            : <button onClick={() => addToCart(product.name, product.price, quantity, product.id)} id="addcard">Add To Cart</button>
+            }</div>
             </div>
-          </div>
+            </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
-};
+        
+        
+    )
+
+}
 
 export default Details;

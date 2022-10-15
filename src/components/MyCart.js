@@ -1,62 +1,57 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = "http://localhost:4000/api";
-
+import "../stylesheets/MyCart.css";
 const path = "http://localhost:4000/api";
 
-const MyCart = (props) => {
+const MyCart = ({
+  loggedIn,
+  token,
+  priceTotal,
+  setPriceTotal
+  }) => {
 
-    // const cartItems = props.cartItems;
-    // const setCartItems = props.setCartItems;
-    const loggedIn = props.loggedIn;
-    const token = props.token;
-    // let purchaseItems = [];
-    // let checkLocalStorage = [];
     const navigate = useNavigate();
     const [cart, setCart] = useState([]);
-    
-    // console.log("Cart items from props is ", cartItems);
-
-    //When I refresh the page it clears the props cartItems variable thereby not rendering what's TRULY in the cart.
-    //So I need to check local storage instead.
-    // checkLocalStorage = localStorage.getItem("cartItems");
-    // // console.log("checkLocalStorage is", checkLocalStorage);
-    // if (checkLocalStorage && checkLocalStorage.length) {
-    //     purchaseItems = JSON.parse(localStorage.getItem("cartItems"));
-    // } else {
-    //     purchaseItems.length = 0;
-    // }
+    const [updateQuantity, setUpdateQuantity] = useState(0)
+    const [error, setError] = useState("")
 
     const getCurrentCart = async () => {
         const sessionCart = localStorage.getItem("cartItems");
         const cartArr = sessionCart ? JSON.parse(sessionCart) : null;
         const cartid = loggedIn ? getCartId() : null;
-        console.log("CART ID", cartid);
-        console.log("LOGGED IN?", loggedIn);
-        console.log("STORAGE RESULT", cartArr);
         if (!loggedIn && sessionCart) {
-            setCart(cartArr);
-            console.log("SESSION CART", cart)
+          setCart(cartArr);
+          // cartTotal();
         } else if(loggedIn && !sessionCart) {
-            setCart(await fetchCustomerCart());
-            console.log("DB CART", cart)
+          setCart(await fetchCustomerCart());
+          // cartTotal();
         } else if(loggedIn && sessionCart) {
-            console.log("CART?", cartArr)
-            await Promise.all(cartArr.map(cartItem => {
-                console.log("PRODOUCT", cartItem)
-                addCartItemsToExistingCart({
-                    cartid,
-                    productid: cartItem.id,
-                    quantity: cartItem.quantity
-                })
-            }))
-            setCart(await fetchCustomerCart());
-            localStorage.removeItem("cartItems")
-            console.log("LOCAL + DB CART", cart)
+          await Promise.all(cartArr.map(cartItem => {
+            addCartItemsToExistingCart({
+              cartid,
+              productid: cartItem.id,
+              quantity: cartItem.quantity
+            })
+          }))
+          setCart(await fetchCustomerCart());
+          localStorage.removeItem("cartItems")
+          // cartTotal();
+          // console.log("LOCAL + DB CART", cart)
         } else {
             setCart([])
-        }
+      }
+      console.log("total", priceTotal)
     }
+
+    // const cartTotal = async() => {
+    //   cart.map(product => {
+    //     console.log("PROD", product)
+    //     setPriceTotal(priceTotal +
+    //     (product.price.replace(",", "") *
+    //     product.quantity))
+    //   })
+    // }
 
     const getCartId = async() => {
         try {
@@ -68,7 +63,7 @@ const MyCart = (props) => {
                 }
             )
             const result = await response.json();
-            console.log("CART ID", result)
+            // console.log("CART ID", result)
             return result;
         } catch (error) {
             console.error(error);
@@ -85,7 +80,7 @@ const MyCart = (props) => {
                 }
             )
             const result = await response.json();
-            console.log("FETCH CART", result)
+            // console.log("FETCH CART", result)
             return result;
         } catch (error) {
             console.error(error);
@@ -116,7 +111,8 @@ const MyCart = (props) => {
         }
     }
       
-    const deleteItem = async (id) => {
+    const handleDelete = async (id, cartItemPrice) => {
+      setPriceTotal(priceTotal - cartItemPrice)
         if (loggedIn) {
             try {
                 const response = await fetch(`${path}/cart_products`, {
@@ -139,10 +135,10 @@ const MyCart = (props) => {
             console.log("CART? Del", cart)
             const storageCart = JSON.parse(localStorage.getItem("cartItems"))
             console.log("storage cart", storageCart)
-            storageCart.map((item, index) => {
-                console.log("IDs", item.id, id)
-                item.id === id ? storageCart.splice(index, 1) : null
-            })
+            storageCart.map((item, i) => {
+              console.log("IDs", item.id, id);
+              item.id === id ? storageCart.splice(i, 1) : null;
+          });
             if (storageCart.length) {
                 localStorage.setItem("cartItems", JSON.stringify(storageCart))
             } else {
@@ -152,111 +148,140 @@ const MyCart = (props) => {
             getCurrentCart()
         }
     }
-    
 
-    // const deleteItem = async (index, productId) => {
+    const handleQuantity = async(id, priceDifference) => {
+      const currentTotal = priceTotal
 
-    //     console.log("Inside delete item", index);
-        
-    //     if (index === 0) {
-    //         purchaseItems.shift();
-    //     } else if (index === purchaseItems.length - 1) {
-    //         purchaseItems.pop();
-    //     } else {
-    //         for (let i = index; i < purchaseItems.length; i++) {
-    //             purchaseItems[i] = purchaseItems[i + 1];
-    //         }
-    //         purchaseItems.length -= 1;
-    //     }   
-        
-    //     localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
-    //     if (purchaseItems.length === 0) {
-    //         setCartItems([]);
-    //         localStorage.setItem("cartItems", []);
-    //     } else {
-    //         await setCartItems(JSON.stringify([...purchaseItems]));
-    //         //localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
-    //     }
+      console.log("DIFF, TTL", priceDifference, priceTotal)
 
-    //     Now call the backend to delete the item from the customer's cart
-    //     if (token) {
-    //         const response = await fetch(`${path}/cart_products`, {
-    //         method: "DELETE",
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Authorization': `Bearer ${token}`
-    //             },
-    //             body : JSON.stringify({
-    //                 id: productId
-    //             })
-    //         });
-    //         const data = await response.json();
-    //         if (!data.success) {
-    //             alert("Error removing purchase item from cart");
-    //         } else {
-    //             console.log('data', data);
-    //             alert("Item successfully deleted from your cart");
-    //         }
-    //     } 
-    // }
+      if (priceDifference + priceTotal < 0) {
+        setError("Nice Try")
+      } else {
+      try {
+        const response = await fetch(`${path}/products/${id}`);
+        const { data } = await response.json();
+        console.log("DATA", data)
 
-    
-    // const adjustQuantity = async (index, productId, quantity) => {
-
-    //     console.log("Index and product are", index, productId, quantity);
-    //     //Here we need to increase the quantity by ONLY 1 each time the button is clicked.
-    //     //However, we need to make sure the current inventory can handle the increase.
-    //     const response = await fetch(`${path}/products/${productId}`);
-    //     const data = await response.json();
-    //     if (data.success) {
-    //         console.log("INVENTORY COUNT is", data.data.inventorycount);
-    //         if (data.data.inventorycount < quantity + 1) {
-    //             alert("Unable to add this extra card to your card due to inventory constraints");
-    //         } else {
-    //             purchaseItems[index].quantity++;
-    //             await setCartItems(JSON.stringify([...purchaseItems]));
-    //             localStorage.setItem("cartItems", cartItems);
-    //             //console.log("New quantity is ", purchaseItems[0].inventorycount);
-    //         }
-    //     } else {
-    //         alert("Error attempting to increase purchase quantity");
-    //     }
-
-    // }
+        if (data) {
+          if (updateQuantity > data.inventorycount) {
+            setError("Quantity exceeds Inventory");
+            console.log("ERROR", error)
+            setPriceTotal(currentTotal)
+            await getCurrentCart()
+          } else if(loggedIn) {
+            console.log("ELLO?")
+            const response = await fetch(`${path}/cart_products`, {
+              method: 'PATCH',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+              },
+              body: JSON.stringify({
+                  id,
+                  quantity: updateQuantity,
+              })
+            });
+          console.log("RESPONSE", response)
+          const result = await response.json();
+          console.log("RESULT", result)
+          // setError("")
+          setPriceTotal(priceTotal + priceDifference)
+          await getCurrentCart()
+        } else {
+          console.log("CART? Del", cart)
+          const storageCart = JSON.parse(localStorage.getItem("cartItems"))
+          console.log("storage cart", storageCart)
+          storageCart.map((item, i) => {
+            console.log("IDs", item.id, id);
+            item.id === id ? item.quantity = updateQuantity : null;
+          });
+          localStorage.setItem("cartItems", JSON.stringify(storageCart))
+          console.log("QTY", storageCart)   
+          // setError("")
+          setPriceTotal(priceTotal + priceDifference)  
+          getCurrentCart()
+      }
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    }
        
     const goToCheckout = () => {   
        navigate("/checkout")
     }
 
     useEffect(() =>{
-        const awaitCart = async() =>{
-            await getCurrentCart()
-            console.log("UE CART", cart)
-        }
-        awaitCart()
-        // console.log("TEST", test)
+      const awaitCart = async() =>{
+        // console.log("CHECK")
+        await getCurrentCart()
+        // console.log("CHECK")
+        // await cartTotal()
+      }
+      // const awaitTotal = async() => {
+      // }
+      awaitCart()
     }, [])
 
-    //Map through localStorage to retrieve all of the purchase items 
     return (
         <div>
             <h1>Welcome to your Cart</h1>
-            {   
+            { 
+              error ?
+              <div className="error">{error}</div>
+              : null
+            } 
+              {
                 cart && cart.length ?
                     cart.map((singleItem, i) => {
-                        console.log("singleitem", singleItem)
-                        let str = `${singleItem.quantity}   ${singleItem.name} @ $${singleItem.price.replace(",","")} $${singleItem.price.replace(",", "") * singleItem.quantity}`;
+                      // console.log("singleitem", singleItem)
+                      let str = 
+                      `
+                      ${singleItem.quantity}   
+                      ${singleItem.name} 
+                      $${
+                      singleItem.price.replace(",", "") * 
+                      singleItem.quantity}
+                      `
+                        {console.log("TOTAL", priceTotal)}
                         return (
                             <div className="cart-item" key={i}>
-                                <h2 className="mycart-str">{str} <a onClick={() => deleteItem(singleItem.id)} href="#" className="fa fa-trash"></a>
-                                <a onClick={() => adjustQuantity(i, singleItem.productid, singleItem.quantity)} href="#" className="fa fa-plus"></a></h2>
+                                <div>
+                                  <h2>{str}</h2>
+                                    <i
+                                    id="icon"
+                                    onClick={() => handleDelete(singleItem.id, singleItem.price * singleItem.quantity)}
+                                    className="fa-solid fa-trash-can"
+                                    ></i>
+                                </div>
+                                <div>
+                                  <input
+                                    type="number"
+                                    min="1"
+                                    placeholder={singleItem.quantity} 
+                                    onChange={
+                                      (e) => setUpdateQuantity(e.target.value)}
+                                  ></input>
+                                  <i
+                                  id="icon"
+                                  className="fa-solid fa-pen-to-square"
+                                  onClick={
+                                    () => handleQuantity(singleItem.id,
+                                      singleItem.price *
+                                      (updateQuantity - singleItem.quantity) 
+                                    )}
+                                  ></i>
+                                  {/* {console.log("QTY", updateQuantity)} */}
+                                </div>
                             </div>
                         );
                     })
-                :
-                <h2>No Items In Cart</h2>
-            }
-            <button className="form-btn" onClick={goToCheckout}>Proceed to Checkout</button>
+                  :
+                  <h2>No Items In Cart</h2>
+              }
+            <div>Total: {priceTotal}</div>
+          <button className="form-btn" onClick={goToCheckout}>Proceed to Checkout</button>
     </div>
   );
 }

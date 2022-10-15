@@ -25,6 +25,7 @@ const App = () => {
   const [token, setToken] = useState("");
   const [isadmin, setIsadmin] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
+  const [priceTotal, setPriceTotal] = useState(0)
   // const [chosenCard, setChosenCard] = useState(0);
   // const [cartItems, setCartItems] = useState([]);
 
@@ -68,6 +69,8 @@ const App = () => {
           path="/MyCart"
           element={
             <MyCart
+              priceTotal={priceTotal}
+              setPriceTotal={setPriceTotal}
               token={token}
               loggedIn={loggedIn}
               // cartItems={cartItems}
@@ -90,6 +93,8 @@ const App = () => {
           path="/products/:productId"
           element={
             <Details
+              priceTotal={priceTotal}
+              setPriceTotal={setPriceTotal}
               token={token}
               loggedIn={loggedIn}
               // chosenCard={chosenCard}
@@ -125,7 +130,14 @@ const App = () => {
             />
           }
         ></Route>
-        <Route path="/checkout" element={<Checkout />}></Route>
+        <Route
+          path="/checkout" 
+          element={
+            <Checkout 
+              priceTotal={priceTotal}
+            />
+          }
+        ></Route>
         <Route
           path="/profile"
           element={<MyProfile password={password} setPassword={setPassword} />}

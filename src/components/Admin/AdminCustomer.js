@@ -45,7 +45,7 @@ const AdminCustomer = () => {
   const setAdmin = async (customerId, isadmin) => {
     try {
       const response = await fetch(`${BASE_URL}/admin/setadmin`, {
-        method: "PATCH",
+        method: 'PATCH',
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
