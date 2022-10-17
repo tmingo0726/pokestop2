@@ -44,15 +44,6 @@ const MyCart = ({
       console.log("total", priceTotal)
     }
 
-    // const cartTotal = async() => {
-    //   cart.map(product => {
-    //     console.log("PROD", product)
-    //     setPriceTotal(priceTotal +
-    //     (product.price.replace(",", "") *
-    //     product.quantity))
-    //   })
-    // }
-
     const getCartId = async() => {
         try {
             const response = await fetch(`${BASE_URL}/cart_products`, {
@@ -219,13 +210,8 @@ const MyCart = ({
 
     useEffect(() =>{
       const awaitCart = async() =>{
-        // console.log("CHECK")
         await getCurrentCart()
-        // console.log("CHECK")
-        // await cartTotal()
       }
-      // const awaitTotal = async() => {
-      // }
       awaitCart()
     }, [])
 

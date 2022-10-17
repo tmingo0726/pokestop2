@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../stylesheets/Header.css";
 
@@ -7,6 +8,7 @@ const Header = ({
   setUsername,
   setPassword,
   isadmin,
+  token
 }) => {
   let navigate = useNavigate();
   const logout = () => {
@@ -24,7 +26,7 @@ const Header = ({
       <Link id="brand-name" to="/">
         Pokéstop
       </Link>
-      {loggedIn ? (
+      {loggedIn || token ? (
         <>
           <nav id="links">
             <Link to="/profile">Profile</Link> | {""}
