@@ -16,70 +16,42 @@ const MyCart = ({
     const [updateQuantity, setUpdateQuantity] = useState(0)
     const [error, setError] = useState("")
 
-
-    useEffect(() => {
-
-      console.log("Inside useEffect for cart", cart);
-      if (!cart.length) {
-        setPriceTotal(0);
-      } else {
-        localStorage.setItem("cartItems", JSON.stringify(cart));
-        cartTotal();
-      }
-
-    }, [cart]);
-
-    
-    useEffect(() =>{
-      const awaitCart = async() =>{
-        await getCurrentCart()
-        console.log("Inside initialization useEffect");
-      }
-      awaitCart()
-
-    }, []);
-    
     const getCurrentCart = async () => {
         const sessionCart = localStorage.getItem("cartItems");
         const cartArr = sessionCart ? JSON.parse(sessionCart) : null;
         const cartid = loggedIn ? getCartId() : null;
         if (!loggedIn && sessionCart) {
           setCart(cartArr);
-        } else if (loggedIn && !sessionCart) {
-          const CartTest = await fetchCustomerCart();
-          console.log("Cart Test is", CartTest);
-          setCart(CartTest);
-        } else if (loggedIn && sessionCart) {
-          console.log("Now we have a session cart and adding new item");
-          if (cartArr.length) {
-            await Promise.all(cartArr.map(cartItem => {
-              addCartItemsToExistingCart({
-                cartid,
-                productid: cartItem.id,
-                quantity: cartItem.quantity
-              })
-            }))
-          }
+          // cartTotal();
+        } else if(loggedIn && !sessionCart) {
           setCart(await fetchCustomerCart());
-          //localStorage.removeItem("cartItems")
-        } else {
-          setCart([])
+          // cartTotal();
+        } else if(loggedIn && sessionCart) {
+          await Promise.all(cartArr.map(cartItem => {
+            addCartItemsToExistingCart({
+              cartid,
+              productid: cartItem.id,
+              quantity: cartItem.quantity
+            })
+          }))
+          setCart(await fetchCustomerCart());
           localStorage.removeItem("cartItems")
-          
+          // cartTotal();
+          // console.log("LOCAL + DB CART", cart)
+        } else {
+            setCart([])
       }
       console.log("total", priceTotal)
     }
 
-    const cartTotal = async() => {
-       let tempTotal = 0;
-       if (cart.length) {
-          cart.map(product => {
-            console.log("PROD", product);
-            tempTotal += Number(product.price.replace(",", "") * product.quantity);
-          })
-          setPriceTotal(tempTotal);
-        }
-    }
+    // const cartTotal = async() => {
+    //   cart.map(product => {
+    //     console.log("PROD", product)
+    //     setPriceTotal(priceTotal +
+    //     (product.price.replace(",", "") *
+    //     product.quantity))
+    //   })
+    // }
 
     const getCartId = async() => {
         try {
@@ -141,7 +113,7 @@ const MyCart = ({
       
     const handleDelete = async (id, cartItemPrice) => {
       setPriceTotal(priceTotal - cartItemPrice)
-      console.log("Inside delete routine and id/cartItemPrice is", id, cartItemPrice);
+      console.log(priceTotal)
         if (loggedIn) {
             try {
                 const response = await fetch(`${path}/cart_products`, {
@@ -155,12 +127,8 @@ const MyCart = ({
                     })
                 });
                 const result = await response.json();
-                console.log("DEL RESULT", id, result.deletedProduct.id);
-                //We have to make some other call here besides re-calling the getCurrentCall function. 
-                //
-                //await getCurrentCart();  
-                const cartAfterDelete = await fetchCustomerCart();
-                setCart(cartAfterDelete);            
+                console.log("DEL RESULT", id, result.deletedProduct.id)
+                await getCurrentCart()               
             } catch (error) {
                 console.error(error);
             }
@@ -171,7 +139,7 @@ const MyCart = ({
             storageCart.map((item, i) => {
               console.log("IDs", item.id, id);
               item.id === id ? storageCart.splice(i, 1) : null;
-            });
+          });
             if (storageCart.length) {
                 localStorage.setItem("cartItems", JSON.stringify(storageCart))
             } else {
@@ -197,9 +165,9 @@ const MyCart = ({
 
         if (data) {
           if (updateQuantity > data.inventorycount) {
-            await setError("Quantity exceeds Inventory");
+            setError("Quantity exceeds Inventory");
             console.log("ERROR", error)
-            await setPriceTotal(currentTotal)
+            setPriceTotal(currentTotal)
             await getCurrentCart()
           } else if(loggedIn) {
             console.log("ELLO?")
@@ -218,7 +186,7 @@ const MyCart = ({
           const result = await response.json();
           console.log("RESULT", result)
           // setError("")
-          await setPriceTotal(priceTotal + priceDifference)
+          setPriceTotal(priceTotal + priceDifference)
           await getCurrentCart()
         } else {
           console.log("CART? Del", cart)
@@ -231,8 +199,8 @@ const MyCart = ({
           localStorage.setItem("cartItems", JSON.stringify(storageCart))
           console.log("QTY", storageCart)   
           // setError("")
-          await setPriceTotal(priceTotal + priceDifference)  
-          await getCurrentCart()
+          setPriceTotal(priceTotal + priceDifference)  
+          getCurrentCart()
       }
         }
       } catch (error) {
@@ -249,7 +217,17 @@ const MyCart = ({
       navigate("/login")
    }
 
-    
+    useEffect(() =>{
+      const awaitCart = async() =>{
+        // console.log("CHECK")
+        await getCurrentCart()
+        // console.log("CHECK")
+        // await cartTotal()
+      }
+      // const awaitTotal = async() => {
+      // }
+      awaitCart()
+    }, [])
 
     return (
         <div>

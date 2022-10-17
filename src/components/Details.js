@@ -67,7 +67,7 @@ const Details = ({
                 if (customerCart && customerCart.length) {
                     Promise.all(customerCart.map(existingProduct => {
                         console.log("IDs", existingProduct.id, productId)
-                        if (existingProduct.id == productId && customerCart.quantity <= 1) {
+                        if (existingProduct.id == productId) {
                             setError("Already in your cart");
                             console.log("ERROR:", error)
                             // return error;
@@ -122,7 +122,6 @@ const Details = ({
         };
 
         purchaseItems.push(item);
-        console.log("Purchase Items is", purchaseItems);
         localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
 
           if(loggedIn) {
