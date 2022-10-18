@@ -46,6 +46,10 @@
   background: linear-gradient(#6b6ba3, #6060a3 10%);
 }
 
+#img-name > h2 {
+  color: #FFDE00;
+}
+
 #img-name {
   display:flex;
   width: 70%;
@@ -59,6 +63,10 @@
 
 #cp-name {
   margin-right: 50px;
+}
+
+h1 {
+  text-align: center;
 }
 
 #qty-group {

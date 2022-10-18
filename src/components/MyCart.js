@@ -147,6 +147,7 @@ const MyCart = ({
 
     const handleQuantity = async(id, priceDifference) => {
       const currentTotal = priceTotal
+      console.log("ID", id)
 
       console.log("DIFF, TTL", priceDifference, priceTotal)
 
