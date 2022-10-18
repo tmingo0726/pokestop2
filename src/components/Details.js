@@ -125,6 +125,7 @@ const Details = ({
         };
 
         purchaseItems.push(item);
+        console.log("Purchase Items is", purchaseItems);
         localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
 
           if(loggedIn) {

@@ -1,13 +1,13 @@
 const express = require("express");
 const cartsRouter = express.Router();
 const { requireUser } = require("./utils");
-const { getCartIdbyCustomerId, closeCart, createCart } = require("../db");
+const { getOpenCartIdByCustomerId, closeCart, createCart } = require("../db");
 
 cartsRouter.patch("/", requireUser, async(req, res, next) => {
     const { id: customerId } = req.user;
     console.log("Inside cart patch and customer Id is", customerId);
     try {
-        const { id: cartid } = await getCartIdbyCustomerId(customerId);
+        const { id: cartid } = await getOpenCartIdByCustomerId(customerId);
 
         console.log("cartId is ", cartid);
         const cart = await closeCart(cartid)
