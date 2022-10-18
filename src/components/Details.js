@@ -108,7 +108,7 @@ const Details = ({
         document.getElementById("quantity-count").innerHTML = quantity;
     }
 
-    const addToCart = async (name, price, quantity, productId) => {
+    const addToCart = async (name, price, quantity, productId, imagelink) => {
       setPriceTotal(priceTotal +
         price.replace(",", "") * quantity)
 
@@ -121,6 +121,7 @@ const Details = ({
           price: price,
           quantity: quantity,
           id: productId,
+          imagelink
         };
 
         purchaseItems.push(item);
@@ -190,7 +191,7 @@ const Details = ({
             <button onClick={() => adjustQuantity("add")} id="plus">+</button>
             <div>{ error
             ? <button onClick={() => navToCart()} id="addcard">Already In Cart</button>
-            : <button onClick={() => addToCart(product.name, product.price, quantity, product.id)} id="addcard">Add To Cart</button>
+            : <button onClick={() => addToCart(product.name, product.price, quantity, product.id, product.imagelink)} id="addcard">Add To Cart</button>
             }</div>
             </div>
             </div>
