@@ -15,6 +15,10 @@ const MyCart = ({
     const [cart, setCart] = useState([]);
     const [updateQuantity, setUpdateQuantity] = useState(0)
     const [error, setError] = useState("")
+    const Monetize = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    })
 
     const getCurrentCart = async () => {
         const sessionCart = localStorage.getItem("cartItems");
