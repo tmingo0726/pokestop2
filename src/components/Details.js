@@ -8,6 +8,7 @@ const Details = ({
     setPriceTotal,
     priceTotal,
     token,
+    setToken,
     loggedIn
 }) => {
     const { productId } = useParams();
@@ -40,18 +41,19 @@ const Details = ({
             // console.log("TESTER", test)
         }
         fetchData();
+        setToken(localStorage.getItem("token"))
         // getCart()
         
     }, []);
 
     useEffect(() => {
 
-        console.log("Inside useEffect for product", product.inventorycount);
+        console.log("Inside useEffect for product", product.id);
         if (product.inventorycount === 0) {
             document.getElementById("addcard").disabled = true;
         }
         
-    }, [product]);
+    }, []);
 
     const getCustomerCart = async() => {
         if(loggedIn) {
@@ -66,7 +68,7 @@ const Details = ({
                 console.log("CART", customerCart)
                 if (customerCart && customerCart.length) {
                     Promise.all(customerCart.map(existingProduct => {
-                        console.log("IDs", existingProduct.id, productId)
+                        console.log("IDs", existingProduct.productId, productId)
                         if (existingProduct.id == productId) {
                             setError("Already in your cart");
                             console.log("ERROR:", error)
@@ -106,7 +108,7 @@ const Details = ({
         document.getElementById("quantity-count").innerHTML = quantity;
     }
 
-    const addToCart = async (name, price, quantity, productId) => {
+    const addToCart = async (name, price, quantity, productId, imagelink) => {
       setPriceTotal(priceTotal +
         price.replace(",", "") * quantity)
 
@@ -119,12 +121,14 @@ const Details = ({
           price: price,
           quantity: quantity,
           id: productId,
+          imagelink
         };
 
         purchaseItems.push(item);
         localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
 
           if(loggedIn) {
+            console.log("HERE?", loggedIn, token)
               const response = await fetch(`${BASE_URL}/cart_products`, {
                   method: "POST",
                   headers: {
@@ -137,6 +141,7 @@ const Details = ({
                   
                   })
               });
+              console.log("response", response)
               const data = await response.json();
               if (!data.success) {
                   alert("Error adding purchase item to cart");
@@ -186,7 +191,7 @@ const Details = ({
             <button onClick={() => adjustQuantity("add")} id="plus">+</button>
             <div>{ error
             ? <button onClick={() => navToCart()} id="addcard">Already In Cart</button>
-            : <button onClick={() => addToCart(product.name, product.price, quantity, product.id)} id="addcard">Add To Cart</button>
+            : <button onClick={() => addToCart(product.name, product.price, quantity, product.id, product.imagelink)} id="addcard">Add To Cart</button>
             }</div>
             </div>
             </div>

@@ -62,6 +62,7 @@ const Login = ({
       setLoggedIn(true);
       setError(result.error);
       console.log("RESULT ERROR", result.error);
+      console.log("RESULT", result);
       setErrorMessage(result.message);
       setToken(result.token);
       setIsadmin(result.customer.admin);
