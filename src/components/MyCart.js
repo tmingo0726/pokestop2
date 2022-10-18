@@ -15,6 +15,10 @@ const MyCart = ({
     const [cart, setCart] = useState([]);
     const [updateQuantity, setUpdateQuantity] = useState(0)
     const [error, setError] = useState("")
+    const Monetize = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    })
 
 
     useEffect(() => {
@@ -68,17 +72,6 @@ const MyCart = ({
           
       }
       console.log("total", priceTotal)
-    }
-
-    const cartTotal = async() => {
-       let tempTotal = 0;
-       if (cart.length) {
-          cart.map(product => {
-            console.log("PROD", product);
-            tempTotal += Number(product.price.replace(",", "") * product.quantity);
-          })
-          setPriceTotal(tempTotal);
-        }
     }
 
     const getCartId = async() => {
@@ -184,6 +177,7 @@ const MyCart = ({
 
     const handleQuantity = async(id, priceDifference) => {
       const currentTotal = priceTotal
+      console.log("ID", id)
 
       console.log("DIFF, TTL", priceDifference, priceTotal)
 
@@ -249,10 +243,16 @@ const MyCart = ({
       navigate("/login")
    }
 
-    
+    useEffect(() =>{
+      const awaitCart = async() =>{
+        await getCurrentCart()
+      }
+      awaitCart()
+    }, [])
 
     return (
-        <div>
+      <div className="cart-wrap">
+        <div className="items-wrap">
             <h1>Welcome to your Cart</h1>
             { 
               error ?
@@ -262,63 +262,66 @@ const MyCart = ({
               {
                 cart && cart.length ?
                     cart.map((singleItem, i) => {
-                      // console.log("singleitem", singleItem)
-                      let str = 
-                      `
-                      ${singleItem.quantity}   
-                      ${singleItem.name} 
-                      $${
-                      Number(singleItem.price.replace(",", "")) * 
-                      singleItem.quantity}
-                      `
-                        {console.log("TOTAL", priceTotal)}
+                      console.log("singleitem", singleItem)
+                        console.log("TOTAL", priceTotal)
                         return (
-                            <div className="cart-item" key={i}>
-                                <div>
-                                  <h2>{str}</h2>
-                                    <i
-                                    id="icon"
-                                    onClick={() => handleDelete(singleItem.id, Number(singleItem.price.replace(",", "")) * singleItem.quantity)}
-                                    className="fa-solid fa-trash-can"
-                                    ></i>
-                                </div>
-                                <div>
-                                  <input
-                                    type="number"
-                                    min="1"
-                                    placeholder={singleItem.quantity} 
-                                    onChange={
-                                      (e) => setUpdateQuantity(e.target.value)}
-                                  ></input>
-                                  <i
-                                  id="icon"
-                                  className="fa-solid fa-pen-to-square"
-                                  onClick={
-                                    () => handleQuantity(singleItem.id,
-                                      Number(singleItem.price.replace(",", "")) *
-                                      (updateQuantity - singleItem.quantity) 
-                                    )}
-                                  ></i>
-                                  {/* {console.log("QTY", updateQuantity)} */}
-                                </div>
+                          <div className="cart-item" key={i}>
+                            <div id="img-name">
+                              <img id="cp-img" src={singleItem.imagelink} width="50px" height="75px"/>
+                              <h2 id="cp-name">{singleItem.name}</h2>
+                              <div id="cp-si-price">{Monetize.format(Number(singleItem.price.replace(",", "")))}</div>
                             </div>
+                            <div id="qty-group">
+                            <div id="qty-txt">Qty: </div>
+                            <input
+                              className="qty-input"
+                              type="number"
+                              min="1"
+                              placeholder={singleItem.quantity} 
+                              onChange={
+                                (e) => setUpdateQuantity(e.target.value)}
+                            ></input>
+                            <i
+                              id="edit"
+                              className="fa-solid fa-pen-to-square fa-xl"
+                              onClick={
+                                () => handleQuantity(singleItem.id,
+                                  Number(singleItem.price.replace(",", "")) *
+                                  (updateQuantity - singleItem.quantity) 
+                                )}
+                            ></i>
+                            </div>
+                            <i
+                              id="trash"
+                              className="fa-solid fa-trash-can fa-xl"
+                              onClick={() => handleDelete(singleItem.id,
+                                Number(singleItem.price.replace(",", "")) * 
+                                singleItem.quantity)}
+                            ></i>
+                            <h3 id="cp-ttl-price">Subtotal: {Monetize.format(Number(singleItem.price.replace(",", "")) * 
+                                  singleItem.quantity)}</h3>
+                            <div></div>
+                          </div>
                         );
                     })
                   :
                   <h2>No Items In Cart</h2>
               }
-            <div>Total: {priceTotal}</div>
-            {
-              loggedIn 
-              ?
-              <button className="form-btn" onClick={goToCheckout}>Proceed to Checkout</button>
-              :
-              <button className="form-btn" onClick={goToLogin}>Login to Proceed</button>
-            }
+              </div>
+            <div className="ttl-checkout">
+              <img id="umbreon" src="https://i.ibb.co/7JLS4QJ/imgbin-pixel-art-umbreon-pok-mon-pikachu-png.png"/>
+              <h2>Total: {Monetize.format(priceTotal)}</h2>
+              {
+                loggedIn 
+                ?
+                <button className="form-btn" onClick={goToCheckout}>Proceed to Checkout</button>
+                :
+                <button className="form-btn" onClick={goToLogin}>Login to Proceed</button>
+              }
+            </div>
     </div>
   );
 }
-
 
 
 

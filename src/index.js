@@ -47,6 +47,7 @@ const App = () => {
     <div>
       <Header
         loggedIn={loggedIn}
+        token={token}
         // setLoggedIn={setLoggedIn}
         setUsername={setUsername}
         setPassword={setPassword}
@@ -96,6 +97,7 @@ const App = () => {
               priceTotal={priceTotal}
               setPriceTotal={setPriceTotal}
               token={token}
+              setToken={setToken}
               loggedIn={loggedIn}
               // chosenCard={chosenCard}
               // cartItems={cartItems}
