@@ -65,6 +65,27 @@ const MyCart = (props) => {
     }
   }
 
+  const removeFromCartProductsTable = async (id) => {
+
+    try {
+      const response = await fetch(`${path}/cart_products`, {
+          method: "DELETE",
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+          },
+          body : JSON.stringify({
+              id
+          })
+      });
+      const result = await response.json();
+      console.log("DEL RESULT", id, result.deletedProduct.id)
+      return result;               
+    } catch (error) {
+      console.error(error);
+    }
+} 
+
   //This routine is used to sometimes just provide the cart ID and also
   //used to return all of the items in a cart for a customer
   const getCustomerCartInfo = async () => {
@@ -88,6 +109,16 @@ const MyCart = (props) => {
     }
   }
   
+  const deleteItem = async (id, totalPriceOfItem) => {
+
+    console.log("Inside delete item", id, totalPriceOfItem);
+    const result = await removeFromCartProductsTable(id);
+    console.log("Inside deleteItem and result is:", result);
+    priceTotal = 0;
+    runningTotal = 0;
+    await getCurrentCart();
+
+  }
 
   const getCurrentCart = async () => {
 
@@ -103,11 +134,13 @@ const MyCart = (props) => {
     //We need to get what's in the cart regardless of whether or not something was chosen from the Details page
     await getCustomerCartInfo();
     cartItemsArr = await JSON.parse(localStorage.getItem("CartItems"));
-    cartItemsArr.map((item, index) => {
-      console.log("before computation price total is:", priceTotal);
-      runningTotal += Number(priceTotal + item.price.replace(",", "") * item.quantity);
-      console.log("How many times are we coming here?", runningTotal);
-    });
+    if (cartItemsArr.length) {
+      cartItemsArr.map((item, index) => {
+        console.log("before computation price total is:", priceTotal);
+        runningTotal += Number(priceTotal + item.price.replace(",", "") * item.quantity);
+        console.log("How many times are we coming here?", runningTotal);
+      });
+    }
     setPriceTotal(runningTotal);
     console.log("cartItemsArr is:", cartItemsArr.length);
     localStorage.setItem("singleCartItem", []);
@@ -128,7 +161,14 @@ const MyCart = (props) => {
               <div className="cart-item" key={index}>
                 <div id="img-name">
                 <img id="cp-img" src={singleItem.imagelink} width="50px" height="75px"/>
-                <h2>{singleItem.quantity} {singleItem.name} {Monetize.format(Number(singleItem.price.replace(",", "") * singleItem.quantity))}</h2>
+                <h2>{singleItem.quantity} {singleItem.name} {Monetize.format(Number(singleItem.price.replace(",", "") * singleItem.quantity))}
+                <i
+                              id="trash"
+                              className="fa-solid fa-trash-can fa-xl"
+                              onClick={() => deleteItem(singleItem.id,
+                                Number(singleItem.price.replace(",", "")) * 
+                                singleItem.quantity)}
+                            ></i></h2>
                 </div>
               </div>
             )
