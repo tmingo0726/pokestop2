@@ -32,6 +32,7 @@ customersRouter.post("/login", async (req, res, next) => {
 
       res.send({
         customer,
+        success: true,
         message: "Login successful.",
         token,
       });

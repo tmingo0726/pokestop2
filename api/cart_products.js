@@ -64,7 +64,7 @@ cartProductsRouter.patch("/", requireUser, async(req, res, next) => {
 
     res.send({
       updatedItem,
-      success: `Updated ${updatedItem.name}'s quantity to ${updatedItem.quantity}`
+      success: true
     })
   } catch ({ error, message }) {
     next({ error, message });

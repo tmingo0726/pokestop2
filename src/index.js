@@ -26,8 +26,7 @@ const App = () => {
   const [isadmin, setIsadmin] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
   const [priceTotal, setPriceTotal] = useState(0)
-  // const [chosenCard, setChosenCard] = useState(0);
-  // const [cartItems, setCartItems] = useState([]);
+  
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("token");
@@ -72,10 +71,6 @@ const App = () => {
             <MyCart
               priceTotal={priceTotal}
               setPriceTotal={setPriceTotal}
-              token={token}
-              loggedIn={loggedIn}
-              // cartItems={cartItems}
-              // setCartItems={setCartItems}
             />
           }
         ></Route>

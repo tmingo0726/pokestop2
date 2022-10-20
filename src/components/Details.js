@@ -19,7 +19,7 @@ const Details = ({
     let quantity = 1;
     let checkLocalStorage = [];
     
-    checkLocalStorage = localStorage.getItem("cartItems");
+    checkLocalStorage = localStorage.getItem("singleCartItem");
     console.log("checkLocalStorage is", checkLocalStorage);
     if (checkLocalStorage === null || checkLocalStorage === [] || !checkLocalStorage.length) {
         purchaseItems = [];
@@ -29,21 +29,13 @@ const Details = ({
     useEffect(() => {
         const fetchData = async() => {
 
-        
-        // const selectedProduct = async (id) => {
             setProduct(await fetchProductById(productId))
-        // }
-        // selectedProduct(productId);
-        
-        // const getCart = async() => {
-            // console.log("PRODUCT", product)
             await getCustomerCart()
-            // console.log("TESTER", test)
+            
         }
         fetchData();
         setToken(localStorage.getItem("token"))
-        // getCart()
-        
+                
     }, []);
 
     useEffect(() => {
@@ -72,7 +64,6 @@ const Details = ({
                         if (existingProduct.id == productId) {
                             setError("Already in your cart");
                             console.log("ERROR:", error)
-                            // return error;
                         }
                     }))
                 }
@@ -125,7 +116,7 @@ const Details = ({
         };
 
         purchaseItems.push(item);
-        localStorage.setItem("cartItems", JSON.stringify([...purchaseItems]));
+        localStorage.setItem("singleCartItem", JSON.stringify([...purchaseItems]));
 
           if(loggedIn) {
             console.log("HERE?", loggedIn, token)
