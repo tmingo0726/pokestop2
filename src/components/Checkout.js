@@ -144,6 +144,7 @@ const Checkout = ({
                 </div>
                 <div>
                   <button className="form-btn" type="submit" onClick={submitPayment}>Submit Payment!</button>
+                  <button className="form-btn" onClick={() => navigate("/MyCart")}>Back To Cart</button>
                 </div>
           </form>
         </div>

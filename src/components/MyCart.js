@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import "../stylesheets/MyCart.css";
 const path = "http://localhost:4000/api";
 
@@ -13,6 +13,8 @@ const MyCart = (props) => {
 
   let priceTotal = props.priceTotal;
   const setPriceTotal = props.setPriceTotal;
+  const navigate = useNavigate();
+
   const Monetize = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD'
@@ -234,7 +236,12 @@ const MyCart = (props) => {
     
   }
   
- 
+ const proceedToCheckout = () => {
+
+  console.log("Inside Proceed to Checkout");
+  navigate("/checkout");
+
+ }
   
   return(
     <div>
@@ -247,7 +254,7 @@ const MyCart = (props) => {
               <div className="cart-item" key={index}>
                 <div id="img-name">
                 <img id="cp-img" src={singleItem.imagelink} width="50px" height="75px"/>
-                <h2>{singleItem.quantity} {singleItem.name} {Monetize.format(Number(singleItem.price.replace(",", "") * singleItem.quantity))}
+                <h3 id="single-item">{singleItem.quantity} {singleItem.name} {Monetize.format(Number(singleItem.price.replace(",", "") * singleItem.quantity))}
                 <i
                               id="trash"
                               className="fa-solid fa-trash-can fa-xl"
@@ -258,7 +265,7 @@ const MyCart = (props) => {
                 <select id="qty-select" onChange={(e) => handleQtyChange(e.target.value, singleItem.id, singleItem.productId)}>
                   <option value="Update Quantity">Update Quantity</option>
                   {quantities.map((qty) => <option value={qty.value}>{qty.label}</option>)}
-                </select></h2>
+                </select></h3>
                 </div>
               </div>
             )
@@ -273,7 +280,8 @@ const MyCart = (props) => {
       {
         <div>
           <hr></hr>
-          <h2>Total: {Monetize.format(priceTotal)}</h2>
+          <h2>Total: {Monetize.format(priceTotal)}
+          <button className="form-btn" onClick={proceedToCheckout}>Proceed To Checkout</button></h2>
         </div>
       }
     </div>
