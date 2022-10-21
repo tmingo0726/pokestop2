@@ -8,7 +8,7 @@ let runningTotal = 0;
 const MyCart = (props) => {
 
   const [allCartItems, setAllCartItems] = useState([]);
-  const [updateQuantity, setUpdateQuantity] = useState(0);
+  const [updateQuantity, setUpdateQuantity] = useState('Select Quantity');
   const [subTotal, setSubTotal] = useState(0);
 
   let priceTotal = props.priceTotal;
@@ -18,6 +18,15 @@ const MyCart = (props) => {
     currency: 'USD'
   })
 
+  const quantities = [
+    { label: "1", value: 1},
+    { label: "2", value: 2},
+    { label: "3", value: 3},
+    { label: "4", value: 4},
+    { label: "5", value: 5},
+    { label: "6", value: 6},
+    { label: "7", value: 7},
+  ];
 
   useEffect(() =>{
 
@@ -113,11 +122,88 @@ const MyCart = (props) => {
 
     console.log("Inside delete item", id, totalPriceOfItem);
     const result = await removeFromCartProductsTable(id);
+    //TBD: Add quantity back to inventory count
+
     console.log("Inside deleteItem and result is:", result);
     priceTotal = 0;
     runningTotal = 0;
     await getCurrentCart();
 
+  }
+
+  const updateProductInventoryCount = async (qty, id) => {
+    
+    console.log("Inside updateProductInventoryCount and qty/id are:", qty, id);
+    const response = await fetch(`${path}/products/`, {
+      method: 'PATCH',
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+          id : id,
+          amountToSubtract: qty
+      })
+    });
+    const result = await response.json();
+    console.log("Result FROM updateProductInventoryCount:", result);
+  }
+
+  const checkInventory = async (qty, productId) => {
+
+    console.log("Inside check inventory and qty/id are:", qty, productId)
+    try {
+      const response = await fetch(`${path}/products/${productId}`);
+      const { data } = await response.json();
+      console.log("DATA", data)
+
+      if (data) {
+        if (qty > data.inventorycount) {
+          return false;
+        } else {
+          //Let's update the product's inventorycount field...
+          //updateProductInventoryCount(qty, productId);
+          return true;
+        }
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleQtyChange = async (updatedQty, id, productId) => {
+
+    console.log("Quantity changed to:", updatedQty, id, productId);
+    const isEnough = await checkInventory(updatedQty, productId);
+    console.log("Is Enough is:", isEnough);
+    
+    //First let's update the quantity in the cart_products table
+    //We can use the current token to get the current open cart
+    if (isEnough) {
+      setUpdateQuantity(updatedQty);
+      const response = await fetch(`${path}/cart_products`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            id,
+            quantity: updatedQty,
+        })
+      });
+      const result = await response.json();
+      console.log("QTY UPDATED:", result);
+      if (result.success) {
+        priceTotal = 0;
+        runningTotal = 0;
+        getCurrentCart();
+      }
+    } else {
+      alert("Quantity exceeds Inventory -- Please choose a smaller amount");
+    }
   }
 
   const getCurrentCart = async () => {
@@ -168,7 +254,11 @@ const MyCart = (props) => {
                               onClick={() => deleteItem(singleItem.id,
                                 Number(singleItem.price.replace(",", "")) * 
                                 singleItem.quantity)}
-                            ></i></h2>
+                            ></i>
+                <select id="qty-select" onChange={(e) => handleQtyChange(e.target.value, singleItem.id, singleItem.productId)}>
+                  <option value="Update Quantity">Update Quantity</option>
+                  {quantities.map((qty) => <option value={qty.value}>{qty.label}</option>)}
+                </select></h2>
                 </div>
               </div>
             )

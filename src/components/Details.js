@@ -1,7 +1,8 @@
+//import path from "path";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import '../stylesheets/Details.css';
-const BASE_URL = "http://localhost:4000/api";
+const path = "http://localhost:4000/api";
 
 let purchaseItems = [];
 const Details = ({
@@ -50,7 +51,7 @@ const Details = ({
     const getCustomerCart = async() => {
         if(loggedIn) {
             try {
-                const response = await fetch(`${BASE_URL}/cart_products`, {
+                const response = await fetch(`${path}/cart_products`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
@@ -77,7 +78,7 @@ const Details = ({
 
     const fetchProductById = async (id) => {
         try {
-            const response = await fetch(`${BASE_URL}/products/${id}`);
+            const response = await fetch(`${path}/products/${id}`);
             const singleProduct = await response.json();
             return singleProduct.data;
         } catch (error) {
@@ -97,6 +98,24 @@ const Details = ({
         }
 
         document.getElementById("quantity-count").innerHTML = quantity;
+    }
+
+    const updateProductInventoryCount = async (qty, id) => {
+    
+        console.log("Inside updateProductInventoryCount and qty/id are:", qty, id);
+        const response = await fetch(`${path}/products/`, {
+          method: 'PATCH',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+              id : id,
+              amountToSubtract: qty
+          })
+        });
+        const result = await response.json();
+        console.log("Result FROM DETAILS: updateProductInventoryCount:", result);
     }
 
     const addToCart = async (name, price, quantity, productId, imagelink) => {
@@ -120,7 +139,7 @@ const Details = ({
 
           if(loggedIn) {
             console.log("HERE?", loggedIn, token)
-              const response = await fetch(`${BASE_URL}/cart_products`, {
+              const response = await fetch(`${path}/cart_products`, {
                   method: "POST",
                   headers: {
                       'Content-Type': 'application/json',
@@ -138,6 +157,10 @@ const Details = ({
                   alert("Error adding purchase item to cart");
               } else {
                   console.log('data', data);
+                  //TVMDEBUG: I don't think we want to do this. Our quantity changer in MyCart changes the total quantity. It does NOT allow to increase the current
+                  //quantity chosen in Details. Because of this we need to enter MyCart with the total inventory unchanged. We will only change it in MyCart on Proceed to Checkout.
+                  //TBD: Reduce inventory count of product selected by quantity chosen
+                  //await updateProductInventoryCount(quantity, productId);
                   alert("Item successfully added to your cart");
               }
 

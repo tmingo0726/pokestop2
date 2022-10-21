@@ -107,6 +107,10 @@ h1 {
   color:rgb(0, 0, 0);
 }
 
+#qty-select {
+  color: black;
+}
+
 .fa-solid:hover {
   cursor: pointer;
 }
